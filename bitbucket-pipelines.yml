@@ -1,0 +1,24 @@
+pipelines:
+  custom: # Pipelines that can only be triggered manually
+    - step:
+        name: Build
+        image: node:10.15.0
+        script:
+          - npm install
+          - npm run build
+        artifacts: # defining the artifacts to be passed to each future step.
+          - build/**
+          - Dockerfile
+          - httpd.conf
+    - step:
+        name: Create Container
+        script:
+          - docker build -t mybenefitz-business-web .
+    - step:
+        name: Deploy Server
+        deployment: test   # can be test, staging or production.
+        # trigger: manual  # Uncomment to make this a manual deployment.
+        script:
+          - echo "server deploy"
+options:
+   docker: true

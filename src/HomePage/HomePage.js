@@ -1,6 +1,6 @@
 import React from 'react';
-import { Link, BrowserRouter, NavLink, Route } from 'react-router-dom';
-import { RequestComp, HistoryComp, ApproveComp } from './index';
+import { Link, NavLink, Route, Redirect } from 'react-router-dom';
+import { CodeComp, RequestComp, HistoryComp, HistorySelectorComp } from './index';
 
 import { userService } from '../_services';
 
@@ -25,7 +25,12 @@ class HomePage extends React.Component {
             user: JSON.parse(localStorage.getItem('user')),
             business: { loading: true }
         });
-        userService.getInfo().then(business => this.setState({ business }));
+        userService.getInfo()
+        .then(business => this.setState({ business }))
+        .catch(e => {
+          console.log("getInfo error");
+          return ( <Redirect to={{ pathname: '/login', state: { from: this.props.location } }} /> )
+        });
     }
 
     handleChange(e) {
@@ -44,43 +49,45 @@ class HomePage extends React.Component {
     }
 
     render() {
-        const { business, showRequest, code } = this.state;
+        const { business } = this.state;
         return (
-            <div className="col-md-6 col-md-offset-3">
-                <h4>Hi {business.name}!</h4>
-                <p>
-                    <Link to="/login">Logout</Link>
-                </p>
-                <form>
-                  <label>
-                    <input placeholder="Type the Code" type="number" name="code" onChange={this.handleChange} />
-                  </label>
-                </form>
-                <button type="button" onClick={this.checkCode}>
-                Check Code
-                </button>
-                { showRequest &&
-                  <ApproveComp code={code} onCloseApprove={this.closeApprove} />
-                }
-                <BrowserRouter>
-                <div id="dashboard">
-                  <div className="content">
-                    <Route exact path="/requests" component={RequestComp} />
-                    <Route exact path="/history" component={HistoryComp} />
-                  </div>
-                  <div className="menu">
-                    <NavLink exact to="/">
-                        Home
-                    </NavLink>
-                    <NavLink exact to="/requests" >
-                        Requests
-                    </NavLink>
-                    <NavLink exact to="/history">
-                        History
-                    </NavLink>
-                </div>
-              </div>
-              </BrowserRouter>
+            <div>
+                <nav className="navbar navbar-expand-md bg-primary navbar-light ustify-content-between mr-auto" role="navigation">
+                <ul className="navbar-nav ustify-content-between col-md-12">
+                <ul className="navbar-nav ">
+                      <a className="navbar-brand" href="#">MyBenefitz</a>
+                </ul>
+                <ul className="navbar-nav mr-auto" >
+                  <li className="nav-item">
+                    <div>
+                       <h5 className="nav-link">שלום {business.name}!</h5>
+                    </div>
+                  </li>
+                  <li className="nav-item">
+                    <NavLink className="nav-link"to="/history/daily"> דוח פעילות יומי</NavLink>
+                  </li>
+                  <li className="nav-item">
+                    <NavLink className="nav-link" to="/code">הזן קוד</NavLink>
+                  </li>
+                  <li className="nav-item mr-auto">
+                    <NavLink className="nav-link " to="/history/month">דוח פעילות חודשי</NavLink>
+                  </li>
+              </ul>
+              <ul className="navbar-nav mr-auto">
+                  <li className="nav-item">
+                    <Link class="nav-link " to="/login">התנתק</Link>
+                  </li>
+              </ul>
+              </ul>
+            </nav>
+            <div className="container">
+                  <Route path="/code" component={CodeComp} />
+                  <Route path="/requests" component={RequestComp} />
+                  <Route path="/history/daily"
+                    render={() => <HistoryComp prevDays="20" />}
+                  />
+                  <Route path="/history/month" component={HistorySelectorComp}/>
+            </div>
             </div>
         );
     }

@@ -1,6 +1,4 @@
 import React from 'react';
-import { NavLink, Route } from 'react-router-dom';
-import { PurchaseComp, UsageComp } from './index';
 import { userService } from '../_services';
 
 class HistoryComp extends React.Component {
@@ -8,32 +6,93 @@ class HistoryComp extends React.Component {
         super(props);
 
         this.state = {
-            user: {},
-            requests: [],
+            loading: false,
+            errorMessage: null,
+            history: [],
+            timeRange: {
+              prevDays: props.prevDays,
+              fromDate: props.fromDate,
+              toDate: props.toDate,
+            }
         };
+
+        this.undoTransaction = this.undoTransaction.bind(this);
+        this.loadHistory = this.loadHistory.bind(this);
     }
 
     componentDidMount() {
+      this.loadHistory();
+    }
+
+    loadHistory(){
+      this.setState({
+          loading: true,
+      });
+      userService.getDailyHistory(this.state.timeRange)
+      .then(history => {
+        this.setState({ history, loading: false });
+      })
+      .catch(e => {
+        console.log("Load Error: ");
+        console.log(e);
         this.setState({
-            user: JSON.parse(localStorage.getItem('user')),
-            requests: { loading: true }
+            loading: false,
+            errorMessage: "שגיאה בטעינת הנתונים",
         });
-        userService.getRequsts().then(requests => this.setState({ requests }));
+      });
+    }
+
+    undoTransaction(type, id) {
+      this.setState({
+          loading: true,
+          history: [],
+      });
+      userService.undoTransaction(type, id)
+      .then(() => {
+        this.loadHistory();
+      })
+      .catch(e => {
+        console.log("Undo Error: " + e);
+        this.setState({
+            loading: false,
+            errorMessage: "שגיאה במחיקת הפעולה",
+        });
+      });
     }
 
     render() {
-        const { user, requests } = this.state;
+        const { history, loading, errorMessage } = this.state;
         return (
             <div>
-              <div className="menu">
-                <Route path='/history/usage' component={UsageComp} />
-                <Route path='/history/purchase' component={PurchaseComp} />
-                  <NavLink exact to="/purchase" >
-                      purchase
-                  </NavLink>
-                  <NavLink exact to="/history/usage">
-                      Usage
-                  </NavLink>
+              {loading &&
+                <div className="spinner-border text-primary" role="status">
+                  <span className="sr-only">טוען...</span>
+                </div>
+              }
+              {errorMessage &&
+                <div className="text-danger">{errorMessage}</div>
+              }
+              <div className="content">
+                {history && history.map((benefit, index) =>
+                    <div className="card" key={benefit.id}>
+                      <div className="card-body">
+                        <div>בקשת {benefit.objectType === "purchesed" ? "רכישה" : benefit.objectType === "usage" ? "שימוש" : benefit.objectType === "canceled" ? "ביטול" : "" }</div>
+                        {benefit.objectType === "purchesed" && benefit.objectType !== "punch" &&
+                          <div>במחיר {benefit.price} שח</div>
+                        }
+                        <div>{benefit.customer.firstName + ' ' + benefit.customer.lastName}</div>
+                        <div>{benefit.customer.phoneNo}</div>
+                        {index === 0 ?
+                          <button
+                            className="code btn btn-danger"
+                            type="button"
+                            onClick={()=> this.undoTransaction(benefit.objectType, benefit.id)} >
+                            בטל פעולה
+                          </button>
+                          : ""}
+                      </div>
+                    </div>
+                )}
               </div>
             </div>
         );

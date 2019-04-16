@@ -11,9 +11,11 @@ pipelines:
           - Dockerfile
           - httpd.conf
     - step:
-        name: Create Container
+        name: Create Container and push to google
         script:
           - docker build -t mybenefitz-business-web .
+          - gcloud auth activate-service-account --key-file cred-b2ee9fc10f9f.json
+          - docker push gcr.io/total-pillar-234914/mybenefitz-business-web
     - step:
         name: Deploy Server
         deployment: test   # can be test, staging or production.

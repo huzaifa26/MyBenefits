@@ -16,15 +16,28 @@ class ApproveComp extends React.Component {
             user: {},
             request: {},
             notFound: false,
-            closeApprove: props.onCloseApprove,
+            showRequest: false,
+            isEmpty: true,
+            disableActionButtons: true,
         };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleCodeError = this.handleCodeError.bind(this);
         this.reloadRequest = this.reloadRequest.bind(this);
+        this.initFields = this.initFields.bind(this);
         this.approveRequest = this.approveRequest.bind(this);
     }
 
+    initFields() {
+      this.setState({
+        user: JSON.parse(localStorage.getItem('user')),
+        request: { },
+        notFound: false,
+        showRequest: false,
+        isEmpty: true,
+        disableActionButtons: true,
+      });
+    }
     componentDidMount() {
       this.reloadRequest();
     }
@@ -32,13 +45,15 @@ class ApproveComp extends React.Component {
     reloadRequest() {
       this.setState({
         user: JSON.parse(localStorage.getItem('user')),
-        request: { loading: true }
+        request: { loading: true },
+        showRequest: false,
       });
       console.log(this.props.code)
       userService.getRequestByCode(this.props.code)
       .then(request => {
         console.log(request);
-        this.setState({ request });
+        var disableApproveButton = (request.type === "use");
+        this.setState({ request, disableApproveButton, showRequest: true });
       })
       .catch(e => {
         this.handleCodeError(e);
@@ -60,55 +75,59 @@ class ApproveComp extends React.Component {
 
     handleChange(e) {
       const { name, value } = e.target;
-      this.setState({ [name]: value });
+      this.setState({ [name]: value , disableApproveButton: false});
     }
 
     handleCodeError(e) {
-      if (e.status == 404){
+      if (e.status === 404){
         this.setState({ request: { loading: false }, notFound: true })
       }
     }
 
     render() {
-        const { request, notFound } = this.state;
+        const { request, showRequest, notFound, isEmpty, disableActionButtons } = this.state;
         return (
             <div>
-                <button type="button" onClick={this.props.onCloseApprove}>
-                Close Approve
-                </button>
-                {request.loading &&
-                    <img src="../assets/loading.gif" />
-                }
-                {notFound &&
-                    <div>Request not found</div>
-                }
-                {!request.loading && !notFound &&
-                    <div>
-                      <h3>Request Info:</h3>
-                      <div>{request.type}</div>
-                      <div>{request.id}</div>
-                      <div>{request.code}</div>
-                      <div>{request.offerDescription}</div>
-                      <div>{request.offerType}</div>
-                      <div>{request.offerPrice}</div>
-                      <div>{request.customerEmail}</div>
-                      <div>{request.customerFirstName}</div>
-                      <div>{request.customerLastName}</div>
-                      {request.type == "use" &&
-                        <div>
-                          <div>Usage Points</div>
-                          <div>{request.pointsPerchased}</div>
-                          <div>{request.pointsStatus}</div>
-                          <form>
-                            <label>
-                              <input placeholder="Number of Points" type="number" name="reducePoints" onChange={this.handleChange} />
-                            </label>
-                          </form>
-                        </div>
-                      }
-                      <button onClick={this.approveRequest} >Approve</button>
+              {isEmpty &&
+                <div>הזן קוד</div>
+              }
+              {notFound &&
+                <div>בקשה לא נמצאה</div>
+              }
+              {request.loading &&
+                  <img src="../assets/loading.gif" alt="loading"/>
+              }
+              {!request.loading && !notFound && showRequest &&
+                  <div>
+                    <h3>פרטי הבקשה</h3>
+                    <div>{request.customer.firstName}</div>
+                    <div>{request.customer.LastName}</div>
+                    <div>{request.offerDescription}</div>
+                    <div>{request.type}</div>
+                    <div>{request.id}</div>
+                    <div>{request.code}</div>
+                    <div>{request.offerType}</div>
+                    <div>{request.offerPrice}</div>
+                    <div>{request.customer.email}</div>
+                    <div>{request.customer.phoneNo}</div>
+                    {request.type === "use" &&
+                      <div>
+                        <div>מצב נקודות</div>
+                        <div>{request.pointsPerchased}</div>
+                        <div>{request.pointsStatus}</div>
+                        <form>
+                          <label>
+                            <input placeholder="כמות הנקודות לשימוש" type="number" name="reducePoints" onChange={this.handleChange} />
+                          </label>
+                        </form>
+                      </div>
+                    }
+                    <div className="btn-group justify-content-between" >
+                    <button onClick={this.approveRequest} disable={disableActionButtons} >אישור</button>
+                    <button onClick={this.initFields} disable={disableActionButtons} >ביטול</button>
                     </div>
-                }
+                  </div>
+              }
             </div>
         );
     }

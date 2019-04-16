@@ -13,11 +13,12 @@ class UsageComp extends React.Component {
     }
 
     componentDidMount() {
+      console.log("UsageComp");
         this.setState({
             user: JSON.parse(localStorage.getItem('user')),
             requests: { loading: true }
         });
-        userService.getRequsts().then(requests => this.setState({ requests }));
+        userService.getBenefitUsage().then(requests => this.setState({ requests }));
     }
 
     render() {

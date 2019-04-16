@@ -17,14 +17,14 @@ class PurchaseComp extends React.Component {
             user: JSON.parse(localStorage.getItem('user')),
             requests: { loading: true }
         });
-        userService.getRequsts().then(requests => this.setState({ requests }));
+        userService.getBenefitPurchased().then(requests => this.setState({ requests }));
     }
 
     render() {
         const { user, requests } = this.state;
         return (
             <div>
-                <h3>Usage:</h3>
+                <h3>Purchase:</h3>
             </div>
         );
     }

@@ -1,5 +1,6 @@
 import React from 'react';
 import { userService } from '../_services';
+import Moment from 'react-moment';
 
 class HistoryComp extends React.Component {
     constructor(props) {
@@ -76,20 +77,30 @@ class HistoryComp extends React.Component {
                 {history && history.map((benefit, index) =>
                     <div className="card" key={benefit.id}>
                       <div className="card-body">
-                        <div>בקשת {benefit.objectType === "purchesed" ? "רכישה" : benefit.objectType === "usage" ? "שימוש" : benefit.objectType === "canceled" ? "ביטול" : "" }</div>
-                        {benefit.objectType === "purchesed" && benefit.objectType !== "punch" &&
+                        <div><Moment format="YYYY-MM-DD HH:mm">{new Date(benefit.createDate)}</Moment></div>
+                        {benefit.objectType === "purchesed" &&
+                          <div>בקשת רכישה</div>
+                        }
+                        {benefit.objectType === "usage" &&
+                          <div>בקשת שימוש</div>
+                        }
+                        {benefit.objectType === "canceled" &&
+                          <div>ביטול פעולה</div>
+                        }
+                        <div>{benefit.description}</div>
+                        {benefit.objectType === "purchesed" && benefit.type !== "punch" &&
                           <div>במחיר {benefit.price} שח</div>
                         }
                         <div>{benefit.customer.firstName + ' ' + benefit.customer.lastName}</div>
                         <div>{benefit.customer.phoneNo}</div>
-                        {index === 0 ?
+                        {index === 0 && (benefit.objectType === "purchesed" || benefit.objectType === "usage") &&
                           <button
                             className="code btn btn-danger"
                             type="button"
                             onClick={()=> this.undoTransaction(benefit.objectType, benefit.id)} >
                             בטל פעולה
                           </button>
-                          : ""}
+                        }
                       </div>
                     </div>
                 )}

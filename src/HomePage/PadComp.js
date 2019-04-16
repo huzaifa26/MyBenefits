@@ -13,8 +13,7 @@ class PadComp extends React.Component {
         this.onClick = this.onClick.bind(this);
     }
 
-    onClick(e) {
-      const { value } = e.target;
+    onClick(value) {
       this.state.onClick(value);
     }
 
@@ -40,8 +39,8 @@ class PadComp extends React.Component {
               <PadBotton value="0" class="btn" onClick={this.onClick}/>
             </div>
             <div className="btn-group ustify-content-between">
-              <PadBotton  type="button" value="מחק" class="btn btn-secondary"  onClick={this.state.onBackspace} />
-              <PadBotton  type="button" value="מחק הכל"  class="btn btn-secondary" onClick={this.state.onClear} />
+              <PadBotton  type="button" value="מחק" color="btn-secondary"  onClick={this.state.onBackspace} />
+              <PadBotton  type="button" value="מחק הכל"  color="btn-secondary" onClick={this.state.onClear} />
             </div>
           </div>
         );
@@ -63,7 +62,7 @@ class PadBotton extends React.Component {
       var {color, action, value} = this.state;
       return (
         <div className="button btn-lg col-md">
-          <button type="button" className={"btn " + color} onClick={action} value={value}>{value}</button>
+          <button type="button" className={"btn " + color} onClick={()=> action(value)} value={value}><h1>{value}</h1></button>
         </div>
       )
     }

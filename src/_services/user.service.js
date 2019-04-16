@@ -117,7 +117,7 @@ function getDailyHistory(dateRange) {
     .then( res =>{
         var array = [];
         res.purchesed.forEach(purchase => {
-          purchase.objectType = "purchesed";
+          purchase.objectType = "purchased";
           array.push(purchase);
         });
         res.usage.forEach(usage => {
@@ -128,10 +128,9 @@ function getDailyHistory(dateRange) {
           canceled.objectType = "canceled";
           array.push(canceled);
         });
-
         array.sort((a, b) => {
-            if (a.createdDate > b.createdDate) return 1;
-            if (a.createdDate < b.createdDate) return -1;
+            if (a.createDate > b.createDate) return -1;
+            if (a.createDate < b.createDate) return 1;
             return 0;
         });
 
@@ -170,7 +169,7 @@ function undoTransaction(type, id) {
     };
     let user = JSON.parse(localStorage.getItem('user'));
     switch(type) {
-      case "purchase":
+      case "purchased":
         return fetch(`${serverUrl}/business/${user.business_id}/benefit_purchased/${id}/refund`, requestOptions).then(handleResponse);
       case "usage":
         return fetch(`${serverUrl}/business/${user.business_id}/benefit_usage/${id}/refund`, requestOptions).then(handleResponse);

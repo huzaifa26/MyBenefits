@@ -1,8 +1,11 @@
 pipelines:
   custom: # Pipelines that can only be triggered manually
+    build:
     - step:
         name: Build
         image: node:10.15.0
+        caches:
+          - node
         script:
           - npm install
           - npm run build
@@ -12,9 +15,11 @@ pipelines:
           - httpd.conf
     - step:
         name: Create Container and push to google
+        image: google/cloud-sdk
         script:
           - docker build -t mybenefitz-business-web .
-          - gcloud auth activate-service-account --key-file cred-b2ee9fc10f9f.json
+          - gcloud auth activate-service-account --key-file total-pillar-234914-9be2c508257f.json
+          - docker tag mybenefitz-business-web gcr.io/total-pillar-234914/mybenefitz-business-web
           - docker push gcr.io/total-pillar-234914/mybenefitz-business-web
     - step:
         name: Deploy Server

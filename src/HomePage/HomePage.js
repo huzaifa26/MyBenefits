@@ -52,31 +52,32 @@ class HomePage extends React.Component {
         const { business } = this.state;
         return (
             <div>
-                <nav className="navbar navbar-expand-md bg-primary navbar-light ustify-content-between mr-auto" role="navigation">
-                <ul className="navbar-nav ustify-content-between col-md-12">
+                <nav className="navbar navbar-expand-md bg-primary navbar-light ustify-content-between" role="navigation">
+                <ul className="navbar-nav col-md-12">
                 <ul className="navbar-nav ">
-                      <a className="navbar-brand" href="#">MyBenefitz</a>
+                    <a className="navbar-brand" href="#">MyBenefitz</a>
                 </ul>
-                <ul className="navbar-nav mr-auto" >
-                  <li className="nav-item">
-                    <div>
-                       <h5 className="nav-link">שלום {business.name}!</h5>
-                    </div>
+                <ul className="navbar-nav mr-auto align-middle" >
+
+                  <li className="nav-item text-success">
+                    <h3><NavLink className="nav-link text-success font-weight-bold" to="/code">הזן קוד</NavLink></h3>
                   </li>
                   <li className="nav-item">
                     <NavLink className="nav-link"to="/history/daily"> דוח פעילות יומי</NavLink>
                   </li>
                   <li className="nav-item">
-                    <NavLink className="nav-link" to="/code">הזן קוד</NavLink>
-                  </li>
-                  <li className="nav-item mr-auto">
-                    <NavLink className="nav-link " to="/history/month">דוח פעילות חודשי</NavLink>
+                    <NavLink className="nav-link" to="/history/month">דוח פעילות חודשי</NavLink>
                   </li>
               </ul>
               <ul className="navbar-nav mr-auto">
-                  <li className="nav-item">
-                    <Link class="nav-link " to="/login">התנתק</Link>
-                  </li>
+                <li className="nav-item">
+                  <div>
+                     <h5 className="nav-link">שלום {business.name}!</h5>
+                  </div>
+                </li>
+                <li className="nav-item">
+                  <Link class="nav-link " to="/login">התנתק</Link>
+                </li>
               </ul>
               </ul>
             </nav>
@@ -84,7 +85,7 @@ class HomePage extends React.Component {
                   <Route path="/code" component={CodeComp} />
                   <Route path="/requests" component={RequestComp} />
                   <Route path="/history/daily"
-                    render={() => <HistoryComp prevDays="20" />}
+                    render={() => <HistoryComp prevDays="1" />}
                   />
                   <Route path="/history/month" component={HistorySelectorComp}/>
             </div>

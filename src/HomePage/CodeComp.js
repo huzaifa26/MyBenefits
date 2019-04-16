@@ -104,9 +104,12 @@ class CodeComp extends React.Component {
         loading: false,
         disableActionButtons: true,
       });
-      userService.approveRequestByID(this.state.request.id, this.state.reducePoints)
-      .then(request => {
-        console.log(request);
+      let reducePoints = 1
+      if (this.state.reducePoints){
+        reducePoints = this.state.reducePoints
+      }
+      userService.approveRequestByID(this.state.request.id, reducePoints)
+      .then(() => {
         this.requestAprove();
       })
       .catch(e => {
@@ -157,7 +160,7 @@ class CodeComp extends React.Component {
       const { request, messages, loading, buttons } = this.state;
       return (
         <div className="row col-md-12">
-          <div className="code col-md-3">
+          <div className="code col-md-4">
 
             <div
               className="modal1 modal-content modal-dialog modal-dialog-top"
@@ -166,7 +169,9 @@ class CodeComp extends React.Component {
               <input
                 id="insertCode"
                 className="code"
-                value ={this.state.code}
+                name="code"
+                value={this.state.code}
+                onChange={this.handleChange}
                 type="number"
                 placeholder ="הקלד קוד" />
 
@@ -188,7 +193,7 @@ class CodeComp extends React.Component {
 
           </div>
 
-          <div className="request col-9">
+          <div className="request col-8">
             <div
               className="modal-content modal-dialog modal-dialog-top"
               tabIndex="-1"

@@ -78,7 +78,7 @@ class HistoryComp extends React.Component {
                     <div className="card" key={benefit.id}>
                       <div className="card-body">
                         <div><Moment format="YYYY-MM-DD HH:mm">{new Date(benefit.createDate)}</Moment></div>
-                        {benefit.objectType === "purchesed" &&
+                        {benefit.objectType === "purchased" &&
                           <div>בקשת רכישה</div>
                         }
                         {benefit.objectType === "usage" &&
@@ -93,7 +93,7 @@ class HistoryComp extends React.Component {
                         }
                         <div>{benefit.customer.firstName + ' ' + benefit.customer.lastName}</div>
                         <div>{benefit.customer.phoneNo}</div>
-                        {index === 0 && (benefit.objectType === "purchesed" || benefit.objectType === "usage") &&
+                        {index === 0 && (benefit.objectType === "purchased" || benefit.objectType === "usage") &&
                           <button
                             className="code btn btn-danger"
                             type="button"

@@ -19,6 +19,7 @@ pipelines:
         script:
           - docker build -t mybenefitz-business-web .
           - gcloud auth activate-service-account --key-file total-pillar-234914-9be2c508257f.json
+          - gcloud auth configure-docker
           - docker tag mybenefitz-business-web gcr.io/total-pillar-234914/mybenefitz-business-web
           - docker push gcr.io/total-pillar-234914/mybenefitz-business-web
     - step:

@@ -44,8 +44,14 @@ class LoginPage extends React.Component {
                     this.props.history.push(from);
                 },
                 error => {
+                  console.log(error);
                   this.setState({ error, loading: false })
                 }
+            )
+            .catch(
+              error => {
+                console.log(error);
+              }
             );
     }
 
@@ -78,7 +84,7 @@ class LoginPage extends React.Component {
                         }
                     </div>
                     {error &&
-                      <div className="alert alert-danger">{ error }</div>
+                      <div className="alert alert-danger">בעיה בהתחברות</div>
                     }
                 </form>
             </div>

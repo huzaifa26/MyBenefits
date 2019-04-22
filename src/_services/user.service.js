@@ -18,12 +18,12 @@ const globalHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Credentials': true,
 };
-let serverUrl = "http://carditapi.hipper.world:8090";
+let serverUrl = "https://api.test.mybenefitz.com";
 console.log(process.env.NODE_ENV);
 if (process.env.NODE_ENV === "development"){
-  serverUrl = "http://localhost:8090"
+  serverUrl = "http://localhost:8090";
 } else if (process.env.NODE_ENV === "production"){
-  serverUrl = "http://carditapi.hipper.world:8090"
+  serverUrl = "https://api.test.mybenefitz.com";
 }
 
 
@@ -40,11 +40,9 @@ function login(email, password) {
         body: JSON.stringify({ email, password }),
     };
 
-    console.log(requestOptions);
     return fetch(`${serverUrl}/business/login`, requestOptions)
         .then(handleResponse)
         .then(user => {
-            console.log(user);
             // login successful if there's a user in the response
             if (user) {
                 // store user details and basic auth credentials in local storage

@@ -9,16 +9,14 @@ class App extends React.Component {
     render() {
         return (
           <div className="container">
-            <div className="col-md">
-              <BrowserRouter>
-                <div>
-                  <Switch>
-                    <Route exact path="/login" component={LoginPage} />
-                    <PrivateRoute path="/" component={HomePage} />
-                  </Switch>
-                </div>
-              </BrowserRouter>
-            </div>
+            <BrowserRouter>
+              <div>
+                <Switch>
+                  <Route exact path="/login" component={LoginPage} />
+                  <PrivateRoute path="/" component={HomePage} />
+                </Switch>
+              </div>
+            </BrowserRouter>
           </div>
         );
     }

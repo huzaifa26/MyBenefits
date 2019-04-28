@@ -23,7 +23,7 @@ console.log(process.env.NODE_ENV);
 if (process.env.NODE_ENV === "development"){
   serverUrl = "http://localhost:8090";
 } else if (process.env.NODE_ENV === "production"){
-  serverUrl = "https://api.test.mybenefitz.com";
+  serverUrl = "https://api.mybenefitz.com";
 }
 
 

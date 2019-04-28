@@ -18,11 +18,11 @@ pipelines:
         image: google/cloud-sdk
         script:
           - docker build -t mybenefitz-business-web .
-          - gcloud auth activate-service-account --key-file total-pillar-234914-9be2c508257f.json
+          - gcloud auth activate-service-account --key-file registry-upload-prod.json
           - gcloud auth configure-docker --quiet
           - echo tag number is- $BITBUCKET_BUILD_NUMBER
-          - docker tag mybenefitz-business-web gcr.io/total-pillar-234914/mybenefitz-business-web:$BITBUCKET_BUILD_NUMBER
-          - docker push gcr.io/total-pillar-234914/mybenefitz-business-web:$BITBUCKET_BUILD_NUMBER
+          - docker tag mybenefitz-business-web gcr.io/warm-tangent-238911/mybenefitz-business-web:$BITBUCKET_BUILD_NUMBER
+          - docker push gcr.io/warm-tangent-238911/mybenefitz-business-web:$BITBUCKET_BUILD_NUMBER
     - step:
         name: Deploy Server
         deployment: test   # can be test, staging or production.

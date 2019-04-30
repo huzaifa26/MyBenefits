@@ -13,11 +13,16 @@ class LoginPage extends React.Component {
             password: '',
             submitted: false,
             loading: false,
-            error: ''
+            error: '',
+            header_ext: '',
         };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+
+        if (process.env.REACT_APP_ENV_TYPE === "test"){
+          this.state.header_ext = " - TEST";
+        }
     }
 
     handleChange(e) {
@@ -56,13 +61,13 @@ class LoginPage extends React.Component {
     }
 
     render() {
-        const { email, password, submitted, loading, error } = this.state;
+        const { email, password, submitted, loading, error, header_ext } = this.state;
         return (
           <div className="row">
             <div className="col-md-6">
               <div className="card">
               <div className="card-body">
-                <h2>התחברות ל-MyBenefitz</h2>
+                <h2>התחברות ל-MyBenefitz{header_ext}</h2>
                 <form name="form" onSubmit={this.handleSubmit}>
                     <div className={'form-group' + (submitted && !email ? ' has-error' : '')}>
                         <label htmlFor="email">כתובת מייל</label>

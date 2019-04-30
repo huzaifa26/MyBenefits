@@ -6,11 +6,22 @@ pipelines:
         image: node:10.15.0
         caches:
           - node
-        script:
+        script: # build of each environment the selection is in httpd.conf
           - npm install
-          - npm run build
+          - mkdir BuildEnvs
+          - mkdir BuildEnvs/prod
+          - mkdir BuildEnvs/test
+          - REACT_APP_ENV_TYPE=prod
+            REACT_APP_HEADER=
+            npm run build
+          - cp -r build/** BuildEnvs/prod/
+          - REACT_APP_ENV_TYPE=test
+            REACT_APP_HEADER=" - Test"
+            npm run build
+          - cp -r build/** BuildEnvs/test/
+          - ls -r BuildEnvs
         artifacts: # defining the artifacts to be passed to each future step.
-          - build/**
+          - BuildEnvs/**
           - Dockerfile
           - httpd.conf
     - step:
@@ -22,12 +33,34 @@ pipelines:
           - gcloud auth configure-docker --quiet
           - echo tag number is- $BITBUCKET_BUILD_NUMBER
           - docker tag mybenefitz-business-web gcr.io/warm-tangent-238911/mybenefitz-business-web:$BITBUCKET_BUILD_NUMBER
-          - docker push gcr.io/warm-tangent-238911/mybenefitz-business-web:$BITBUCKET_BUILD_NUMBER
+          - docker tag mybenefitz-business-web gcr.io/warm-tangent-238911/mybenefitz-business-web:latest
+          - docker push gcr.io/warm-tangent-238911/mybenefitz-business-web
     - step:
-        name: Deploy Server
+        name: Deploy Test Server
+        image: google/cloud-sdk
         deployment: test   # can be test, staging or production.
-        # trigger: manual  # Uncomment to make this a manual deployment.
+        trigger: manual  # Manual deployment.
         script:
-          - echo "server deploy"
+          - gcloud auth activate-service-account --key-file keys/deploy-key-test.json
+          - gcloud container clusters get-credentials your-first-cluster-1 --zone europe-west6-c --project total-pillar-234914
+          - kubectl set image deploy/mybenefitz-business mybenefitz-business-web=gcr.io/warm-tangent-238911/mybenefitz-business-web:$BITBUCKET_BUILD_NUMBER
+    - step:
+        name: Deploy Staging Server
+        image: google/cloud-sdk
+        deployment: staging   # can be test, staging or production.
+        trigger: manual  # Manual deployment.
+        script:
+          - echo Staging
+#          - gcloud auth activate-service-account --key-file keys/deploy-key-staging.json
+#          - kubectl set image deploy/mybenefitz-api mybenefitz-api=gcr.io/warm-tangent-238911/mybenefitz-api:$BITBUCKET_BUILD_NUMBER
+    - step:
+        name: Deploy Production Server
+        image: google/cloud-sdk
+        deployment: production # can be test, staging or production.
+        trigger: manual # Manual deployment.
+        script:
+          - gcloud auth activate-service-account --key-file keys/deploy-key-prod.json
+          - gcloud container clusters get-credentials my-benefitz-prod --zone europe-west6-b --project warm-tangent-238911
+          - kubectl set image deploy/mybenefitz-business mybenefitz-business-web=gcr.io/warm-tangent-238911/mybenefitz-business-web:$BITBUCKET_BUILD_NUMBER
 options:
    docker: true

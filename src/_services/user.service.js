@@ -18,13 +18,15 @@ const globalHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Credentials': true,
 };
-let serverUrl = "https://api.test.mybenefitz.com";
-console.log(process.env.NODE_ENV);
-if (process.env.NODE_ENV === "development"){
+let serverUrl = "http://localhost:8090";
+if (process.env.REACT_APP_ENV_TYPE === "test"){
+  serverUrl = "https://api.test.mybenefitz.com";
+} else if (process.env.REACT_APP_ENV_TYPE === "development"){
   serverUrl = "http://localhost:8090";
-} else if (process.env.NODE_ENV === "production"){
+} else if (process.env.REACT_APP_ENV_TYPE === "prod"){
   serverUrl = "https://api.mybenefitz.com";
 }
+console.log("API Path", serverUrl);
 
 
 function login(email, password) {

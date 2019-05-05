@@ -3,6 +3,7 @@ import { PadComp } from './index';
 
 import { userService } from '../_services';
 
+const ScannerActivationCode = "~&</>";
 class CodeComp extends React.Component {
     constructor(props) {
         super(props);
@@ -13,6 +14,7 @@ class CodeComp extends React.Component {
             request: null,
             messages: null,
             buttons: {check: true, ok: false, cancel: false},
+            barcodeScanner: { isScannerVerify: false, isCodeStarted: false, scannerString: "", code: "" },
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -25,10 +27,51 @@ class CodeComp extends React.Component {
         this.addLetter = this.addLetter.bind(this);
         this.removeOneLetter = this.removeOneLetter.bind(this);
         this.clearLetters = this.clearLetters.bind(this);
+        this.barcodeMethod = this.barcodeMethod.bind(this);
+    }
+    
+    barcodeMethod(e){
+      if (e.key === "Shift"){
+        return;
+      }
+      const { barcodeScanner } = this.state;
+      if (e.key === "~"){
+        this.setState({ barcodeScanner: { ...barcodeScanner, isScannerVerify: true, scannerString: "~" }});
+      } else if (barcodeScanner.isScannerVerify){
+        const scannerString = barcodeScanner.scannerString + e.key;
+        if (ScannerActivationCode.startsWith(scannerString)){
+          // Check if activation code started
+          if (ScannerActivationCode == scannerString){
+            this.setState({ barcodeScanner: { ...barcodeScanner, scannerString, isScannerVerify: false, isCodeStarted: true }});
+          }else {
+            // Increse the activation code
+            this.setState({ barcodeScanner: { ...barcodeScanner, scannerString }});
+          }
+        } else {
+          // Reset
+          this.setState({ barcodeScanner: { isScannerVerify: false, isCodeStarted: false, scannerString: "", code: "" }});
+        }
+      } else if (barcodeScanner.isCodeStarted){
+        if (e.key === 'Enter') {
+          this.setState({ code: barcodeScanner.code});
+          // Reset
+          this.setState({ barcodeScanner: { isScannerVerify: false, isCodeStarted: false, scannerString: "", code: "" }});
+          this.checkCode();
+        } else {
+          const code = barcodeScanner.code + e.key;
+          this.setState({ barcodeScanner: { ...barcodeScanner, code }});
+        }
+      }
     }
 
-    componentDidMount() {
+    componentDidMount(){
+      document.addEventListener("keydown", this.barcodeMethod, false);
     }
+    componentWillUnmount() {
+       document.removeEventListener("keydown", this._handleEscKey, false);
+    }
+
+
 
     initFields() {
       this.setState({
@@ -52,6 +95,12 @@ class CodeComp extends React.Component {
       }
       if (e.status === 400){
         this.setState({ loading: false, messages: "INVALID_CODE" })
+      }
+    }
+
+    _handleKeyDown = (e) => {
+      if (e.key === 'Enter') {
+        this.checkCode();
       }
     }
 
@@ -172,8 +221,11 @@ class CodeComp extends React.Component {
                 name="code"
                 value={this.state.code}
                 onChange={this.handleChange}
+                disabled={!buttons.check}
                 type="number"
-                placeholder ="הקלד קוד" />
+                placeholder ="הקלד קוד"
+                onKeyDown={this._handleKeyDown}
+              />
 
               <PadComp
                 className="container"

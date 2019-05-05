@@ -179,20 +179,20 @@ function undoTransaction(type, id) {
 }
 
 function handleResponse(response) {
-    return response.text().then(text => {
+  if (response.status === 401) {
+    // auto logout if 401 response returned from api
+    logout();
+    window.location.reload(true);
+  }
+  return response.text().then(text => {
 
-        const data = text && JSON.parse(text);
-        if (!response.ok) {
-            // if (response.status === 401) {
-            //     // auto logout if 401 response returned from api
-            //     logout();
-            //     window.location.reload(true);
-            // }
+      const data = text && JSON.parse(text);
+      if (!response.ok) {
 
-            //const error = (data && data.error) || (data && data.message) || response.statusText;
-            return Promise.reject(response);
-        }
+          //const error = (data && data.error) || (data && data.message) || response.statusText;
+          return Promise.reject(response);
+      }
 
-        return data;
-    });
+      return data;
+  });
 }

@@ -76,7 +76,7 @@ class HomePage extends React.Component {
                   </div>
                 </li>
                 <li className="nav-item">
-                  <Link class="nav-link " to="/login">התנתק</Link>
+                  <Link className="nav-link " to="/login">התנתק</Link>
                 </li>
               </ul>
               </ul>

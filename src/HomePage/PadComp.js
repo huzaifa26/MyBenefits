@@ -19,32 +19,28 @@ class PadComp extends React.Component {
 
     render() {
         return (
-          <div className="button-group-vertical" role="group" >
-            <div className="btn-group">
-              <PadBotton   value="3" class="btn" onClick={this.onClick}/>
-              <PadBotton   value="2" class="btn" onClick={this.onClick}/>
-              <PadBotton   value="1" class="btn"  onClick={this.onClick}/>
+          <div class="btn-toolbar btn-group-vertical " role="toolbar" aria-label="Toolbar with button groups">
+          <div className="btn-group justify-content-between" role="group">
+              <PadBotton  value="4" class="btn btn-outline-default " onClick={this.onClick}/>
+              <PadBotton  value="3" class="btn btn-outline-default " onClick={this.onClick}/>
+              <PadBotton  value="2" class="btn btn-outline-default" onClick={this.onClick}/>
+              <PadBotton  value="1" class="btn btn-outline-default"  onClick={this.onClick}/>
             </div>
-            <div className="btn-group">
-              <PadBotton  value="6" class="btn" onClick={this.onClick}/>
-              <PadBotton  value="5" class="btn" onClick={this.onClick}/>
-              <PadBotton  value="4" class="btn" onClick={this.onClick}/>
+            <div className="btn-group justify-content-between" role="group">
+              <PadBotton  value="8" class="btn btn-outline-default" onClick={this.onClick}/>
+              <PadBotton  value="7" class="btn btn-outline-default" onClick={this.onClick}/>
+              <PadBotton  value="6" class="btn btn-outline-default" onClick={this.onClick}/>
+              <PadBotton  value="5" class="btn btn-outline-default" onClick={this.onClick}/>
             </div>
-            <div className="btn-group ">
-              <PadBotton  value="9" class="btn" onClick={this.onClick}/>
-              <PadBotton  value="8" class="btn" onClick={this.onClick}/>
-              <PadBotton  value="7" class="btn" onClick={this.onClick}/>
-            </div>
-            <div className="btn-group">
-              <PadBotton value="0" class="btn" onClick={this.onClick}/>
-            </div>
-            <div className="btn-group ustify-content-between">
-              <PadBotton  type="button" value="מחק" color="btn-secondary"  onClick={this.state.onBackspace} />
-              <PadBotton  type="button" value="מחק הכל"  color="btn-secondary" onClick={this.state.onClear} />
-            </div>
+            <div className="btn-group justify-content-between" role="group">
+              <PadBotton value="0" class="btn btn-outline-default" onClick={this.onClick}/>
+              <PadBotton  value="9" class="btn btn-outline-defaulty" onClick={this.onClick}/>
+              <PadBotton  value="מחק ספרה" class="btn btn-outline-default"  onClick={this.state.onBackspace} />
+              <PadBotton  value="מחק קוד" class="btn btn-outline-default"  onClick={this.state.onClear} />
+            </div> 
           </div>
         );
-    }
+      }
 }
 
 class PadBotton extends React.Component {

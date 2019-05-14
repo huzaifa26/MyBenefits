@@ -64,7 +64,7 @@ class HistoryComp extends React.Component {
     render() {
         const { history, loading, errorMessage } = this.state;
         return (
-            <div>
+            <div className="jumbotron">
               {loading &&
                 <div className="spinner-border text-primary" role="status">
                   <span className="sr-only">טוען...</span>

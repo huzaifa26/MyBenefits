@@ -73,18 +73,18 @@ class LoginPage extends React.Component {
                         <label htmlFor="email">כתובת מייל</label>
                         <input type="text" className="form-control" name="email" value={email} onChange={this.handleChange} />
                         {submitted && !email &&
-                            <div className="help-block">יש להזין כתובת מייל</div>
+                            <div className="help-block alert alert-danger">יש להזין כתובת מייל</div>
                         }
                     </div>
                     <div className={'form-group' + (submitted && !password ? ' has-error' : '')}>
                         <label htmlFor="password">סיסמא</label>
                         <input type="password" className="form-control" name="password" value={password} onChange={this.handleChange} />
                         {submitted && !password &&
-                            <div className="help-block">יש להזין סיסמא</div>
+                            <div className="help-block alert alert-danger">יש להזין סיסמא</div>
                         }
                     </div>
                     <div className="form-group">
-                        <button className="btn btn-primary" disabled={loading}>התחברות</button>
+                        <button className="btn btn-lg btn-primary btn-block" disabled={loading}>התחברות</button>
                         {loading &&
                           <div className="spinner-border text-primary" role="status">
                             <span className="sr-only">טוען...</span>

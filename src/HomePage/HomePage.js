@@ -52,34 +52,35 @@ class HomePage extends React.Component {
         const { business } = this.state;
         return (
             <div>
-                <nav className="navbar navbar-expand-md bg-primary navbar-light ustify-content-between" role="navigation">
+              
+          
+             
+                <nav className="navbar fixed-top nav-pills nav-justified  navbar-expand-md bg-secondary text-white navbar-light justify-content-between" role="navigation">
+                <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul className="navbar-nav col-md-12">
-                <ul className="navbar-nav ">
-                    <a className="navbar-brand" href="#">MyBenefitz</a>
+                <ul className="navbar-nav nav-item">
+                     <div>
+                       <h5 className="nav-link text-white">שלום {business.name}!</h5>
+                     </div>
                 </ul>
                 <ul className="navbar-nav mr-auto align-middle" >
-
-                  <li className="nav-item text-success">
-                    <h3><NavLink className="nav-link text-success font-weight-bold" to="/code">הזן קוד</NavLink></h3>
+                  <li>                                  
+                    <NavLink className="nav-link nav-item text-white" to="/code" role="presentation"><h5 >הזן קוד</h5></NavLink>    
                   </li>
-                  <li className="nav-item">
-                    <NavLink className="nav-link"to="/history/daily"> דוח פעילות יומי</NavLink>
+                  <li >
+                    <NavLink className="nav-link nav-item text-white" to="/history/daily" role="presentation"><h5> דוח יומי</h5></NavLink>
                   </li>
-                  <li className="nav-item">
-                    <NavLink className="nav-link" to="/history/month">דוח פעילות חודשי</NavLink>
+                  <li>
+                    <NavLink className="nav-link nav-item text-white" to="/history/month" role="presentation"><h5>דוח חודשי</h5></NavLink>
                   </li>
-              </ul>
-              <ul className="navbar-nav mr-auto">
+                  </ul>
+                  <ul className="navbar-nav nav-item mr-auto align-left">
                 <li className="nav-item">
-                  <div>
-                     <h5 className="nav-link">שלום {business.name}!</h5>
-                  </div>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link " to="/login">התנתק</Link>
+                  <Link className="nav-link text-white" to="/login"><h5>התנתק</h5></Link>
                 </li>
               </ul>
               </ul>
+              </div>
             </nav>
             <div className="container">
                   <Route path="/code" component={CodeComp} />

@@ -12,7 +12,7 @@ class CodeComp extends React.Component {
             loading: false,
             code: "",
             request: null,
-            messages: null,
+            messages: "ENTER_CODE",
             buttons: {check: true, ok: false, cancel: false},
             barcodeScanner: { isScannerVerify: false, isCodeStarted: false, scannerString: "", code: "" },
         };
@@ -78,7 +78,7 @@ class CodeComp extends React.Component {
         loading: false,
         code: null,
         request: null,
-        messages: null,
+        messages: "ENTER_CODE",
         buttons: {check: true, ok: false, ok_action: null , cancel: false},
       });
       this.clearLetters();
@@ -117,7 +117,7 @@ class CodeComp extends React.Component {
             request,
             loading: false,
             messages: "REQUEST_SHOW",
-            buttons: {ok: true, ok_action: this.goToConfirm , cancel: true},
+            buttons: {ok: true, ok_action: this.approveRequest , cancel: true},
           });
         })
         .catch(e => {
@@ -186,21 +186,21 @@ class CodeComp extends React.Component {
     randerMessage(messages) {
       switch(messages) {
         case "NOT_FOUND":
-          return(<div className="text-danger">בקשה לא נמצאה</div>)
+          return(<div className="alert alert-danger alert-dismissible" role="alert"> בקשה לא נמצאה, נסה שנית </div>)
         case "REQUEST_SHOW":
-          return(<div className="text-warning">אנא אשר או בטל את הבקשה הבאה</div>)
+          return(<div className="alet alert-warning alert-dismissible" role="alert">אנא אשר או בטל את הבקשה הבאה</div>)
         case "ARE_YOU_SURE":
-          return(<div className="text-danger">האם אתה בטוח שברצונך לאשר את הבקשה הנ&quot;ל?</div>)
+          return(<div className="alert alert-danger alert-dismissible" role="alert">האם אתה בטוח שברצונך לאשר את הבקשה הזו ? &quot;ל?</div>)
         case "INVALID_CODE":
-          return(<div className="text-warning">קוד לא תקין, יש להשתמש בספרות בלבד</div>)
+          return(<div class="alert alert-warning alert-dismissible" role="alert" >קוד לא תקין, יש להשתמש בספרות בלבד</div>)
         case "REQUEST_CANCELD":
-          return(<div className="text-danger">הבקשה בוטלה. הקש אישור להמשך</div>)
+          return(<div class="alert alert-danger alert-dismissible" role="alert">הבקשה בוטלה. הקש אישור להמשך</div>)
         case "CONTINUE":
-          return(<div className="text-success">הבקשה אושרה! הקש אישור להמשך</div>)
+          return(<div class="alert alert-success alert-dismissible" role="alert">הבקשה אושרה! הקש אישור להמשך</div>)
         case "NO_ENOUGH_POINTS":
-        return(<div className="text-warning"> אין מספיק נקובים למימוש, נסה שנית</div>)
-        default:
-          return(<div> הזן קוד משמאל</div>)
+        return(<div className="alert alert-warning alert-dismissible" role="alert"> אין מספיק נקובים למימוש, נסה שנית</div>)
+        case "ENTER_CODE":
+          return(<div className="alert alert-info" role="alert"> הזן קוד </div>)
       }
     }
 
@@ -208,92 +208,101 @@ class CodeComp extends React.Component {
     render() {
       const { request, messages, loading, buttons } = this.state;
       return (
-        <div className="row col-md-12">
-          <div className="code col-md-4">
+        <div className="row jumbotron">
 
-            <div
-              className="modal1 modal-content modal-dialog modal-dialog-top"
-              tabIndex="-1">
-
-              <input
-                id="insertCode"
-                className="code"
-                name="code"
-                value={this.state.code}
-                onChange={this.handleChange}
-                disabled={!buttons.check}
-                type="number"
-                placeholder ="הקלד קוד"
-                onKeyDown={this._handleKeyDown}
-              />
-
+          <div className="col-md-7 mb-4">
+            <div className="modal1 modal-content modal-dialog modal-dialog-top border-0">
+            <div className="border-0">
+                    <h2>
+                        {this.randerMessage(messages)}
+                    </h2>
+                </div> 
+            
+              <div class="input-group">
+                 
+                <input
+                  id="insertCode"
+                  className="code form-control input-lg"
+                  name="code"
+                  value={this.state.code}
+                  onChange={this.handleChange}
+                  disabled={!buttons.check}
+                  type="number"
+                  placeholder ="הקלד קוד"
+                   onKeyDown={this._handleKeyDown}
+                />
+               
+              </div>
+                
               <PadComp
                 className="container"
                 onClick={this.addLetter}
                 onClear={this.clearLetters}
                 onBackspace={this.removeOneLetter}/>
 
-              <button
-                className="code btn btn-primary"
-                type="button"
-                onClick={this.checkCode}
-                disabled={!buttons.check}>
-                שליחת קוד להצגת בקשה
-              </button>
+
+                    <button
+                      className="code btn btn-primary btn-lg btn-block"
+                      type="button"
+                      onClick={this.checkCode}
+                      disabled={!buttons.check}>
+                      שלח!
+                    </button>
+               
 
             </div>
 
           </div>
 
-          <div className="request col-8">
+          <div className="request col-md-5">
             <div
               className="modal-content modal-dialog modal-dialog-top"
-              tabIndex="-1"
               role="document">
               <div className="modal-header border-0">
-                <h5 className="modal-title border-0">
-                  {this.randerMessage(messages)}
-                </h5>
-              </div>
+                        <h3 className="modal-title border-0">
+                        <strong>פרטי בקשת הלקוח</strong>
+                        </h3>
+                      </div>
 
               <div className="modal-body border-0">
                 {!loading && request &&
                   <div>
-                    <h3 >
-                      : פרטי הבקשה
-                    </h3>
-
+                
                     <div>
-                      {request.customer.firstName + " " + request.customer.lastName + "(" + request.customer.phoneNo + ")"}
+                      <h3><strong>שם הלקוח :</strong> {request.customer.firstName + " " + request.customer.lastName}</h3>
                     </div>
 
                     {request.type === "purchase" &&
                       <div>
                         {(request.offerType === "prepaid" || request.offerType === "free") &&
-                          <div>
-                            <div>מבקש לרכוש</div>
-                            <div> ב - {request.offerPrice} שח</div>
+                          <div >
+                            <div><h3><strong>בקשה:</strong> רכישה</h3></div>
+                            <div class="alert alert-success"><h3> מחיר:  {request.offerPrice} ש"ח </h3></div>
+                            <div class="alert alert-succes"><h3>
+                              <strong> הלקוח צריך לשלם לך :{request.offerPrice} ש"ח </strong>
+                            </h3> 
+                            </div>
                           </div>
                         }
                         {request.offerType === "punch" &&
-                          <div>
-                            <div>לאפשר מימושים של:</div>
+                          <div class="alert alert-warning">
+                            <div><h3><strong >סוג הבקשה :</strong> לאפשר ניקובים</h3></div>
                           </div>
                         }
                         <div>
-                          {request.offerDescription}
+                        <h3><strong >תיאור הטבה :</strong> {request.offerDescription}</h3>
                         </div>
                       </div>
                     }
                     {request.type === "use" &&
                       <div>
                         {request.offerType === "prepaid" &&
-                          <div>
-                            <div>מבקש לממש </div>
-                            <div>{request.offerDescription}</div>
-                            <div>
+                          <div class="alert bg-warning">
+                            <div class="alert alert-warning"><h3><strong>בקשה:</strong> שימוש </h3></div>
+                            <div class="alert alert-warning"><h3><strong>תיאור הטבה : </strong>{request.offerDescription}</h3></div>
+                            <div class="alert alert-warning"><h3><strong>
                               מספר הניקובים שנותרו:
-                              {request.pointsStatus}
+                              </strong><span class="label label-primary" >{request.pointsStatus}</span></h3>
                             </div>
                             <form>
                               <label>
@@ -308,13 +317,19 @@ class CodeComp extends React.Component {
                         }
                         {request.offerType === "punch" &&
                           <div>
-                            <div>לסמן את</div>
-                            <div>{request.offerDescription}</div>
-                            <div>
-                              מספר הניקובים שנותרו:
+                            <div class="alert alert-Warning"><h3><strong> סוג הבקשה:</strong>ניקוב</h3></div>
+                            <div ><h3><strong> תיאור הבקשה:</strong>{request.offerDescription}</h3></div>
+                            <div><h3>
+                            <strong> מספר הניקובים שנותרו:</strong>
                               {request.pointsStatus}
-                            </div>
+                              </h3></div>
                           </div>
+                        }
+                        { request.pointsStatus == "0" &&
+                           <div class="alert alert-danger"><h3>
+                              <strong> הלקוח זכאי לכוס קפה חינם!</strong>
+                            </h3> 
+                            </div>
                         }
                       </div>
                     }
@@ -324,14 +339,16 @@ class CodeComp extends React.Component {
               <div className="modal-footer border-0 justify-content-between" >
                 <button
                   type="button"
-                  className="btn btn-primary "
+                  className="btn btn-outline-primary mr-auto btn-lg btn-block"
                   onClick={buttons.ok_action}
-                  disabled={!buttons.ok}>אישור</button>
+                  disabled={!buttons.ok}
+                  hidden={!buttons.ok}>אישור</button>
                 <button
                   type="button"
-                  className="btn btn-secondary mr-auto"
+                  className="btn btn-outline-secondary mr-auto btn-lg btn-block"
                   onClick={this.cancelRequest}
-                  disabled={!buttons.cancel}>ביטול</button>
+                  disabled={!buttons.cancel}
+                  hidden={!buttons.cancel}>ביטול</button>
               </div>
             </div>
           </div>

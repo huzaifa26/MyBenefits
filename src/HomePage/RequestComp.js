@@ -21,7 +21,7 @@ class RequestComp extends React.Component {
     }
 
     render() {
-        const { user, requests } = this.state;
+        const { requests } = this.state;
         return (
             <div>
                 <h3>Requsts Pending:</h3>

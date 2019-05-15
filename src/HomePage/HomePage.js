@@ -52,11 +52,12 @@ class HomePage extends React.Component {
         const { business } = this.state;
         return (
             <div>
-              
-          
-             
+              { this.props.location.pathname === '/' ?
+                <Redirect to='/code' />
+                : null
+              }
                 <nav className="navbar fixed-top nav-pills nav-justified  navbar-expand-md bg-secondary text-white navbar-light justify-content-between" role="navigation">
-                <div class="collapse navbar-collapse" id="navbarCollapse">
+                <div className="collapse navbar-collapse" id="navbarCollapse">
                 <ul className="navbar-nav col-md-12">
                 <ul className="navbar-nav nav-item">
                      <div>
@@ -64,8 +65,8 @@ class HomePage extends React.Component {
                      </div>
                 </ul>
                 <ul className="navbar-nav mr-auto align-middle" >
-                  <li>                                  
-                    <NavLink className="nav-link nav-item text-white" to="/code" role="presentation"><h5 >הזן קוד</h5></NavLink>    
+                  <li>
+                    <NavLink className="nav-link nav-item text-white" to="/code" role="presentation"><h5 >הזן קוד</h5></NavLink>
                   </li>
                   <li >
                     <NavLink className="nav-link nav-item text-white" to="/history/daily" role="presentation"><h5> דוח יומי</h5></NavLink>

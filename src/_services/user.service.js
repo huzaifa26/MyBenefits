@@ -67,7 +67,7 @@ function getInfo() {
         headers: {...authHeader(), ...globalHeaders}
     };
     let user = JSON.parse(localStorage.getItem('user'));
-    return fetch(`${serverUrl}/business/${user.business_id}`, requestOptions).then(handleResponse);
+    return fetch(`${serverUrl}/business/${user.business_id}`, requestOptions).then(handleResponse).catch(handleError);
 }
 function checkInfoAvailable() {
     getInfo()
@@ -86,7 +86,7 @@ function getRequestByCode(code) {
         headers: {...authHeader(), ...globalHeaders}
     };
     let user = JSON.parse(localStorage.getItem('user'));
-    return fetch(`${serverUrl}/business/${user.business_id}/request/${code}`, requestOptions).then(handleResponse);
+    return fetch(`${serverUrl}/business/${user.business_id}/request/${code}`, requestOptions).then(handleResponse).catch(handleError);
 }
 function approveRequestByID(reqID, points) {
     let data = {
@@ -99,7 +99,7 @@ function approveRequestByID(reqID, points) {
         body: JSON.stringify(data),
     };
     let user = JSON.parse(localStorage.getItem('user'));
-    return fetch(`${serverUrl}/business/${user.business_id}/request/redeem`, requestOptions).then(handleResponse);
+    return fetch(`${serverUrl}/business/${user.business_id}/request/redeem`, requestOptions).then(handleResponse).catch(handleError);
 }
 
 function getDailyHistory(dateRange) {
@@ -113,7 +113,7 @@ function getDailyHistory(dateRange) {
       + `&fromDate=${dateRange.fromDate ? dateRange.fromDate : ""}`
       + `&toDate=${dateRange.toDate ? dateRange.toDate : ""}`;
 
-    return fetch(url, requestOptions).then(handleResponse)
+    return fetch(url, requestOptions).then(handleResponse).catch(handleError)
     .then( res =>{
         var array = [];
         res.purchesed.forEach(purchase => {
@@ -144,7 +144,7 @@ function getRequsts() {
         headers: {...authHeader(), ...globalHeaders}
     };
     let user = JSON.parse(localStorage.getItem('user'));
-    return fetch(`${serverUrl}/business/${user.business_id}/request`, requestOptions).then(handleResponse);
+    return fetch(`${serverUrl}/business/${user.business_id}/request`, requestOptions).then(handleResponse).catch(handleError);
 }
 function getBenefitPurchased() {
     const requestOptions = {
@@ -152,7 +152,7 @@ function getBenefitPurchased() {
         headers: {...authHeader(), ...globalHeaders}
     };
     let user = JSON.parse(localStorage.getItem('user'));
-    return fetch(`${serverUrl}/business/${user.business_id}/benefit_purchased`, requestOptions).then(handleResponse);
+    return fetch(`${serverUrl}/business/${user.business_id}/benefit_purchased`, requestOptions).then(handleResponse).catch(handleError);
 }
 function getBenefitUsage() {
     const requestOptions = {
@@ -160,7 +160,7 @@ function getBenefitUsage() {
         headers: {...authHeader(), ...globalHeaders}
     };
     let user = JSON.parse(localStorage.getItem('user'));
-    return fetch(`${serverUrl}/business/${user.business_id}/benefit_usage`, requestOptions).then(handleResponse)
+    return fetch(`${serverUrl}/business/${user.business_id}/benefit_usage`, requestOptions).then(handleResponse).catch(handleError);
 }
 function undoTransaction(type, id) {
     const requestOptions = {
@@ -170,15 +170,16 @@ function undoTransaction(type, id) {
     let user = JSON.parse(localStorage.getItem('user'));
     switch(type) {
       case "purchased":
-        return fetch(`${serverUrl}/business/${user.business_id}/benefit_purchased/${id}/refund`, requestOptions).then(handleResponse);
+        return fetch(`${serverUrl}/business/${user.business_id}/benefit_purchased/${id}/refund`, requestOptions).then(handleResponse).catch(handleError);
       case "usage":
-        return fetch(`${serverUrl}/business/${user.business_id}/benefit_usage/${id}/refund`, requestOptions).then(handleResponse);
+        return fetch(`${serverUrl}/business/${user.business_id}/benefit_usage/${id}/refund`, requestOptions).then(handleResponse).catch(handleError);
       default:
         return Promise.reject("Unknown type: " + type);
     }
 }
 
 function handleResponse(response) {
+  console.log("response:", response);
   if (response.status === 401) {
     // auto logout if 401 response returned from api
     logout();
@@ -195,4 +196,10 @@ function handleResponse(response) {
 
       return data;
   });
+}
+function handleError(e) {
+  console.log("Error:", e);
+  logout();
+  window.location.reload(true);
+  return Promise.reject(e);
 }

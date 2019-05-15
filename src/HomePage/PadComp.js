@@ -37,7 +37,7 @@ class PadComp extends React.Component {
               <PadBotton  value="9" class="btn btn-outline-defaulty" onClick={this.onClick}/>
               <PadBotton  value="מחק ספרה" class="btn btn-outline-default"  onClick={this.state.onBackspace} />
               <PadBotton  value="מחק קוד" class="btn btn-outline-default"  onClick={this.state.onClear} />
-            </div> 
+            </div>
           </div>
         );
       }

@@ -13,7 +13,9 @@ class CodeComp extends React.Component {
             code: "",
             request: null,
             messages: "ENTER_CODE",
+            fastLane: false,
             buttons: {check: true, ok: false, cancel: false},
+            colors: { msgBox: "#FFFFFF" },
             barcodeScanner: { isScannerVerify: false, isCodeStarted: false, scannerString: "", code: "" },
         };
 
@@ -29,7 +31,7 @@ class CodeComp extends React.Component {
         this.clearLetters = this.clearLetters.bind(this);
         this.barcodeMethod = this.barcodeMethod.bind(this);
     }
-    
+
     barcodeMethod(e){
       if (e.key === "Shift"){
         return;
@@ -41,7 +43,7 @@ class CodeComp extends React.Component {
         const scannerString = barcodeScanner.scannerString + e.key;
         if (ScannerActivationCode.startsWith(scannerString)){
           // Check if activation code started
-          if (ScannerActivationCode == scannerString){
+          if (ScannerActivationCode === scannerString){
             this.setState({ barcodeScanner: { ...barcodeScanner, scannerString, isScannerVerify: false, isCodeStarted: true }});
           }else {
             // Increse the activation code
@@ -53,7 +55,7 @@ class CodeComp extends React.Component {
         }
       } else if (barcodeScanner.isCodeStarted){
         if (e.key === 'Enter') {
-          this.setState({ code: barcodeScanner.code});
+          this.setState({ code: barcodeScanner.code, fastLane: true});
           // Reset
           this.setState({ barcodeScanner: { isScannerVerify: false, isCodeStarted: false, scannerString: "", code: "" }});
           this.checkCode();
@@ -79,7 +81,10 @@ class CodeComp extends React.Component {
         code: null,
         request: null,
         messages: "ENTER_CODE",
+        fastLane: false,
         buttons: {check: true, ok: false, ok_action: null , cancel: false},
+        colors: { msgBox: "#FFFFFF" },
+        barcodeScanner: { isScannerVerify: false, isCodeStarted: false, scannerString: "", code: "" },
       });
       this.clearLetters();
     }
@@ -119,6 +124,9 @@ class CodeComp extends React.Component {
             messages: "REQUEST_SHOW",
             buttons: {ok: true, ok_action: this.approveRequest , cancel: true},
           });
+          if (this.state.fastLane){
+            this.setState({colors: {...this.state.colors, msgBox: "aqua" }});
+          }
         })
         .catch(e => {
           this.handleCodeError(e);
@@ -192,21 +200,23 @@ class CodeComp extends React.Component {
         case "ARE_YOU_SURE":
           return(<div className="alert alert-danger alert-dismissible" role="alert">האם אתה בטוח שברצונך לאשר את הבקשה הזו ? &quot;ל?</div>)
         case "INVALID_CODE":
-          return(<div class="alert alert-warning alert-dismissible" role="alert" >קוד לא תקין, יש להשתמש בספרות בלבד</div>)
+          return(<div className="alert alert-warning alert-dismissible" role="alert" >קוד לא תקין, יש להשתמש בספרות בלבד</div>)
         case "REQUEST_CANCELD":
-          return(<div class="alert alert-danger alert-dismissible" role="alert">הבקשה בוטלה. הקש אישור להמשך</div>)
+          return(<div className="alert alert-danger alert-dismissible" role="alert">הבקשה בוטלה. הקש אישור להמשך</div>)
         case "CONTINUE":
-          return(<div class="alert alert-success alert-dismissible" role="alert">הבקשה אושרה! הקש אישור להמשך</div>)
+          return(<div className="alert alert-success alert-dismissible" role="alert">הבקשה אושרה! הקש אישור להמשך</div>)
         case "NO_ENOUGH_POINTS":
         return(<div className="alert alert-warning alert-dismissible" role="alert"> אין מספיק נקובים למימוש, נסה שנית</div>)
         case "ENTER_CODE":
-          return(<div className="alert alert-info" role="alert"> הזן קוד </div>)
+          return(<div className="alert alert-info" role="alert">הזן קוד או סרוק</div>)
+        default:
+          return(<div className="alert alert-info" role="alert">Unknown</div>)
       }
     }
 
 
     render() {
-      const { request, messages, loading, buttons } = this.state;
+      const { request, messages, loading, buttons, colors } = this.state;
       return (
         <div className="row jumbotron">
 
@@ -216,10 +226,10 @@ class CodeComp extends React.Component {
                     <h2>
                         {this.randerMessage(messages)}
                     </h2>
-                </div> 
-            
+                </div>
+
               <div class="input-group">
-                 
+
                 <input
                   id="insertCode"
                   className="code form-control input-lg"
@@ -231,9 +241,9 @@ class CodeComp extends React.Component {
                   placeholder ="הקלד קוד"
                    onKeyDown={this._handleKeyDown}
                 />
-               
+
               </div>
-                
+
               <PadComp
                 className="container"
                 onClick={this.addLetter}
@@ -248,7 +258,7 @@ class CodeComp extends React.Component {
                       disabled={!buttons.check}>
                       שלח!
                     </button>
-               
+
 
             </div>
 
@@ -257,6 +267,8 @@ class CodeComp extends React.Component {
           <div className="request col-md-5">
             <div
               className="modal-content modal-dialog modal-dialog-top"
+              style={{ backgroundColor: colors.msgBox} }
+              tabIndex="-1"
               role="document">
               <div className="modal-header border-0">
                         <h3 className="modal-title border-0">
@@ -267,7 +279,7 @@ class CodeComp extends React.Component {
               <div className="modal-body border-0">
                 {!loading && request &&
                   <div>
-                
+
                     <div>
                       <h3><strong>שם הלקוח :</strong> {request.customer.firstName + " " + request.customer.lastName}</h3>
                     </div>
@@ -280,7 +292,7 @@ class CodeComp extends React.Component {
                             <div class="alert alert-success"><h3> מחיר:  {request.offerPrice} ש"ח </h3></div>
                             <div class="alert alert-succes"><h3>
                               <strong> הלקוח צריך לשלם לך :{request.offerPrice} ש"ח </strong>
-                            </h3> 
+                            </h3>
                             </div>
                           </div>
                         }
@@ -325,10 +337,10 @@ class CodeComp extends React.Component {
                               </h3></div>
                           </div>
                         }
-                        { request.pointsStatus == "0" &&
+                        { request.pointsStatus === "0" &&
                            <div class="alert alert-danger"><h3>
                               <strong> הלקוח זכאי לכוס קפה חינם!</strong>
-                            </h3> 
+                            </h3>
                             </div>
                         }
                       </div>

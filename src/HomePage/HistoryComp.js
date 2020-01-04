@@ -87,8 +87,8 @@ class HistoryComp extends React.Component {
                         {benefit.objectType === "canceled" &&
                           <div>ביטול פעולה</div>
                         }
-                        <div>{benefit.description}</div>
-                        {benefit.objectType === "purchesed" && benefit.type !== "punch" &&
+                        <div>{benefit.offerDescription}</div>
+                        {benefit.objectType === "purchased" && benefit.type !== "punch" &&
                           <div>במחיר {benefit.price} שח</div>
                         }
                         <div>{benefit.customer.firstName + ' ' + benefit.customer.lastName}</div>

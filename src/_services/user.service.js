@@ -12,6 +12,8 @@ export const userService = {
     getBenefitUsage,
     getDailyHistory,
     undoTransaction,
+    getBusinessBenefits,
+    postAddBenefitToUser,
 };
 const globalHeaders = {
   'Content-Type': 'application/json',
@@ -80,6 +82,15 @@ function checkInfoAvailable() {
       return false
     });
 }
+function getBusinessBenefits() {
+  const requestOptions = {
+      method: 'GET',
+      headers: {...authHeader(), ...globalHeaders}
+  };
+  let user = JSON.parse(localStorage.getItem('user'));
+  return fetch(`${serverUrl}/business/${user.business_id}/benefit_offer`, requestOptions).then(handleResponse).catch(handleError);
+}
+
 function getRequestByCode(code) {
     const requestOptions = {
         method: 'GET',
@@ -100,6 +111,21 @@ function approveRequestByID(reqID, points) {
     };
     let user = JSON.parse(localStorage.getItem('user'));
     return fetch(`${serverUrl}/business/${user.business_id}/request/redeem`, requestOptions).then(handleResponse).catch(handleError);
+}
+
+function postAddBenefitToUser(benefitOfferId,code, pointsStatus) {
+  let data = {
+    "benefitOfferId": benefitOfferId,
+    "pointsStatus": pointsStatus,
+    "code":code,
+  }
+  const requestOptions = {
+      method: 'POST',
+      headers: {...authHeader(), ...globalHeaders},
+      body: JSON.stringify(data),
+  };
+  let user = JSON.parse(localStorage.getItem('user'));
+  return fetch(`${serverUrl}/business/${user.business_id}/used_benefit`, requestOptions).then(handleResponse);
 }
 
 function getDailyHistory(dateRange) {

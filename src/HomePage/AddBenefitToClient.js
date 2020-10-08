@@ -1,10 +1,12 @@
 import React from 'react';
-import { PadComp } from './index';
-
+import { PadComp,CodeComp,PadModalComp } from './index';
+import { Link, NavLink, Route, Redirect } from 'react-router-dom';
 import { userService } from '../_services';
+import { Button,Modal } from 'react-bootstrap'
+
 
 const ScannerActivationCode = "~&</>";
-class CodeComp extends React.Component {
+class AddBenefitToClient extends React.Component {
     constructor(props) {
         super(props);
 
@@ -12,11 +14,15 @@ class CodeComp extends React.Component {
             loading: false,
             code: "",
             request: null,
-            messages: "ENTER_CODE",
+            messages: "CHOOSE_BENEFIT",
             fastLane: false,
-            buttons: {check: true, ok: false, cancel: false},
+            buttons: {check: true, ok: false, cancel: false, back: false},
             colors: { msgBox: "#FFFFFF" },
             barcodeScanner: { isScannerVerify: false, isCodeStarted: false, scannerString: "", code: "" },
+            benefits:[],
+            selectedBenefit:null,
+            showHide : false,
+            pointsLeft : -1
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -30,7 +36,55 @@ class CodeComp extends React.Component {
         this.removeOneLetter = this.removeOneLetter.bind(this);
         this.clearLetters = this.clearLetters.bind(this);
         this.barcodeMethod = this.barcodeMethod.bind(this);
+        this.updateCodeFunc = this.updateCodeFunc.bind(this);
     }
+    toggleModal() {
+      console.log("modal show: " + this.state.showHide + " to " + !this.state.showHide)
+      this.setState({ showHide: !this.state.showHide })
+    }
+    openModal() {
+      if (this.state.pointsLeft==-1){
+        console.log("ponts: " + this.state.pointsLeft)
+        this.setState({ loading: false, messages: "POINTS_NOT_FILLED" });
+        return;
+      }else{
+        this.toggleModal()
+      }
+  }
+  CancelAndHide(){
+    this.toggleModal()
+    this.setState({messages: "CHOOSE_BENEFIT", code:""});
+  }
+
+  SendAndHideOnApproval(){
+   //console.log("code: "+ this.state.code + "selectedBenefitId: "+ this.state.selectedBenefit.id + "pointsLeft: "+ this.state.pointsLeft );
+    this.setState({
+      loading: true,
+    });
+      userService.postAddBenefitToUser(this.state.selectedBenefit.id,this.state.code,this.state.pointsLeft)
+      .then(request => {
+        this.setState({
+          request,
+          loading: false,
+          messages: "APPROVED",
+          buttons: {ok: false, ok_action: this.approveRequest , cancel: false, back: true},
+        });
+        this.openModal();
+        if (this.state.fastLane){
+          this.setState({colors: {...this.state.colors, msgBox: "aqua" }});
+        }
+      })
+      .catch(e => {
+        this.handleCodeError(e);
+        this.toggleModal();
+
+      });
+    
+  }
+  
+  
+ 
+  
 
     barcodeMethod(e){
       if (e.key === "Shift"){
@@ -68,6 +122,13 @@ class CodeComp extends React.Component {
 
     componentDidMount(){
       document.addEventListener("keydown", this.barcodeMethod, false);
+      //load benefits
+      userService.getBusinessBenefits()
+      .then(benefits => this.setState({ benefits }))
+      .catch(e => {
+        console.log("getBusinessBenefits error");
+        return ( <Redirect to={{ pathname: '/', state: { from: this.props.location } }} /> )
+      });
     }
     componentWillUnmount() {
        document.removeEventListener("keydown", this._handleEscKey, false);
@@ -77,10 +138,14 @@ class CodeComp extends React.Component {
 
     initFields() {
       this.setState({
+        selectedBenefit : null,
+        pointsLeft : -1,
+        selectedBenefit:null,
+        showHide : false,
         loading: false,
-        code: null,
+        code: "",
         request: null,
-        messages: "ENTER_CODE",
+        messages: "CHOOSE_BENEFIT",
         fastLane: false,
         buttons: {check: true, ok: false, ok_action: null , cancel: false},
         colors: { msgBox: "#FFFFFF" },
@@ -90,8 +155,7 @@ class CodeComp extends React.Component {
     }
 
     handleChange(e) {
-      const { name, value } = e.target;
-      this.setState({ [name]: value });
+      this.setState({ pointsLeft: e.target.value });
     }
 
     handleCodeError(e) {
@@ -122,7 +186,7 @@ class CodeComp extends React.Component {
             request,
             loading: false,
             messages: "REQUEST_SHOW",
-            buttons: {ok: true, ok_action: this.approveRequest , cancel: true},
+            buttons: {ok: false,  cancel: false, back:true},
           });
           if (this.state.fastLane){
             this.setState({colors: {...this.state.colors, msgBox: "aqua" }});
@@ -136,9 +200,9 @@ class CodeComp extends React.Component {
 
     cancelRequest() {
       this.initFields();
-      this.setState({ messages: "REQUEST_CANCELD",
-      buttons: {ok: true, ok_action: this.initFields, cancel: false}});
+      this.setState({ messages: "CHOOSE_BENEFIT", buttons: {cancel: false}});
       this.clearLetters();
+      
     }
 
     goToConfirm() {
@@ -179,6 +243,9 @@ class CodeComp extends React.Component {
       this.setState({ disableApproveButton: true });
     }
 
+    updateCodeFunc(e){
+      this.setState({ code: e });
+    }
     addLetter(e){
       var newcode = this.state.code + e;
       this.setState({ code: newcode });
@@ -191,73 +258,63 @@ class CodeComp extends React.Component {
       this.setState({ code: "" });
     }
 
+    renderBackButtonText(){
+      console.log(this.state.messages)
+      switch(this.state.messages) {
+        case "APPROVED":
+          return(<div>אישור</div>)
+        default: 
+          return(<div>ביטול</div>)
+      }
+    }
+
     randerMessage(messages) {
       switch(messages) {
         case "NOT_FOUND":
-          return(<div className="alert alert-danger alert-dismissible" role="alert"> בקשה לא נמצאה, נסה שנית </div>)
-        case "REQUEST_SHOW":
-          return(<div className="alet alert-warning alert-dismissible" role="alert">אנא אשר או בטל את הבקשה הבאה</div>)
-        case "ARE_YOU_SURE":
-          return(<div className="alert alert-danger alert-dismissible" role="alert">האם אתה בטוח שברצונך לאשר את הבקשה הזו ? &quot;ל?</div>)
+          return(<div className="alert alert-danger alert-dismissible" role="alert"> הקוד לא נמצא, אנא נסה שנית </div>)
         case "INVALID_CODE":
           return(<div className="alert alert-warning alert-dismissible" role="alert" >קוד לא תקין, יש להשתמש בספרות בלבד</div>)
-        case "REQUEST_CANCELD":
-          return(<div className="alert alert-danger alert-dismissible" role="alert">הבקשה בוטלה. הקש אישור להמשך</div>)
-        case "CONTINUE":
+        case "APPROVED":
           return(<div className="alert alert-success alert-dismissible" role="alert">הבקשה אושרה! הקש אישור להמשך</div>)
-        case "NO_ENOUGH_POINTS":
-        return(<div className="alert alert-warning alert-dismissible" role="alert"> אין מספיק נקובים למימוש, נסה שנית</div>)
-        case "ENTER_CODE":
-          return(<div className="alert alert-info" role="alert">הזן קוד או סרוק</div>)
-        default:
-          return(<div className="alert alert-info" role="alert">Unknown</div>)
+        case "POINTS_NOT_FILLED":
+          return(<div className="alert alert-warning alert-dismissible" role="alert"> נא לסמן יתרת נקודות רצויה</div>)
+        case "CHOOSE_BENEFIT":
+          return(<div className="alert alert-info" role="alert">בחר הטבה</div>)
+        default: 
+          return(<div className="alert alert-info" role="alert">בחר הטבה</div>)
       }
     }
 
 
     render() {
-      const { request, messages, loading, buttons, colors } = this.state;
+      const { request, messages, loading, buttons, colors, benefits, selectedBenefit } = this.state;
       return (
         <div className="row jumbotron">
-
           <div className="col-md-7 mb-4">
             <div className="modal1 modal-content modal-dialog modal-dialog-top border-0">
             <div className="border-0">
                     <h2>
-                        {this.randerMessage(messages)}
+                    {this.randerMessage(messages)}
                     </h2>
                 </div>
 
-              <div className="input-group">
-
-                <input
-                  id="insertCode"
-                  className="code form-control input-lg"
-                  name="code"
-                  value={this.state.code}
-                  onChange={this.handleChange}
-                  disabled={!buttons.check}
-                  type="number"
-                  placeholder ="הקלד קוד"
-                   onKeyDown={this._handleKeyDown}
-                />
-
-              </div>
-
-              <PadComp
-                className="container"
-                onClick={this.addLetter}
-                onClear={this.clearLetters}
-                onBackspace={this.removeOneLetter}/>
-
-
-                    <button
-                      className="code btn btn-primary btn-lg btn-block"
-                      type="button"
-                      onClick={this.checkCode}
-                      disabled={!buttons.check}>
-                      שלח!
-                    </button>
+              
+              {benefits.map((benefit, i) => ( !(benefit.type == 'free') &&
+              <button
+              key={i}
+              className="btn btn-primary btn-lg btn-block "
+              type="button"
+              onClick={
+                () => this.setState({
+                  selectedBenefit:benefit,
+                  messages:"CHOOSE_BENEFIT",
+                  buttons: {ok: true, ok_action: this.approveRequest , cancel: true, back:false},
+                })
+              }>
+              {benefit.description}
+            </button>)
+               )}
+              
 
 
             </div>
@@ -272,79 +329,37 @@ class CodeComp extends React.Component {
               role="document">
               <div className="modal-header border-0">
                         <h3 className="modal-title border-0">
-                        <strong>פרטי בקשת הלקוח</strong>
+                        <strong>פרטי ההטבה</strong>
                         </h3>
                       </div>
 
               <div className="modal-body border-0">
-                {!loading && request &&
+                {selectedBenefit &&
                   <div>
-
                     <div>
-                      <h3><strong>שם הלקוח :</strong> {request.customer.firstName + " " + request.customer.lastName}</h3>
+                      <h3><strong>שם הלקוח :</strong> עמית קדוש</h3>
                     </div>
 
-                    {request.type === "purchase" &&
-                      <div>
-                        {(request.offerType === "prepaid" || request.offerType === "free") &&
-                          <div >
-                            <div><h3><strong>בקשה:</strong> רכישה</h3></div>
-                            <div className="alert alert-success"><h3> מחיר:  {request.offerPrice} ש"ח </h3></div>
-                            <div className="alert alert-succes"><h3>
-                              <strong> הלקוח צריך לשלם לך :{request.offerPrice} ש"ח </strong>
-                            </h3>
-                            </div>
-                          </div>
-                        }
-                        {request.offerType === "punch" &&
-                          <div className="alert alert-warning">
-                            <div><h3><strong >סוג הבקשה :</strong> לאפשר ניקובים</h3></div>
-                          </div>
-                        }
-                        <div>
-                        <h3><strong >תיאור הטבה :</strong> {request.offerDescription}</h3>
-                        </div>
-                      </div>
-                    }
-                    {request.type === "use" &&
-                      <div>
-                        {request.offerType === "prepaid" &&
+                   
                           <div className="alert bg-warning">
-                            <div className="alert alert-warning"><h3><strong>בקשה:</strong> שימוש </h3></div>
-                            <div className="alert alert-warning"><h3><strong>תיאור הטבה : </strong>{request.offerDescription}</h3></div>
-                            <div className="alert alert-warning"><h3><strong>
-                              מספר הניקובים שנותרו:
-                              </strong><span className="label label-primary" >{request.pointsStatus}</span></h3>
-                            </div>
-                            <form>
-                              <label>
+                            <div className="alert alert-warning"><h3><strong>פעולה:</strong> הוספת הטבה ללקוח </h3></div>
+                            {/* <div className="alert alert-warning"><h3><strong>מועדון:</strong> {selectedBenefit.clubName} </h3></div> */}
+                            <div className="alert alert-warning"><h3><strong>תיאור הטבה : </strong>{selectedBenefit.description}</h3></div>
+                            <div className="alert alert-warning"><h3><strong>מחיר מקורי : </strong>{selectedBenefit.price}</h3></div>
+                            <div className="alert alert-warning"><h3><strong>יתרה מקורית : </strong>{selectedBenefit.points}</h3></div>
+                            <form>                              
                                 <input
+                                  className="code form-control input-lg"
                                   placeholder="כמות הנקודות לשימוש"
                                   type="number"
                                   name="reducePoints"
-                                  onChange={this.handleChange} />
-                              </label>
+                                  min="0"
+                                  max={this.state.selectedBenefit.points}
+                                  onChange={this.handleChange} />                              
                             </form>
                           </div>
-                        }
-                        {request.offerType === "punch" &&
-                          <div>
-                            <div className="alert alert-Warning"><h3><strong> סוג הבקשה:</strong>ניקוב</h3></div>
-                            <div ><h3><strong> תיאור הבקשה:</strong>{request.offerDescription}</h3></div>
-                            <div><h3>
-                            <strong> מספר הניקובים שנותרו:</strong>
-                              {request.pointsStatus}
-                              </h3></div>
-                          </div>
-                        }
-                        { request.pointsStatus === "0" &&
-                           <div className="alert alert-danger"><h3>
-                              <strong> הלקוח זכאי לכוס קפה חינם!</strong>
-                            </h3>
-                            </div>
-                        }
-                      </div>
-                    }
+                        
+                        
                   </div>
                 }
               </div>
@@ -352,7 +367,7 @@ class CodeComp extends React.Component {
                 <button
                   type="button"
                   className="btn btn-outline-primary mr-auto btn-lg btn-block"
-                  onClick={buttons.ok_action}
+                  onClick={() => this.openModal()}
                   disabled={!buttons.ok}
                   hidden={!buttons.ok}>אישור</button>
                 <button
@@ -361,12 +376,43 @@ class CodeComp extends React.Component {
                   onClick={this.cancelRequest}
                   disabled={!buttons.cancel}
                   hidden={!buttons.cancel}>ביטול</button>
+                <button
+                  type="button"
+                  className="btn btn-outline-primary mr-auto btn-lg btn-block"
+                  onClick={this.cancelRequest}
+                  disabled={!buttons.back}
+                  hidden={!buttons.back}>אישור</button>
+                  
               </div>
             </div>
+            
+                <div >
+                <Modal show={this.state.showHide} className="my-modal show" >
+                <Modal.Header className="modalTitle">
+                    <Modal.Title >סרוק ברקוד או הקש קוד</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      <PadModalComp
+                className="container"
+                updateCodeFunc={this.updateCodeFunc}
+                onClear={this.clearLetters}
+                onBackspace={this.removeOneLetter}/></Modal.Body>
+                    <Modal.Footer>
+                    <Button variant="secondary" onClick={() => this.SendAndHideOnApproval()}>
+                        אישור
+                    </Button>
+                    <Button variant="primary" onClick={() => this.CancelAndHide()}>
+                    ביטול
+                    </Button>
+                    </Modal.Footer>
+                </Modal>
+                </div>
           </div>
+          
         </div>
+        
       );
     }
 }
 
-export { CodeComp };
+export { AddBenefitToClient };

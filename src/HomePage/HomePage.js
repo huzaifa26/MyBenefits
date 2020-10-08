@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, NavLink, Route, Redirect } from 'react-router-dom';
-import { CodeComp, RequestComp, HistoryComp, HistorySelectorComp } from './index';
+import { CodeComp, RequestComp, HistoryComp, HistorySelectorComp,AddBenefitToClient } from './index';
 
 import { userService } from '../_services';
 
@@ -56,33 +56,36 @@ class HomePage extends React.Component {
                 <Redirect to='/code' />
                 : null
               }
-                <nav className="navbar fixed-top nav-pills nav-justified  navbar-expand-md bg-secondary text-white navbar-light justify-content-between" role="navigation">
+              <nav className="navbar fixed-top nav-pills nav-justified  navbar-expand-md bg-secondary text-white navbar-light justify-content-between" role="navigation">
                 <div className="collapse navbar-collapse" id="navbarCollapse">
-                <ul className="navbar-nav col-md-12">
-                <ul className="navbar-nav nav-item">
-                     <div>
-                       <h5 className="nav-link text-white">שלום {business.name}!</h5>
-                     </div>
-                </ul>
-                <ul className="navbar-nav mr-auto align-middle" >
-                  <li>
-                    <NavLink className="nav-link nav-item text-white" to="/code" role="presentation"><h5 >הזן קוד</h5></NavLink>
-                  </li>
-                  <li >
-                    <NavLink className="nav-link nav-item text-white" to="/history/daily" role="presentation"><h5> דוח יומי</h5></NavLink>
-                  </li>
-                  <li>
-                    <NavLink className="nav-link nav-item text-white" to="/history/month" role="presentation"><h5>דוח חודשי</h5></NavLink>
-                  </li>
+                  <ul className="navbar-nav col-md-12">
+                    <ul className="navbar-nav nav-item">
+                        <div>
+                          <h5 className="nav-link text-white">שלום {business.name}!</h5>
+                        </div>
+                    </ul>
+                    <ul className="navbar-nav mr-auto align-middle" >
+                      <li>
+                        <NavLink className="nav-link nav-item text-white" to="/code" role="presentation"><h5 >הזן קוד</h5></NavLink>
+                      </li>
+                      <li >
+                        <NavLink className="nav-link nav-item text-white" to="/history/daily" role="presentation"><h5> דוח יומי</h5></NavLink>
+                      </li>
+                      <li>
+                        <NavLink className="nav-link nav-item text-white" to="/history/month" role="presentation"><h5>דוח חודשי</h5></NavLink>
+                      </li>
+                      <li>
+                        <NavLink className="nav-link nav-item text-white" to="/Add_Benefit_To_Client" role="presentation"><h5>הוסף הטבה ללקוח</h5></NavLink>
+                      </li>
+                    </ul>
+                      <ul className="navbar-nav nav-item mr-auto align-left">
+                        <li className="nav-item">
+                          <Link className="nav-link text-white" to="/login"><h5>התנתק</h5></Link>
+                        </li>
+                      </ul>
                   </ul>
-                  <ul className="navbar-nav nav-item mr-auto align-left">
-                <li className="nav-item">
-                  <Link className="nav-link text-white" to="/login"><h5>התנתק</h5></Link>
-                </li>
-              </ul>
-              </ul>
-              </div>
-            </nav>
+                </div>
+              </nav>
             <div className="container">
                   <Route path="/code" component={CodeComp} />
                   <Route path="/requests" component={RequestComp} />
@@ -90,6 +93,7 @@ class HomePage extends React.Component {
                     render={() => <HistoryComp prevDays="1" />}
                   />
                   <Route path="/history/month" component={HistorySelectorComp}/>
+                  <Route path="/Add_Benefit_To_Client" component={AddBenefitToClient}/>
             </div>
             </div>
         );

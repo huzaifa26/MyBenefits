@@ -5,3 +5,6 @@ export * from './HistorySelectorComp';
 export * from './CodeComp';
 export * from './PadComp';
 export * from './ApproveComp';
+export * from './AddBenefitToClient';
+export * from './PadModalComp';
+

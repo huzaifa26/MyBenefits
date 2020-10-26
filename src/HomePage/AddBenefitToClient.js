@@ -350,7 +350,7 @@ class AddBenefitToClient extends React.Component {
                             <form>                              
                                 <input
                                   className="code form-control input-lg"
-                                  placeholder="כמות הנקודות לשימוש"
+                                  placeholder="יתרת נקודות רצויה"
                                   type="number"
                                   name="reducePoints"
                                   min="0"

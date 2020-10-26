@@ -310,10 +310,10 @@ class CodeComp extends React.Component {
                       <div>
                         {request.offerType === "prepaid" &&
                           <div className="alert bg-warning">
-                            <div className="alert alert-warning"><h3><strong>בקשה:</strong> שימוש </h3></div>
-                            <div className="alert alert-warning"><h3><strong>תיאור הטבה : </strong>{request.offerDescription}</h3></div>
+                            <div className="alert alert-warning"><h3><strong> סוג הבקשה: </strong>שימוש בהטבה</h3></div>
+                            <div className="alert alert-warning"><h3><strong>תיאור הטבה: </strong>{request.offerDescription}</h3></div>
                             <div className="alert alert-warning"><h3><strong>
-                              מספר הניקובים שנותרו:
+                              מספר הנקודות שנותרו:
                               </strong><span className="label label-primary" >{request.pointsStatus}</span></h3>
                             </div>
                             <form>
@@ -329,20 +329,27 @@ class CodeComp extends React.Component {
                         }
                         {request.offerType === "punch" &&
                           <div>
-                            <div className="alert alert-Warning"><h3><strong> סוג הבקשה:</strong>ניקוב</h3></div>
-                            <div ><h3><strong> תיאור הבקשה:</strong>{request.offerDescription}</h3></div>
+                            <div className="alert alert-Warning"><h3><strong> סוג הבקשה: </strong>ניקוב</h3></div>
+                            <div ><h3><strong> תיאור הטבה: </strong>{request.offerDescription}</h3></div>
                             <div><h3>
                             <strong> מספר הניקובים שנותרו:</strong>
                               {request.pointsStatus}
                               </h3></div>
                           </div>
                         }
-                        { request.pointsStatus === "0" &&
+                        {request.offerType === "free" &&
+                          <div>
+                            <div className="alert alert-Warning"><h3><strong> סוג הבקשה: </strong>שימוש בהטבה</h3></div>
+                            <div ><h3><strong> תיאור הטבה: </strong>{request.offerDescription}</h3></div>
+                          </div>
+                        }
+                        { request.pointsStatus === 0 &&
                            <div className="alert alert-danger"><h3>
-                              <strong> הלקוח זכאי לכוס קפה חינם!</strong>
+                              <strong> הלקוח זכאי לקבל הטבה זו בחינם!</strong>
                             </h3>
                             </div>
                         }
+                        
                       </div>
                     }
                   </div>

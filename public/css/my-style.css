@@ -4,3 +4,12 @@
 .modalTitle{
     background-color: #d1ecf1;
 }
+
+.padButton{
+    font-size: min(8vw,40px);
+}
+
+.iconButton{
+    width: min(8vw,2.5rem);
+    height: min(8vw,2.5rem);
+}

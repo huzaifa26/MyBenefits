@@ -1,6 +1,6 @@
 import React from 'react';
-import { PadComp } from './index';
-
+import { PadComp, CustomerDetailsComp } from './index';
+import { Button,Modal } from 'react-bootstrap'
 import { userService } from '../_services';
 
 const ScannerActivationCode = "~&</>";
@@ -17,6 +17,8 @@ class CodeComp extends React.Component {
             buttons: {check: true, ok: false, cancel: false},
             colors: { msgBox: "#FFFFFF" },
             barcodeScanner: { isScannerVerify: false, isCodeStarted: false, scannerString: "", code: "" },
+            showModal:false,
+            modalMessage:"יש לוודא את פרטי הבקשה ולאשר"
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -85,6 +87,7 @@ class CodeComp extends React.Component {
         buttons: {check: true, ok: false, ok_action: null , cancel: false},
         colors: { msgBox: "#FFFFFF" },
         barcodeScanner: { isScannerVerify: false, isCodeStarted: false, scannerString: "", code: "" },
+        showModal:false,
       });
       this.clearLetters();
     }
@@ -122,6 +125,7 @@ class CodeComp extends React.Component {
             request,
             loading: false,
             messages: "REQUEST_SHOW",
+            showModal:true,
             buttons: {ok: true, ok_action: this.approveRequest , cancel: true},
           });
           if (this.state.fastLane){
@@ -136,8 +140,7 @@ class CodeComp extends React.Component {
 
     cancelRequest() {
       this.initFields();
-      this.setState({ messages: "REQUEST_CANCELD",
-      buttons: {ok: true, ok_action: this.initFields, cancel: false}});
+      this.setState({ messages: "REQUEST_CANCELD"});
       this.clearLetters();
     }
 
@@ -202,13 +205,13 @@ class CodeComp extends React.Component {
         case "INVALID_CODE":
           return(<div className="alert alert-warning alert-dismissible" role="alert" >קוד לא תקין, יש להשתמש בספרות בלבד</div>)
         case "REQUEST_CANCELD":
-          return(<div className="alert alert-danger alert-dismissible" role="alert">הבקשה בוטלה. הקש אישור להמשך</div>)
+          return(<div className="alert alert-danger alert-dismissible" role="alert">הבקשה בוטלה. הכנס או סרוק קוד חדש</div>)
         case "CONTINUE":
           return(<div className="alert alert-success alert-dismissible" role="alert">הבקשה אושרה! הקש אישור להמשך</div>)
         case "NO_ENOUGH_POINTS":
         return(<div className="alert alert-warning alert-dismissible" role="alert"> אין מספיק נקובים למימוש, נסה שנית</div>)
         case "ENTER_CODE":
-          return(<div className="alert alert-info" role="alert">הזן קוד או סרוק</div>)
+          return(<div className="alert alert-info" role="alert">הזן או סרוק קוד</div>)
         default:
           return(<div className="alert alert-info" role="alert">Unknown</div>)
       }
@@ -216,11 +219,11 @@ class CodeComp extends React.Component {
 
 
     render() {
-      const { request, messages, loading, buttons, colors } = this.state;
+      const { request, messages, loading, buttons, colors,showModal } = this.state;
       return (
         <div className="row jumbotron">
 
-          <div className="col-md-7 mb-4">
+          <div className="col-md-7">
             <div className="modal1 modal-content modal-dialog modal-dialog-top border-0">
             <div className="border-0">
                     <h2>
@@ -250,7 +253,7 @@ class CodeComp extends React.Component {
                 onClear={this.clearLetters}
                 onBackspace={this.removeOneLetter}/>
 
-
+              <div style={{paddingTop:"20px"}}>
                     <button
                       className="code btn btn-primary btn-lg btn-block"
                       type="button"
@@ -258,7 +261,7 @@ class CodeComp extends React.Component {
                       disabled={!buttons.check}>
                       שלח!
                     </button>
-
+             </div>
 
             </div>
 
@@ -371,6 +374,51 @@ class CodeComp extends React.Component {
               </div>
             </div>
           </div>
+
+          
+
+          <div>
+                <Modal show={this.state.showModal} className="my-modal show" >
+                  <Modal.Header className="modalTitle">
+                      <Modal.Title >יש לוודא את פרטי הבקשה ולאשרם</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                      <CustomerDetailsComp
+                            loading= { loading }
+                            code= { this.code }
+                            request= { request }
+                            messages= { messages }
+                            fastLane= { this.fastLane }
+                            buttons= { buttons }
+                            colors= { colors }
+                            barcodeScanner= { this.barcodeScanner }
+                          className="container"/>
+                  </Modal.Body>
+                  <Modal.Footer>
+                  <div className="modal-footer border-0 justify-content-between" >
+                <button
+                  type="button"
+                  className="btn btn-outline-primary mr-auto btn-lg btn-block"
+                  onClick={buttons.ok_action}
+                  disabled={!buttons.ok}
+                  hidden={!buttons.ok}>אישור</button>
+                <button
+                  type="button"
+                  className="btn btn-outline-secondary mr-auto btn-lg btn-block"
+                  onClick={this.cancelRequest}
+                  disabled={!buttons.cancel}
+                  hidden={!buttons.cancel}>ביטול</button>
+              </div>
+                  </Modal.Footer>
+                </Modal>
+            </div>
+
+
+
+
+
+
+
         </div>
       );
     }

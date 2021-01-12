@@ -7,4 +7,5 @@ export * from './PadComp';
 export * from './ApproveComp';
 export * from './AddBenefitToClient';
 export * from './PadModalComp';
+export * from './CustomerDetailsComp';
 

@@ -271,7 +271,7 @@ class AddBenefitToClient extends React.Component {
     randerMessage(messages) {
       switch(messages) {
         case "NOT_FOUND":
-          return(<div className="alert alert-danger alert-dismissible" role="alert"> הקוד לא נמצא, אנא נסה שנית </div>)
+          return(<div className="alert alert-danger alert-dismissible" role="alert"> קוד משתמש לא נמצא, אנא נסה שנית </div>)
         case "INVALID_CODE":
           return(<div className="alert alert-warning alert-dismissible" role="alert" >קוד לא תקין, יש להשתמש בספרות בלבד</div>)
         case "APPROVED":
@@ -298,7 +298,7 @@ class AddBenefitToClient extends React.Component {
                     </h2>
                 </div>
 
-              
+              <div class="justify-content-center"></div>
               {benefits.map((benefit, i) => ( !(benefit.type == 'free') &&
               <button
               key={i}
@@ -315,7 +315,7 @@ class AddBenefitToClient extends React.Component {
             </button>)
                )}
               
-
+              
 
             </div>
 
@@ -336,9 +336,6 @@ class AddBenefitToClient extends React.Component {
               <div className="modal-body border-0">
                 {selectedBenefit &&
                   <div>
-                    <div>
-                      <h3><strong>שם הלקוח :</strong> עמית קדוש</h3>
-                    </div>
 
                    
                           <div className="alert bg-warning">
@@ -386,25 +383,26 @@ class AddBenefitToClient extends React.Component {
               </div>
             </div>
             
-                <div >
+                <div>
                 <Modal show={this.state.showHide} className="my-modal show" >
-                <Modal.Header className="modalTitle">
-                    <Modal.Title >סרוק ברקוד או הקש קוד</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
+                  <Modal.Header className="modalTitle">
+                      <Modal.Title >סרוק ברקוד או הקש קוד</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
                       <PadModalComp
-                className="container"
-                updateCodeFunc={this.updateCodeFunc}
-                onClear={this.clearLetters}
-                onBackspace={this.removeOneLetter}/></Modal.Body>
-                    <Modal.Footer>
-                    <Button variant="secondary" onClick={() => this.SendAndHideOnApproval()}>
-                        אישור
-                    </Button>
-                    <Button variant="primary" onClick={() => this.CancelAndHide()}>
-                    ביטול
-                    </Button>
-                    </Modal.Footer>
+                          className="container"
+                          updateCodeFunc={this.updateCodeFunc}
+                          onClear={this.clearLetters}
+                          onBackspace={this.removeOneLetter}/>
+                  </Modal.Body>
+                  <Modal.Footer>
+                      <Button variant="secondary" onClick={() => this.SendAndHideOnApproval()}>
+                          אישור
+                      </Button>
+                      <Button variant="primary" onClick={() => this.CancelAndHide()}>
+                      ביטול
+                      </Button>
+                  </Modal.Footer>
                 </Modal>
                 </div>
           </div>

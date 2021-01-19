@@ -51,41 +51,46 @@ class HomePage extends React.Component {
     render() {
         const { business } = this.state;
         return (
-            <div>
+            <div className="page">
+              <div>
               { this.props.location.pathname === '/' ?
                 <Redirect to='/code' />
                 : null
               }
-              <nav className="navbar fixed-top nav-pills nav-justified  navbar-expand-md bg-secondary text-white navbar-light justify-content-between" role="navigation">
-                <div className="collapse navbar-collapse" id="navbarCollapse">
-                  <ul className="navbar-nav col-md-12">
-                    <ul className="navbar-nav nav-item">
-                        <div>
-                          <h5 className="nav-link text-white">שלום {business.name}!</h5>
-                        </div>
-                    </ul>
-                    <ul className="navbar-nav mr-auto align-middle" >
-                      <li>
-                        <NavLink className="nav-link nav-item text-white" to="/code" role="presentation"><h5 >הזן קוד</h5></NavLink>
+              <nav className="navbar navbar-expand-lg navbar-dark bg-dark" id="navbarCollapse">
+                <a className="navbar-brand" href="#">שלום {business.name}!</a>
+                <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                  <span className="navbar-toggler-icon"></span>
+                </button>
+                <div className="collapse navbar-collapse" id="navbarNav">
+                  <ul className="nav navbar-nav mr-auto">
+                    <li className="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
+                      <NavLink className="nav-link nav-item" to="/code" role="presentation">
+                    <h5 >הזן קוד</h5>
+                  </NavLink>
+                    </li>
+                    <li className="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
+                      <NavLink className="nav-link nav-item" to="/history/daily" role="presentation">
+                    <h5>דוח יומי</h5>
+                  </NavLink>
+                    </li>
+                    <li className="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
+                      <NavLink className="nav-link nav-item" to="/Add_Benefit_To_Client" role="presentation">
+                    <h5>הוסף הטבה ללקוח</h5>
+                  </NavLink>
+                    </li>
+                  </ul>
+                  <ul className="nav navbar-nav navbar-left">
+                    <li className="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
+                        <Link className="nav-link" to="/login">
+                      <h5>התנתק</h5>
+                    </Link>
                       </li>
-                      <li >
-                        <NavLink className="nav-link nav-item text-white" to="/history/daily" role="presentation"><h5> דוח יומי</h5></NavLink>
-                      </li>
-                      <li>
-                        <NavLink className="nav-link nav-item text-white" to="/history/month" role="presentation"><h5>דוח חודשי</h5></NavLink>
-                      </li>
-                      <li>
-                        <NavLink className="nav-link nav-item text-white" to="/Add_Benefit_To_Client" role="presentation"><h5>הוסף הטבה ללקוח</h5></NavLink>
-                      </li>
-                    </ul>
-                      <ul className="navbar-nav nav-item mr-auto align-left">
-                        <li className="nav-item">
-                          <Link className="nav-link text-white" to="/login"><h5>התנתק</h5></Link>
-                        </li>
-                      </ul>
                   </ul>
                 </div>
               </nav>
+
+              </div>
             <div className="container">
                   <Route path="/code" component={CodeComp} />
                   <Route path="/requests" component={RequestComp} />

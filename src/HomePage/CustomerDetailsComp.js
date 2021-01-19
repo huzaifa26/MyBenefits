@@ -19,6 +19,18 @@ class CustomerDetailsComp extends React.Component {
             barcodeScanner: props.barcodeScanner,
     };
 
+    this.handleChange = this.handleChange.bind(this);
+
+}
+
+
+
+handleChange(e) {
+  const { name, value } = e.target;
+  this.props.onChange(e);
+
+
+  this.setState({ [name]: value });
 }
 
 render() {
@@ -32,16 +44,16 @@ render() {
               role="document">
 
               <div style={{paddingBottom:"20px"}}>
-                <h3><strong>פרטי בקשה</strong></h3>
+                <h3><strong>פרטי בקשה:</strong></h3>
                 </div>
               <div>
                 {!loading && request &&
                   <div>
-                      <div class="row">
-                          <div class="col-md-4">
-                              <label><strong>שם הלקוח</strong></label>
+                      <div className="row align-items-top">
+                          <div className="col-md-4">
+                              <label><strong>שם הלקוח:</strong></label>
                         </div>
-                        <div class="col-md-8">
+                        <div className="col-md-8">
                               <p>{request.customer.firstName + " " + request.customer.lastName}</p>
                         </div>
                       </div>
@@ -50,47 +62,47 @@ render() {
                       <div>
                         {(request.offerType === "prepaid" || request.offerType === "free") &&
                           <div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                 <label><strong>בקשה</strong></label>
+                            <div className="row align-items-top">
+                                <div className="col-md-4">
+                                 <label><strong>בקשה:</strong></label>
                                 </div>
-                                <div class="col-md-6">
+                                <div className="col-md-8">
                                     <p>רכישה</p>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                 <label><strong>מחיר</strong></label>
+                            <div className="row align-items-top">
+                                <div className="col-md-4">
+                                 <label><strong>מחיר:</strong></label>
                                 </div>
-                                <div class="col-md-6">
+                                <div className="col-md-8">
                                     <p>{request.offerPrice} ש"ח</p>
                                 </div>
                             </div>
-                            <div class="row alert alert-succes">
-                                <div class="col-md-6">
-                                 <label><strong>הלקוח צריך לשלם לך </strong></label>
+                            <div className="row align-items-top">
+                                <div className="col-md-4">
+                                 <label><strong>הלקוח צריך לשלם לך:</strong></label>
                                 </div>
-                                <div class="col-md-6">
+                                <div className="col-md-8">
                                     <p>{request.offerPrice} ש"ח</p>
                                 </div>
                             </div>
                           </div>
                         }
                         {request.offerType === "punch" &&
-                          <div class="row">
-                            <div class="col-md-6">
-                               <label><strong>סוג הבקשה</strong></label>
+                          <div className="row align-items-top">
+                            <div className="col-md-4">
+                               <label><strong>סוג הבקשה:</strong></label>
                             </div>
-                            <div class="col-md-6">
+                            <div className="col-md-8">
                                 <p>לאפשר ניקובים</p>
                             </div>
                           </div>
                         }
-                        <div class="row">
-                            <div class="col-md-6">
-                               <label><strong>תיאור הטבה</strong></label>
+                        <div className="row align-items-top">
+                            <div className="col-md-4">
+                               <label><strong>תיאור הטבה:</strong></label>
                             </div>
-                            <div class="col-md-6">
+                            <div className="col-md-8">
                                 <p>{request.offerDescription}</p>
                             </div>
                         </div>
@@ -100,27 +112,27 @@ render() {
                       <div>
                         {request.offerType === "prepaid" &&
                             <div>
-                              <div class="row">
-                                  <div class="col-md-6">
-                                   <label><strong>בקשה</strong></label>
+                              <div className="row align-items-top">
+                                  <div className="col-md-4">
+                                   <label><strong>בקשה:</strong></label>
                                   </div>
-                                  <div class="col-md-6">
+                                  <div className="col-md-8">
                                       <p>שימוש בהטבה</p>
                                   </div>
                               </div>
-                              <div class="row">
-                                  <div class="col-md-6">
-                                   <label><strong>תיאור הטבה</strong></label>
+                              <div className="row align-items-top">
+                                  <div className="col-md-4">
+                                   <label><strong>תיאור הטבה:</strong></label>
                                   </div>
-                                  <div class="col-md-6">
+                                  <div className="col-md-8">
                                       <p>{request.offerDescription}</p>
                                   </div>
                               </div>
-                              <div class="row">
-                                  <div class="col-md-6">
-                                   <label><strong>מספר הנקודות שנותרו</strong></label>
+                              <div className="row align-items-top">
+                                  <div className="col-md-4">
+                                   <label><strong>מספר הנקודות שנותרו:</strong></label>
                                   </div>
-                                  <div class="col-md-6">
+                                  <div className="col-md-8">
                                       <p>{request.pointsStatus}</p>
                                   </div>
                               </div>
@@ -130,34 +142,34 @@ render() {
                                     placeholder="כמות הנקודות לשימוש"
                                     type="number"
                                     name="reducePoints"
-                                    onChange={this.handleChange} />
+                                    onChange={this.props.onChange} />
                                 </strong></label>
                               </form>
                             </div>
                         }
                         {request.offerType === "punch" &&
                             <div>
-                              <div class="row">
-                                  <div class="col-md-4">
-                                   <label><strong>סוג הבקשה</strong></label>
+                              <div className="row align-items-top">
+                                  <div className="col-md-4">
+                                   <label><strong>סוג הבקשה:</strong></label>
                                   </div>
-                                  <div class="col-md-8">
+                                  <div className="col-md-8">
                                       <p>ניקוב</p>
                                   </div>
                               </div>
-                              <div class="row">
-                                  <div class="col-md-4">
-                                   <label><strong>תיאור הטבה</strong></label>
+                              <div className="row align-items-top">
+                                  <div className="col-md-4">
+                                   <label><strong>תיאור הטבה:</strong></label>
                                   </div>
-                                  <div class="col-md-8">
+                                  <div className="col-md-8">
                                       <p>{request.offerDescription}</p>
                                   </div>
                               </div>
-                              <div class="row">
-                                  <div class="col-md-4">
-                                   <label><strong>מספר הניקובים שנותרו</strong></label>
+                              <div className="row align-items-top">
+                                  <div className="col-md-4">
+                                   <label><strong>מספר הניקובים שנותרו:</strong></label>
                                   </div>
-                                  <div class="col-md-8">
+                                  <div className="col-md-8">
                                       <p>{request.pointsStatus}</p>
                                   </div>
                               </div>
@@ -165,24 +177,22 @@ render() {
                         }
                         {request.offerType === "free" &&
                           <div>
-                            <div class="row">
-                                  <div class="col-md-6">
-                                   <label><strong>סוג הבקשה</strong></label>
+                            <div className="row align-items-top">
+                                  <div className="col-md-4">
+                                   <label><strong>סוג הבקשה:</strong></label>
                                   </div>
-                                  <div class="col-md-6">
+                                  <div className="col-md-8">
                                       <p>שימוש בהטבה</p>
                                   </div>
-                              </div>
-                              <div class="row">
-                                  <div class="col-md-6">
-                                   <label><strong>תיאור הטבה </strong></label>
+                            </div>
+                            <div className="row align-items-top">
+                                  <div className="col-md-4">
+                                    <label><strong>תיאור הטבה:</strong></label>
                                   </div>
-                                  <div class="col-md-6">
-                                      <p>{request.offerDescription}</p>
+                                  <div className="col-md-8">
+                                    <p>{request.offerDescription}</p>
                                   </div>
-                              </div>
-                            <div className="alert alert-Warning"><strong> סוג הבקשה </strong>שימוש בהטבה</div>
-                            <div ><strong> תיאור הטבה </strong>{request.offerDescription}</div>
+                            </div>
                           </div>
                         }
                         { request.pointsStatus === 0 &&

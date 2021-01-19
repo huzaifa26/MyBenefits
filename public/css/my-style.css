@@ -1,9 +1,10 @@
 .modal-backdrop.fade {
     opacity: .5;
 }
-.modalTitle{
+.modalTitleOk{
     background-color: #d1ecf1;
 }
+
 
 .padButton{
     font-size: min(8vw,40px);
@@ -13,3 +14,53 @@
     width: min(8vw,2.5rem);
     height: min(8vw,2.5rem);
 }
+
+.bla{
+    padding-top: 30px;
+}
+.input1{
+    font-size: min(8vw,62px) !important; 
+    height: 70px !important;
+    text-align: center; 
+    border: 1px solid black;
+}
+
+.first-title {
+    margin-top: 60px;
+}
+
+.my-btn-shape{
+	border-radius: 100px 100px 100px 100px;
+}
+.my-yellow{
+    background-color: #EBBC33;
+    color: #ffffff !important;
+
+}
+
+.reportheader{
+    font-size: 2rem;
+    padding-top: 20px;
+}
+
+.card{
+    margin-bottom: 2vh;
+}
+
+html, body, #root, #app {
+    height: 100vh;
+    background: #00b9bf;
+    /* background: -webkit-linear-gradient(bottom, #34d5bc, #00b9bf);
+    background: -o-linear-gradient(bottom, #34d5bc, #00b9bf);
+    background: -moz-linear-gradient(bottom, #34d5bc, #00b9bf);
+    background: linear-gradient(bottom, #34d5bc, #00b9bf); */
+    font-family: Arial, Verdana, Sans-serif;
+}
+
+  
+
+
+
+
+
+

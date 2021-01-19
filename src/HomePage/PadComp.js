@@ -19,7 +19,7 @@ class PadComp extends React.Component {
 
     render() {
         return (
-          <div className="btn-group-vertical mt-4" role="group" aria-label="Toolbar with button groups">
+          <div className="btn-group-vertical mt-4 col-12" role="group" aria-label="Toolbar with button groups">
               <div className="btn-group">   
                 <PadBotton  value="3" onClick={this.onClick}/>
                 <PadBotton  value="2" onClick={this.onClick}/>

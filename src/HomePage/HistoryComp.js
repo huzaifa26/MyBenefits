@@ -64,45 +64,110 @@ class HistoryComp extends React.Component {
     render() {
         const { history, loading, errorMessage } = this.state;
         return (
-            <div className="jumbotron">
-              {loading &&
-                <div className="spinner-border text-primary" role="status">
-                  <span className="sr-only">טוען...</span>
-                </div>
-              }
-              {errorMessage &&
-                <div className="text-danger">{errorMessage}</div>
-              }
+            <div>
+              
+              {(history && Object.keys(history).length>0) &&
+              <div className="row justify-content-center">
+              <p className="reportheader col-lg-8 justify-content-center">דוח פעולת יומי:</p>
+              </div>
+            }
+
+            {(!history || Object.keys(history).length===0) && 
+              <div className="row justify-content-center">
+              <p className="reportheader col-lg-8 justify-content-center">לא נעשו עדיין פעולות היום</p>
+              </div>
+            }
+
               <div className="content">
                 {history && history.map((benefit, index) =>
-                    <div className="card" key={benefit.id}>
+                <div className="row justify-content-center">
+                    <div className="card col-lg-8" key={benefit.id}>
                       <div className="card-body">
-                        <div><Moment format="YYYY-MM-DD HH:mm">{new Date(benefit.createDate)}</Moment></div>
-                        {benefit.objectType === "purchased" &&
-                          <div>בקשת רכישה</div>
+                      {benefit.objectType==="canceled" &&
+                      <div class="row align-items-top pb-2">
+                            <div class="col-md-12 bg-danger text-center">
+                                <strong>פעולה בוטלה</strong>
+                        </div>
+                      </div>
+                     }
+                        <div class="row align-items-top pb-2">
+                            <div class="col-md-2">
+                                <strong>תאריך:</strong>
+                          </div>
+                          <div class="col-md-10">
+                               <Moment interval={100} format="HH:mm | DD/MM/YYYY">{new Date(benefit.createDate)}</Moment>
+                          </div>
+                        </div>
+                        {benefit.objectType!="canceled" &&
+                        <div class="row align-items-top  pb-2">
+                            <div class="col-md-2">
+                                <strong>פעולה:</strong>
+                          </div>
+                          <div class="col-md-10">
+                            {benefit.objectType === "purchased" && <div>רכישה</div>}
+                            {benefit.objectType === "usage" && <div>שימוש</div> }
+                          </div>
+                        </div>
                         }
-                        {benefit.objectType === "usage" &&
-                          <div>בקשת שימוש</div>
-                        }
-                        {benefit.objectType === "canceled" &&
-                          <div>ביטול פעולה</div>
-                        }
-                        <div>{benefit.offerDescription}</div>
+
+                        <div class="row align-items-top  pb-2">
+                            <div class="col-md-2">
+                                <strong>הטבה:</strong>
+                          </div>
+                          <div class="col-md-10">
+                              {benefit.objectType!="canceled" && benefit.offerDescription}
+                              {benefit.objectType==="canceled" && benefit.benefitOffer.description}
+                          </div>
+                        </div>
+                        
                         {benefit.objectType === "purchased" && benefit.type !== "punch" &&
-                          <div>במחיר {benefit.price} שח</div>
+                        <div class="row align-items-top  pb-2">
+                            <div class="col-md-2">
+                                <strong>מחיר:</strong>
+                          </div>
+                          <div class="col-md-10">
+                                במחיר {benefit.price} שח
+                          </div>
+                        </div>
                         }
-                        <div>{benefit.customer.firstName + ' ' + benefit.customer.lastName}</div>
-                        <div>{benefit.customer.phoneNo}</div>
-                        {index === 0 && (benefit.objectType === "purchased" || benefit.objectType === "usage") &&
-                          <button
-                            className="code btn btn-danger"
-                            type="button"
-                            onClick={()=> this.undoTransaction(benefit.objectType, benefit.id)} >
+
+
+                        <div class="row align-items-top  pb-2">
+                            <div class="col-md-2">
+                                <strong>שם הלקוח:</strong>
+                          </div>
+                          <div class="col-md-10">
+                              {benefit.customer.firstName + ' ' + benefit.customer.lastName}
+                          </div>
+                        </div>
+
+                        <div class="row align-items-top  pb-2">
+                            <div class="col-md-2">
+                                <strong>מס טלפון:</strong>
+                          </div>
+                          <div class="col-md-10">
+                              {benefit.customer.phoneNo}
+                          </div>
+                        </div>
+
+
+                        {index >= 0 && index <=0 && (benefit.objectType === "purchased" || benefit.objectType === "usage") &&
+                        <div class="row justify-content-center">
+                            <button
+                              className="code btn btn-danger col-6 my-btn-shape"
+                              type="button"
+                              onClick={()=> this.undoTransaction(benefit.objectType, benefit.id)} >
                             בטל פעולה
                           </button>
+                        </div>
                         }
+
+
+
+                        
                       </div>
                     </div>
+                  </div>
                 )}
               </div>
             </div>

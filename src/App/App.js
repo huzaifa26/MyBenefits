@@ -8,15 +8,17 @@ import { LoginPage } from "../LoginPage";
 class App extends React.Component {
   render() {
     return (
-      <div className="container">
-        <BrowserRouter>
-          <div>
-            <Switch>
-              <Route exact path="/login" component={LoginPage} />
-              <PrivateRoute path="/" component={HomePage} />
-            </Switch>
-          </div>
-        </BrowserRouter>
+      <div className="container " >
+        <div className="container" >
+          <BrowserRouter>
+            <div >
+              <Switch>
+                <Route exact path="/login" component={LoginPage} />
+                <PrivateRoute path="/" component={HomePage} />
+              </Switch>
+            </div>
+          </BrowserRouter>
+        </div>
       </div>
     );
   }

@@ -43,7 +43,7 @@ class AddBenefitToClient extends React.Component {
       this.setState({ showHide: !this.state.showHide })
     }
     openModal() {
-      if (this.state.pointsLeft==-1){
+      if (this.state.pointsLeft===-1){
         console.log("ponts: " + this.state.pointsLeft)
         this.setState({ loading: false, messages: "POINTS_NOT_FILLED" });
         return;
@@ -63,13 +63,15 @@ class AddBenefitToClient extends React.Component {
     });
       userService.postAddBenefitToUser(this.state.selectedBenefit.id,this.state.code,this.state.pointsLeft)
       .then(request => {
+        this.openModal();
+        this.initFields();
         this.setState({
           request,
           loading: false,
           messages: "APPROVED",
-          buttons: {ok: false, ok_action: this.approveRequest , cancel: false, back: true},
+          buttons: {ok: false, ok_action: this.approveRequest , cancel: false},
         });
-        this.openModal();
+       
         if (this.state.fastLane){
           this.setState({colors: {...this.state.colors, msgBox: "aqua" }});
         }
@@ -87,9 +89,11 @@ class AddBenefitToClient extends React.Component {
   
 
     barcodeMethod(e){
+      console.log("A");
       if (e.key === "Shift"){
         return;
       }
+      console.log("B");
       const { barcodeScanner } = this.state;
       if (e.key === "~"){
         this.setState({ barcodeScanner: { ...barcodeScanner, isScannerVerify: true, scannerString: "~" }});
@@ -112,14 +116,15 @@ class AddBenefitToClient extends React.Component {
           this.setState({ code: barcodeScanner.code, fastLane: true});
           // Reset
           this.setState({ barcodeScanner: { isScannerVerify: false, isCodeStarted: false, scannerString: "", code: "" }});
-          this.checkCode();
+          this.SendAndHideOnApproval();
         } else {
           const code = barcodeScanner.code + e.key;
           this.setState({ barcodeScanner: { ...barcodeScanner, code }});
         }
       }
     }
-
+    
+  
     componentDidMount(){
       document.addEventListener("keydown", this.barcodeMethod, false);
       //load benefits
@@ -130,6 +135,7 @@ class AddBenefitToClient extends React.Component {
         return ( <Redirect to={{ pathname: '/', state: { from: this.props.location } }} /> )
       });
     }
+
     componentWillUnmount() {
        document.removeEventListener("keydown", this._handleEscKey, false);
     }
@@ -140,14 +146,13 @@ class AddBenefitToClient extends React.Component {
       this.setState({
         selectedBenefit : null,
         pointsLeft : -1,
-        selectedBenefit:null,
         showHide : false,
         loading: false,
         code: "",
         request: null,
         messages: "CHOOSE_BENEFIT",
         fastLane: false,
-        buttons: {check: true, ok: false, ok_action: null , cancel: false},
+        buttons: {check: true, ok: false, ok_action: null , cancel: false, back:false},
         colors: { msgBox: "#FFFFFF" },
         barcodeScanner: { isScannerVerify: false, isCodeStarted: false, scannerString: "", code: "" },
       });
@@ -163,7 +168,7 @@ class AddBenefitToClient extends React.Component {
         this.setState({ loading: false, messages: "NOT_FOUND" })
       }
       if (e.status === 400){
-        this.setState({ loading: false, messages: "INVALID_CODE" })
+        
       }
     }
 
@@ -275,7 +280,7 @@ class AddBenefitToClient extends React.Component {
         case "INVALID_CODE":
           return(<div className="alert alert-warning alert-dismissible" role="alert" >קוד לא תקין, יש להשתמש בספרות בלבד</div>)
         case "APPROVED":
-          return(<div className="alert alert-success alert-dismissible" role="alert">הבקשה אושרה! הקש אישור להמשך</div>)
+          return(<div className="alert alert-success alert-dismissible" role="alert">הבקשה אושרה!</div>)
         case "POINTS_NOT_FILLED":
           return(<div className="alert alert-warning alert-dismissible" role="alert"> נא לסמן יתרת נקודות רצויה</div>)
         case "CHOOSE_BENEFIT":
@@ -289,17 +294,17 @@ class AddBenefitToClient extends React.Component {
     render() {
       const { request, messages, loading, buttons, colors, benefits, selectedBenefit } = this.state;
       return (
-        <div className="row jumbotron">
-          <div className="col-md-7 mb-4">
-            <div className="modal1 modal-content modal-dialog modal-dialog-top border-0">
+        <div className="row">
+          <div className="col-md-7 mb-4 bla">
+            <div className="">
             <div className="border-0">
                     <h2>
                     {this.randerMessage(messages)}
                     </h2>
                 </div>
 
-              <div class="justify-content-center"></div>
-              {benefits.map((benefit, i) => ( !(benefit.type == 'free') &&
+              <div className="justify-content-center"></div>
+              {benefits.map((benefit, i) => ( !(benefit.type === 'free') &&
               <button
               key={i}
               className="btn btn-primary btn-lg btn-block "
@@ -327,8 +332,8 @@ class AddBenefitToClient extends React.Component {
               style={{ backgroundColor: colors.msgBox} }
               tabIndex="-1"
               role="document">
-              <div className="modal-header border-0">
-                        <h3 className="modal-title border-0">
+              <div className="modal-header">
+                        <h3 className="modal-title">
                         <strong>פרטי ההטבה</strong>
                         </h3>
                       </div>
@@ -338,12 +343,12 @@ class AddBenefitToClient extends React.Component {
                   <div>
 
                    
-                          <div className="alert bg-warning">
-                            <div className="alert alert-warning"><h3><strong>פעולה:</strong> הוספת הטבה ללקוח </h3></div>
+                          <div className="">
+                            <div className="alert"><h3><strong>פעולה:</strong> הוספת הטבה ללקוח </h3></div>
                             {/* <div className="alert alert-warning"><h3><strong>מועדון:</strong> {selectedBenefit.clubName} </h3></div> */}
-                            <div className="alert alert-warning"><h3><strong>תיאור הטבה : </strong>{selectedBenefit.description}</h3></div>
-                            <div className="alert alert-warning"><h3><strong>מחיר מקורי : </strong>{selectedBenefit.price}</h3></div>
-                            <div className="alert alert-warning"><h3><strong>יתרה מקורית : </strong>{selectedBenefit.points}</h3></div>
+                            <div className="alert"><h3><strong>תיאור הטבה : </strong>{selectedBenefit.description}</h3></div>
+                            <div className="alert"><h3><strong>מחיר מקורי : </strong>{selectedBenefit.price}</h3></div>
+                            <div className="alert"><h3><strong>יתרה מקורית : </strong>{selectedBenefit.points}</h3></div>
                             <form>                              
                                 <input
                                   className="code form-control input-lg"
@@ -385,7 +390,7 @@ class AddBenefitToClient extends React.Component {
             
                 <div>
                 <Modal show={this.state.showHide} className="my-modal show" >
-                  <Modal.Header className="modalTitle">
+                  <Modal.Header className="modalTitleOk">
                       <Modal.Title >סרוק ברקוד או הקש קוד</Modal.Title>
                   </Modal.Header>
                   <Modal.Body>
@@ -396,10 +401,17 @@ class AddBenefitToClient extends React.Component {
                           onBackspace={this.removeOneLetter}/>
                   </Modal.Body>
                   <Modal.Footer>
-                      <Button variant="secondary" onClick={() => this.SendAndHideOnApproval()}>
+                      <Button 
+                      type="button"
+                      className="btn btn-outline-primary mr-auto btn-lg btn-block"
+                      onClick={() => this.SendAndHideOnApproval()}>
                           אישור
                       </Button>
-                      <Button variant="primary" onClick={() => this.CancelAndHide()}>
+                      <Button 
+                      type="button"
+                      styles="margin-top=0"
+                      className="btn btn-outline-secondary mr-auto btn-lg btn-block"
+                      onClick={() => this.CancelAndHide()}>
                       ביטול
                       </Button>
                   </Modal.Footer>

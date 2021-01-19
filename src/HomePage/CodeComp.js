@@ -14,13 +14,14 @@ class CodeComp extends React.Component {
             request: null,
             messages: "ENTER_CODE",
             fastLane: false,
-            buttons: {check: true, ok: false, cancel: false},
+            buttons: {},
             colors: { msgBox: "#FFFFFF" },
             barcodeScanner: { isScannerVerify: false, isCodeStarted: false, scannerString: "", code: "" },
-            showModal:false,
-            modalMessage:"יש לוודא את פרטי הבקשה ולאשר"
+            showModal: false,
+            modal:{instructions :this.renderModalMessage("OK"), class: "modalTitleOk"}
         };
 
+        this.renderModalMessage = this.renderModalMessage.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.checkCode = this.checkCode.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -32,6 +33,7 @@ class CodeComp extends React.Component {
         this.removeOneLetter = this.removeOneLetter.bind(this);
         this.clearLetters = this.clearLetters.bind(this);
         this.barcodeMethod = this.barcodeMethod.bind(this);
+        
     }
 
     barcodeMethod(e){
@@ -84,12 +86,17 @@ class CodeComp extends React.Component {
         request: null,
         messages: "ENTER_CODE",
         fastLane: false,
-        buttons: {check: true, ok: false, ok_action: null , cancel: false},
+        buttons: { ok_action: null },
         colors: { msgBox: "#FFFFFF" },
         barcodeScanner: { isScannerVerify: false, isCodeStarted: false, scannerString: "", code: "" },
         showModal:false,
+        modal:{instructions :this.renderModalMessage("OK"), class: "modalTitleOk"},
       });
       this.clearLetters();
+    }
+
+    setReducedPoints = (e) => {
+      this.setState({reducePoints: e.target.value})
     }
 
     handleChange(e) {
@@ -102,8 +109,9 @@ class CodeComp extends React.Component {
         this.setState({ loading: false, messages: "NOT_FOUND" })
       }
       if (e.status === 400){
-        this.setState({ loading: false, messages: "INVALID_CODE" })
+        
       }
+      this.clearLetters();
     }
 
     _handleKeyDown = (e) => {
@@ -124,9 +132,8 @@ class CodeComp extends React.Component {
           this.setState({
             request,
             loading: false,
-            messages: "REQUEST_SHOW",
             showModal:true,
-            buttons: {ok: true, ok_action: this.approveRequest , cancel: true},
+            buttons: {ok_action: this.approveRequest},
           });
           if (this.state.fastLane){
             this.setState({colors: {...this.state.colors, msgBox: "aqua" }});
@@ -146,27 +153,43 @@ class CodeComp extends React.Component {
 
     goToConfirm() {
       this.setState({
-        buttons: {ok: true, ok_action: this.approveRequest , cancel: true},
+        buttons: { ok_action: this.approveRequest },
         messages: "ARE_YOU_SURE",
       });
     }
 
     requestAprove() {
+      this.initFields();
       this.setState({
-        buttons: {ok: true, ok_action: this.initFields , cancel: false},
         messages: "CONTINUE",
       });
-      this.clearLetters();
+      
+      
+    }
+
+    renderModalMessage(messages) {
+      switch(messages) {
+        case "NUMBER_TOO_BIG":
+          return("מס' הנקודות לשימוש גבוה מידי")
+        case "OK":
+          return("יש לוודא את פרטי הבקשה ולאשרם")
+        default:
+          return("יש לוודא את פרטי הבקשה ולאשרם")
+      }
     }
 
     approveRequest() {
       this.setState({
         loading: false,
-        disableActionButtons: true,
       });
       let reducePoints = 1
       if (this.state.reducePoints){
         reducePoints = this.state.reducePoints
+      }
+      if (reducePoints>this.state.request.pointsStatus){
+        console.log ("reducePoints = " + reducePoints +"; pointsStatus = "+this.state.request.pointsStatus)
+        this.state.modal.instructions=this.renderModalMessage("NUMBER_TOO_BIG");
+        this.state.modal.class="bg-danger";
       }
       userService.approveRequestByID(this.state.request.id, reducePoints)
       .then(() => {
@@ -178,9 +201,6 @@ class CodeComp extends React.Component {
       });
     }
 
-    disableActionButtons() {
-      this.setState({ disableApproveButton: true });
-    }
 
     addLetter(e){
       var newcode = this.state.code + e;
@@ -194,6 +214,8 @@ class CodeComp extends React.Component {
       this.setState({ code: "" });
     }
 
+    
+
     randerMessage(messages) {
       switch(messages) {
         case "NOT_FOUND":
@@ -201,13 +223,13 @@ class CodeComp extends React.Component {
         case "REQUEST_SHOW":
           return(<div className="alet alert-warning alert-dismissible" role="alert">אנא אשר או בטל את הבקשה הבאה</div>)
         case "ARE_YOU_SURE":
-          return(<div className="alert alert-danger alert-dismissible" role="alert">האם אתה בטוח שברצונך לאשר את הבקשה הזו ? &quot;ל?</div>)
+          return(<div className="alert alert-danger alert-dismissible" role="alert">האם אתה בטוח שברצונך לאשר בקשה זו ? &quot;ל?</div>)
         case "INVALID_CODE":
           return(<div className="alert alert-warning alert-dismissible" role="alert" >קוד לא תקין, יש להשתמש בספרות בלבד</div>)
         case "REQUEST_CANCELD":
-          return(<div className="alert alert-danger alert-dismissible" role="alert">הבקשה בוטלה. הכנס או סרוק קוד חדש</div>)
+          return(<div className="alert alert-info" role="alert"><b>הבקשה בוטלה.</b> הזן או סרוק קוד חדש</div>)
         case "CONTINUE":
-          return(<div className="alert alert-success alert-dismissible" role="alert">הבקשה אושרה! הקש אישור להמשך</div>)
+          return(<div className="alert alert-success alert-dismissible" role="alert"><b>הבקשה אושרה!</b> הזן או סרוק קוד חדש</div>)
         case "NO_ENOUGH_POINTS":
         return(<div className="alert alert-warning alert-dismissible" role="alert"> אין מספיק נקובים למימוש, נסה שנית</div>)
         case "ENTER_CODE":
@@ -221,30 +243,29 @@ class CodeComp extends React.Component {
     render() {
       const { request, messages, loading, buttons, colors,showModal } = this.state;
       return (
-        <div className="row jumbotron">
+        <div className="row justify-content-center">
 
-          <div className="col-md-7">
-            <div className="modal1 modal-content modal-dialog modal-dialog-top border-0">
-            <div className="border-0">
+          <div className="col-md-7 bla">
+            <div className="">
+            <div className="">
                     <h2>
                         {this.randerMessage(messages)}
                     </h2>
                 </div>
-
-              <div className="input-group">
-
+              <div className="row justify-content-center">
+                <div className="input-group-lg col-6 ">
+              
                 <input
                   id="insertCode"
-                  className="code form-control input-lg"
+                  className="code form-control input-lg justify-content-md-center input1"
                   name="code"
                   value={this.state.code}
                   onChange={this.handleChange}
-                  disabled={!buttons.check}
                   type="number"
-                  placeholder ="הקלד קוד"
-                   onKeyDown={this._handleKeyDown}
+                  onKeyDown={this._handleKeyDown}
                 />
 
+              </div>
               </div>
 
               <PadComp
@@ -255,10 +276,9 @@ class CodeComp extends React.Component {
 
               <div style={{paddingTop:"20px"}}>
                     <button
-                      className="code btn btn-primary btn-lg btn-block"
+                      className="code btn btn-warning btn-lg btn-block my-btn-shape my-yellow"
                       type="button"
-                      onClick={this.checkCode}
-                      disabled={!buttons.check}>
+                      onClick={this.checkCode}>
                       שלח!
                     </button>
              </div>
@@ -267,7 +287,7 @@ class CodeComp extends React.Component {
 
           </div>
 
-          <div className="request col-md-5">
+          {/* <div className="request col-md-5">
             <div
               className="modal-content modal-dialog modal-dialog-top"
               style={{ backgroundColor: colors.msgBox} }
@@ -373,14 +393,14 @@ class CodeComp extends React.Component {
                   hidden={!buttons.cancel}>ביטול</button>
               </div>
             </div>
-          </div>
+          </div> */}
 
           
 
           <div>
                 <Modal show={this.state.showModal} className="my-modal show" >
-                  <Modal.Header className="modalTitle">
-                      <Modal.Title >יש לוודא את פרטי הבקשה ולאשרם</Modal.Title>
+                  <Modal.Header className={this.state.modal.class}>
+                      <Modal.Title >{this.state.modal.instructions}</Modal.Title>
                   </Modal.Header>
                   <Modal.Body>
                       <CustomerDetailsComp
@@ -392,22 +412,20 @@ class CodeComp extends React.Component {
                             buttons= { buttons }
                             colors= { colors }
                             barcodeScanner= { this.barcodeScanner }
-                          className="container"/>
+                           className="container"
+                           onChange={this.setReducedPoints}/>
                   </Modal.Body>
                   <Modal.Footer>
-                  <div className="modal-footer border-0 justify-content-between" >
-                <button
+                  <div className="modal-footer border-0" >
+                <Button
                   type="button"
                   className="btn btn-outline-primary mr-auto btn-lg btn-block"
-                  onClick={buttons.ok_action}
-                  disabled={!buttons.ok}
-                  hidden={!buttons.ok}>אישור</button>
-                <button
+                  onClick={buttons.ok_action}>אישור</Button>
+                <Button
                   type="button"
-                  className="btn btn-outline-secondary mr-auto btn-lg btn-block"
-                  onClick={this.cancelRequest}
-                  disabled={!buttons.cancel}
-                  hidden={!buttons.cancel}>ביטול</button>
+                  styles="margin-top=0"
+                  className="btn btn-outline-secondary mr-auto btn-lg"
+                  onClick={this.cancelRequest}>ביטול</Button>
               </div>
                   </Modal.Footer>
                 </Modal>

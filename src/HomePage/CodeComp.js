@@ -186,16 +186,16 @@ class CodeComp extends React.Component {
       if (this.state.reducePoints){
         reducePoints = this.state.reducePoints
       }
+      userService.approveRequestByID(this.state.request.id, reducePoints)
+      .then(() => {
+        this.requestAprove();
+      })
+      .catch(e => { 
       if (reducePoints>this.state.request.pointsStatus){
         console.log ("reducePoints = " + reducePoints +"; pointsStatus = "+this.state.request.pointsStatus)
         this.state.modal.instructions=this.renderModalMessage("NUMBER_TOO_BIG");
         this.state.modal.class="bg-danger";
       }
-      userService.approveRequestByID(this.state.request.id, reducePoints)
-      .then(() => {
-        this.requestAprove();
-      })
-      .catch(e => {
         console.log("approve error");
         this.handleCodeError(e);
       });

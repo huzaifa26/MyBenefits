@@ -73,7 +73,7 @@ class HistoryComp extends React.Component {
             }
 
             {(!history || Object.keys(history).length===0) && 
-              <div className="row justify-content-center">
+              <div className="row justify-content-center text-center mt-4">
               <p className="reportheader col-lg-8 justify-content-center">לא נעשו עדיין פעולות היום</p>
               </div>
             }

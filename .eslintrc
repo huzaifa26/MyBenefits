@@ -10,10 +10,6 @@
     "jsx": true
   }
 },
-"extends": [
-  "eslint:recommended",
-  "plugin:react/recommended"
-],
 "parser": "babel-eslint",
 "rules": {
     # linebreak-style: off,

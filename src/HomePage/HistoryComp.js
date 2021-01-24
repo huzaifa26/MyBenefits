@@ -7,7 +7,7 @@ class HistoryComp extends React.Component {
         super(props);
 
         this.state = {
-            loading: false,
+            loading: true,
             errorMessage: null,
             history: [],
             timeRange: {
@@ -65,94 +65,100 @@ class HistoryComp extends React.Component {
         const { history, loading, errorMessage } = this.state;
         return (
             <div>
+
+            {(loading) && 
+              <div className="row justify-content-center text-center mt-4">
+              <p className="reportheader col-lg-8 justify-content-center">טוען...</p>
+              </div>
+            }
               
-              {(history && Object.keys(history).length>0) &&
+              {(!loading && history && Object.keys(history).length>0) &&
               <div className="row justify-content-center">
               <p className="reportheader col-lg-8 justify-content-center">דוח פעולת יומי:</p>
               </div>
             }
 
-            {(!history || Object.keys(history).length===0) && 
+            {(!loading && (!history || Object.keys(history).length===0)) && 
               <div className="row justify-content-center text-center mt-4">
               <p className="reportheader col-lg-8 justify-content-center">לא נעשו עדיין פעולות היום</p>
               </div>
             }
 
               <div className="content">
-                {history && history.map((benefit, index) =>
-                <div className="row justify-content-center">
+                {!loading && history && history.map((benefit, index) =>
+                <div className="row justify-content-center" key={index}>
                     <div className="card col-lg-8" key={benefit.id}>
                       <div className="card-body">
                       {benefit.objectType==="canceled" &&
-                      <div class="row align-items-top pb-2">
-                            <div class="col-md-12 bg-danger text-center">
+                      <div className="row align-items-top pb-2">
+                            <div className="col-md-12 bg-danger text-center">
                                 <strong>פעולה בוטלה</strong>
                         </div>
                       </div>
                      }
-                        <div class="row align-items-top pb-2">
-                            <div class="col-md-2">
+                        <div className="row align-items-top pb-2">
+                            <div className="col-md-2">
                                 <strong>תאריך:</strong>
                           </div>
-                          <div class="col-md-10">
+                          <div className="col-md-10">
                                <Moment interval={100} format="HH:mm | DD/MM/YYYY">{new Date(benefit.createDate)}</Moment>
                           </div>
                         </div>
                         {benefit.objectType!="canceled" &&
-                        <div class="row align-items-top  pb-2">
-                            <div class="col-md-2">
+                        <div className="row align-items-top  pb-2">
+                            <div className="col-md-2">
                                 <strong>פעולה:</strong>
                           </div>
-                          <div class="col-md-10">
+                          <div className="col-md-10">
                             {benefit.objectType === "purchased" && <div>רכישה</div>}
                             {benefit.objectType === "usage" && <div>שימוש</div> }
                           </div>
                         </div>
                         }
 
-                        <div class="row align-items-top  pb-2">
-                            <div class="col-md-2">
+                        <div className="row align-items-top  pb-2">
+                            <div className="col-md-2">
                                 <strong>הטבה:</strong>
                           </div>
-                          <div class="col-md-10">
+                          <div className="col-md-10">
                               {benefit.objectType!="canceled" && benefit.offerDescription}
                               {benefit.objectType==="canceled" && benefit.benefitOffer.description}
                           </div>
                         </div>
                         
                         {benefit.objectType === "purchased" && benefit.type !== "punch" &&
-                        <div class="row align-items-top  pb-2">
-                            <div class="col-md-2">
+                        <div className="row align-items-top  pb-2">
+                            <div className="col-md-2">
                                 <strong>מחיר:</strong>
                           </div>
-                          <div class="col-md-10">
+                          <div className="col-md-10">
                                 במחיר {benefit.price} שח
                           </div>
                         </div>
                         }
 
 
-                        <div class="row align-items-top  pb-2">
-                            <div class="col-md-2">
+                        <div className="row align-items-top  pb-2">
+                            <div className="col-md-2">
                                 <strong>שם הלקוח:</strong>
                           </div>
-                          <div class="col-md-10">
+                          <div className="col-md-10">
                               {benefit.customer.firstName + ' ' + benefit.customer.lastName}
                           </div>
                         </div>
 
-                        <div class="row align-items-top  pb-2">
-                            <div class="col-md-2">
+                        <div className="row align-items-top  pb-2">
+                            <div className="col-md-2">
                                 <strong>מס טלפון:</strong>
                           </div>
-                          <div class="col-md-10">
+                          <div className="col-md-10">
                               {benefit.customer.phoneNo}
                           </div>
                         </div>
 
 
                         {index >= 0 && index <=0 && (benefit.objectType === "purchased" || benefit.objectType === "usage") &&
-                        <div class="row justify-content-center">
+                        <div className="row justify-content-center">
                             <button
                               className="code btn btn-danger col-6 my-btn-shape"
                               type="button"

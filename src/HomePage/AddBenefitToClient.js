@@ -126,7 +126,7 @@ class AddBenefitToClient extends React.Component {
     
   
     componentDidMount(){
-      document.addEventListener("keydown", this.barcodeMethod, false);
+      //document.addEventListener("keydown", this.barcodeMethod, false);
       //load benefits
       userService.getBusinessBenefits()
       .then(benefits => this.setState({ benefits }))
@@ -137,7 +137,7 @@ class AddBenefitToClient extends React.Component {
     }
 
     componentWillUnmount() {
-       document.removeEventListener("keydown", this._handleEscKey, false);
+       //document.removeEventListener("keydown", this._handleEscKey, false);
     }
 
 
@@ -332,7 +332,7 @@ class AddBenefitToClient extends React.Component {
               style={{ backgroundColor: colors.msgBox} }
               tabIndex="-1"
               role="document">
-              <div className="modal-header">
+              <div className="modal-header btn-dark justify-content-center">
                         <h3 className="modal-title">
                         <strong>פרטי ההטבה</strong>
                         </h3>
@@ -344,7 +344,7 @@ class AddBenefitToClient extends React.Component {
 
                    
                           <div className="">
-                            <div className="alert"><h3><strong>פעולה:</strong> הוספת הטבה ללקוח </h3></div>
+                            
                             {/* <div className="alert alert-warning"><h3><strong>מועדון:</strong> {selectedBenefit.clubName} </h3></div> */}
                             <div className="alert"><h3><strong>תיאור הטבה : </strong>{selectedBenefit.description}</h3></div>
                             <div className="alert"><h3><strong>מחיר מקורי : </strong>{selectedBenefit.price}</h3></div>
@@ -363,6 +363,11 @@ class AddBenefitToClient extends React.Component {
                         
                         
                   </div>
+                }
+                {!selectedBenefit &&
+                <div className="text-center pt-3">
+                  בחר הטבה על-מנת לראות את פרטיה
+                </div>
                 }
               </div>
               <div className="modal-footer border-0 justify-content-between" >

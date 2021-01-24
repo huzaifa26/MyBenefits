@@ -263,6 +263,7 @@ class CodeComp extends React.Component {
                   onChange={this.handleChange}
                   type="number"
                   onKeyDown={this._handleKeyDown}
+                  disabled={true}
                 />
 
               </div>

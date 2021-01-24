@@ -34,20 +34,20 @@ class HistorySelectorComp extends React.Component {
               
               <div className="row justify-content-center">
               <div className="col-lg-8">
-                <div class="row align-items-top pb-2">
-                    <div class="col-md-1">
+                <div className="row align-items-top pb-2">
+                    <div className="col-md-1">
                         <strong>מתאריך:</strong>
                     </div>
-                    <div class="col-md-4">
+                    <div className="col-md-4">
                         <DatePicker format="dd-MM-y" locale="he-IL"
                       onChange={this.changeFromDate}
                       value={this.state.fromDate}
                     />
                     </div>
-                    <div class="col-md-2">
+                    <div className="col-md-2">
                         <strong>עד תאריך:</strong>
                     </div>
-                    <div class="col-md-4">
+                    <div className="col-md-4">
                         <DatePicker format="dd-MM-y" locale="he-IL"
                       onChange={this.changeToDate}
                       value={this.state.toDate}

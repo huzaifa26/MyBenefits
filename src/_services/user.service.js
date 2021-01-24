@@ -227,9 +227,9 @@ function handleError(e) {
   console.log("Error:", e);
   return Promise.reject(e);
 }
-function handleErrorLogout(e) {
-  console.log("Error:", e);
-  logout();
-  window.location.reload(true);
-  return Promise.reject(e);
-}
+// function handleErrorLogout(e) {
+//   console.log("Error:", e);
+//   logout();
+//   window.location.reload(true);
+//   return Promise.reject(e);
+// }

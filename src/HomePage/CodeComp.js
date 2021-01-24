@@ -82,7 +82,7 @@ class CodeComp extends React.Component {
     initFields() {
       this.setState({
         loading: false,
-        code: null,
+        code: "",
         request: null,
         messages: "ENTER_CODE",
         fastLane: false,
@@ -193,8 +193,7 @@ class CodeComp extends React.Component {
       .catch(e => { 
       if (reducePoints>this.state.request.pointsStatus){
         console.log ("reducePoints = " + reducePoints +"; pointsStatus = "+this.state.request.pointsStatus)
-        this.state.modal.instructions=this.renderModalMessage("NUMBER_TOO_BIG");
-        this.state.modal.class="bg-danger";
+        this.setState({modal : {class:"bg-danger", instructions: this.renderModalMessage("NUMBER_TOO_BIG")}})
       }
         console.log("approve error");
         this.handleCodeError(e);
@@ -241,7 +240,7 @@ class CodeComp extends React.Component {
 
 
     render() {
-      const { request, messages, loading, buttons, colors,showModal } = this.state;
+      const { request, messages, loading, buttons, colors} = this.state;
       return (
         <div className="row justify-content-center">
 

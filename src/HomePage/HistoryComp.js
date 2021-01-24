@@ -62,7 +62,7 @@ class HistoryComp extends React.Component {
     }
 
     render() {
-        const { history, loading, errorMessage } = this.state;
+        const { history, loading } = this.state;
         return (
             <div>
 
@@ -104,7 +104,7 @@ class HistoryComp extends React.Component {
                                <Moment interval={100} format="HH:mm | DD/MM/YYYY">{new Date(benefit.createDate)}</Moment>
                           </div>
                         </div>
-                        {benefit.objectType!="canceled" &&
+                        {benefit.objectType!=="canceled" &&
                         <div className="row align-items-top  pb-2">
                             <div className="col-md-2">
                                 <strong>פעולה:</strong>
@@ -121,7 +121,7 @@ class HistoryComp extends React.Component {
                                 <strong>הטבה:</strong>
                           </div>
                           <div className="col-md-10">
-                              {benefit.objectType!="canceled" && benefit.offerDescription}
+                              {benefit.objectType!=="canceled" && benefit.offerDescription}
                               {benefit.objectType==="canceled" && benefit.benefitOffer.description}
                           </div>
                         </div>

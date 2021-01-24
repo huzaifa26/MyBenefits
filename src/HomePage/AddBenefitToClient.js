@@ -1,6 +1,6 @@
 import React from 'react';
-import { PadComp,CodeComp,PadModalComp } from './index';
-import { Link, NavLink, Route, Redirect } from 'react-router-dom';
+import { PadModalComp } from './index';
+import { Redirect } from 'react-router-dom';
 import { userService } from '../_services';
 import { Button,Modal } from 'react-bootstrap'
 
@@ -292,7 +292,7 @@ class AddBenefitToClient extends React.Component {
 
 
     render() {
-      const { request, messages, loading, buttons, colors, benefits, selectedBenefit } = this.state;
+      const { messages, buttons, colors, benefits, selectedBenefit } = this.state;
       return (
         <div className="row">
           <div className="col-md-7 mb-4 bla">

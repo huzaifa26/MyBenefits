@@ -1,9 +1,5 @@
 import React from 'react';
-import { PadComp } from './index';
 
-import { userService } from '../_services';
-
-const ScannerActivationCode = "~&</>";
 class PadModalComp extends React.Component {
   constructor(props) {
     super(props);

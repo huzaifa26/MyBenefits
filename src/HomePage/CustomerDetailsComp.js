@@ -1,9 +1,6 @@
 import React from 'react';
-import { PadComp } from './index';
 
-import { userService } from '../_services';
 
-const ScannerActivationCode = "~&</>";
 class CustomerDetailsComp extends React.Component {
   constructor(props) {
     super(props);
@@ -34,7 +31,7 @@ handleChange(e) {
 }
 
 render() {
-  var {loading, code, request, messages, fastLane, buttons, colors, barcodeScanner} = this.state;
+  var {loading, request, colors} = this.state;
   return (
 <div>
 <div className="request ">

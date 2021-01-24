@@ -6,8 +6,8 @@ class HistorySelectorComp extends React.Component {
     constructor(props) {
         super(props);
 
-        var date = new Date();
-        var todayFormated = `${date.getMonth()+1}-${date.getDate()}-${date.getFullYear()}`
+        // var date = new Date();
+        //var todayFormated = `${date.getMonth()+1}-${date.getDate()}-${date.getFullYear()}`
 
         this.state = {
             fromDate: null,

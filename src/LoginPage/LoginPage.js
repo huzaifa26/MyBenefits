@@ -63,7 +63,7 @@ class LoginPage extends React.Component {
     render() {
         const { email, password, submitted, loading, error, header_ext } = this.state;
         return (
-          <div className="row">
+          <div className="row justify-content-center pt-3">
             <div className="col-md-6">
               <div className="card">
               <div className="card-body">

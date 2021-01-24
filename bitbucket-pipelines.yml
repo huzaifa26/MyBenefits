@@ -42,7 +42,7 @@ pipelines:
         trigger: manual  # Manual deployment.
         script:
           - gcloud auth activate-service-account --key-file keys/deploy-key-test.json
-          - gcloud container clusters get-credentials your-first-cluster-1 --zone europe-west6-c --project total-pillar-234914
+		  - gcloud container clusters get-credentials my-benefitz-test --zone europe-west2-b --project total-pillar-234914
           - kubectl set image deploy/mybenefitz-business mybenefitz-business-web=gcr.io/warm-tangent-238911/mybenefitz-business-web:$BITBUCKET_BUILD_NUMBER
     - step:
         name: Deploy Staging Server

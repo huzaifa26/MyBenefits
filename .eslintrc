@@ -16,7 +16,6 @@
 ],
 "parser": "babel-eslint",
 "rules": {
-  eslint-env: browser,
     # linebreak-style: off,
     # indent: off,
     # quotes: off,

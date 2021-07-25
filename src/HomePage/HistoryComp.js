@@ -137,7 +137,6 @@ class HistoryComp extends React.Component {
                         </div>
                         }
 
-
                         <div className="row align-items-top  pb-2">
                             <div className="col-md-2">
                                 <strong>שם הלקוח:</strong>
@@ -156,7 +155,26 @@ class HistoryComp extends React.Component {
                           </div>
                         </div>
 
+                        {benefit.objectType === "usage" &&
+                        <div className="row align-items-top  pb-2">
+                            <div className="col-md-2">
+                                <strong>נקודות שירדו:</strong>
+                          </div>
+                          <div className="col-md-10">
+                              {benefit.pointsReduced}
+                          </div>
+                        </div>
+                        }
 
+                        <div className="row align-items-top  pb-2">
+                            <div className="col-md-2">
+                                <strong>נקודות שנשארו:</strong>
+                          </div>
+                          <div className="col-md-10">
+                              {benefit.pointsStatus}
+                          </div>
+                        </div>
+                        
                         {index >= 0 && index <=0 && (benefit.objectType === "purchased" || benefit.objectType === "usage") &&
                         <div className="row justify-content-center">
                             <button
@@ -167,8 +185,6 @@ class HistoryComp extends React.Component {
                           </button>
                         </div>
                         }
-
-
 
                         
                       </div>

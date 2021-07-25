@@ -228,7 +228,11 @@ class CodeComp extends React.Component {
         case "REQUEST_CANCELD":
           return(<div className="alert alert-info" role="alert"><b>הבקשה בוטלה.</b> הזן או סרוק קוד חדש</div>)
         case "CONTINUE":
-          return(<div className="alert alert-success alert-dismissible" role="alert"><b>הבקשה אושרה!</b> הזן או סרוק קוד חדש</div>)
+          let reducePoints = 1
+          if (this.state.reducePoints){
+            reducePoints = this.state.reducePoints
+          }
+          return(<div className="alert alert-success alert-dismissible" role="alert"> <b>הבקשה אושרה!</b> ירדו {reducePoints} נקודות . הזן או סרוק קוד חדש</div>)
         case "NO_ENOUGH_POINTS":
         return(<div className="alert alert-warning alert-dismissible" role="alert"> אין מספיק נקובים למימוש, נסה שנית</div>)
         case "ENTER_CODE":

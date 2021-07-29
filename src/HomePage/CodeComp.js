@@ -18,7 +18,7 @@ class CodeComp extends React.Component {
             colors: { msgBox: "#FFFFFF" },
             barcodeScanner: { isScannerVerify: false, isCodeStarted: false, scannerString: "", code: "" },
             showModal: false,
-            modal:{instructions :this.renderModalMessage("OK"), class: "modalTitleOk"}
+            modal:{instructions :this.renderModalMessage("OK"), class: "modalTitleOk", disableActionButton: false}
         };
 
         this.renderModalMessage = this.renderModalMessage.bind(this);
@@ -33,7 +33,7 @@ class CodeComp extends React.Component {
         this.removeOneLetter = this.removeOneLetter.bind(this);
         this.clearLetters = this.clearLetters.bind(this);
         this.barcodeMethod = this.barcodeMethod.bind(this);
-        
+        this.saveRequestDetails = this.saveRequestDetails.bind(this);     
     }
 
     barcodeMethod(e){
@@ -89,8 +89,8 @@ class CodeComp extends React.Component {
         buttons: { ok_action: null },
         colors: { msgBox: "#FFFFFF" },
         barcodeScanner: { isScannerVerify: false, isCodeStarted: false, scannerString: "", code: "" },
-        showModal:false,
-        modal:{instructions :this.renderModalMessage("OK"), class: "modalTitleOk"},
+        showModal: false,
+        modal:{instructions :this.renderModalMessage("OK"), class: "modalTitleOk", disableActionButton: false}
       });
       this.clearLetters();
     }
@@ -158,7 +158,19 @@ class CodeComp extends React.Component {
       });
     }
 
+    saveRequestDetails(request) {
+      this.setState({
+        approvalRequest: {
+          customerFirstName: request.customer.firstName,
+          customerLastName: request.customer.lastName,
+          pointsStatus: request.pointsStatus,
+          typeOfRequest: request.type
+        }
+      })
+    }
+
     requestAprove() {
+      this.saveRequestDetails(this.state.request);
       this.initFields();
       this.setState({
         messages: "CONTINUE",
@@ -181,8 +193,11 @@ class CodeComp extends React.Component {
     approveRequest() {
       this.setState({
         loading: false,
+        modal: {disableActionButton: true},
+        showModal: false
       });
       let reducePoints = 1
+      let pointsStatus = this.state.request.pointsStatus;
       if (this.state.reducePoints){
         reducePoints = this.state.reducePoints
       }
@@ -191,9 +206,9 @@ class CodeComp extends React.Component {
         this.requestAprove();
       })
       .catch(e => { 
-      if (reducePoints>this.state.request.pointsStatus){
-        console.log ("reducePoints = " + reducePoints +"; pointsStatus = "+this.state.request.pointsStatus)
-        this.setState({modal : {class:"bg-danger", instructions: this.renderModalMessage("NUMBER_TOO_BIG")}})
+      if (reducePoints > pointsStatus){
+        console.log ("reducePoints = " + reducePoints +"; pointsStatus = "+ pointsStatus)
+        this.setState({modal : {class:"bg-danger", instructions: this.renderModalMessage("NUMBER_TOO_BIG")}, disableActionButton: false})
       }
         console.log("approve error");
         this.handleCodeError(e);
@@ -228,11 +243,13 @@ class CodeComp extends React.Component {
         case "REQUEST_CANCELD":
           return(<div className="alert alert-info" role="alert"><b>הבקשה בוטלה.</b> הזן או סרוק קוד חדש</div>)
         case "CONTINUE":
-          let reducePoints = 1
+          let reducePoints = 0;
           if (this.state.reducePoints){
             reducePoints = this.state.reducePoints
+          } else if (this.state.approvalRequest.typeOfRequest == "use"){
+            reducePoints = 1;
           }
-          return(<div className="alert alert-success alert-dismissible" role="alert"> <b>הבקשה אושרה!</b> ירדו {reducePoints} נקודות . הזן או סרוק קוד חדש</div>)
+          return(<div className="alert alert-success alert-dismissible" role="alert"> <b>הבקשה אושרה!</b> ללקוח: {this.state.approvalRequest.customerFirstName} {this.state.approvalRequest.customerLastName} ירדו {reducePoints} נקודות . הזן או סרוק קוד חדש</div>)
         case "NO_ENOUGH_POINTS":
         return(<div className="alert alert-warning alert-dismissible" role="alert"> אין מספיק נקובים למימוש, נסה שנית</div>)
         case "ENTER_CODE":

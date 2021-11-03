@@ -194,7 +194,6 @@ class CodeComp extends React.Component {
       this.setState({
         loading: false,
         modal: {disableActionButton: true},
-        showModal: false
       });
       let reducePoints = 1
       let pointsStatus = this.state.request.pointsStatus;
@@ -208,7 +207,7 @@ class CodeComp extends React.Component {
       .catch(e => { 
       if (reducePoints > pointsStatus){
         console.log ("reducePoints = " + reducePoints +"; pointsStatus = "+ pointsStatus)
-        this.setState({modal : {class:"bg-danger", instructions: this.renderModalMessage("NUMBER_TOO_BIG")}, disableActionButton: false})
+        this.setState({modal : {class:"bg-danger", instructions: this.renderModalMessage("NUMBER_TOO_BIG"), disableActionButton: false}})
       }
         console.log("approve error");
         this.handleCodeError(e);
@@ -439,6 +438,7 @@ class CodeComp extends React.Component {
                   <Modal.Footer>
                   <div className="modal-footer border-0" >
                 <Button
+                  disabled={this.state.modal.disableActionButton}
                   type="button"
                   className="btn btn-outline-primary mr-auto btn-lg btn-block"
                   onClick={buttons.ok_action}>אישור</Button>

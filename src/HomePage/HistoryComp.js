@@ -154,8 +154,7 @@ class HistoryComp extends React.Component {
                               {benefit.customer.phoneNo}
                           </div>
                         </div>
-
-                        {benefit.objectType === "usage" &&
+                    
                         <div className="row align-items-top  pb-2">
                             <div className="col-md-2">
                                 <strong>נקודות שירדו:</strong>
@@ -164,8 +163,7 @@ class HistoryComp extends React.Component {
                               {benefit.pointsReduced}
                           </div>
                         </div>
-                        }
-
+                        
                         <div className="row align-items-top  pb-2">
                             <div className="col-md-2">
                                 <strong>נקודות שנשארו:</strong>

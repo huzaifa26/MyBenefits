@@ -103,6 +103,15 @@ render() {
                                 <p>{request.offerDescription}</p>
                             </div>
                         </div>
+                        <form>
+                            <label><strong>
+                              <input
+                                placeholder="כמות הנקודות לשימוש"
+                                type="number"
+                                name="reducePoints"
+                                onChange={this.props.onChange} />
+                              </strong></label>
+                        </form>
                       </div>
                     }
                     {request.type === "use" &&

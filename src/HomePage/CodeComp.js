@@ -158,19 +158,20 @@ class CodeComp extends React.Component {
       });
     }
 
-    saveRequestDetails(request) {
+    saveRequestDetails(request, reducePoints) {
       this.setState({
         approvalRequest: {
           customerFirstName: request.customer.firstName,
           customerLastName: request.customer.lastName,
           pointsStatus: request.pointsStatus,
+          reducePoints: reducePoints,
           typeOfRequest: request.type
         }
       })
     }
 
-    requestAprove() {
-      this.saveRequestDetails(this.state.request);
+     requestAprove(reducePoints) {
+      this.saveRequestDetails(this.state.request, reducePoints);
       this.initFields();
       this.setState({
         messages: "CONTINUE",
@@ -195,14 +196,17 @@ class CodeComp extends React.Component {
         loading: false,
         modal: {disableActionButton: true},
       });
-      let reducePoints = 1
+      let reducePoints = 0;
       let pointsStatus = this.state.request.pointsStatus;
+      //if the user click # of reducde points 
       if (this.state.reducePoints){
         reducePoints = this.state.reducePoints
+      } else if (this.state.request.type == "use") {
+        reducePoints = 1;
       }
       userService.approveRequestByID(this.state.request.id, reducePoints)
       .then(() => {
-        this.requestAprove();
+        this.requestAprove(reducePoints);
       })
       .catch(e => { 
       if (reducePoints > pointsStatus){
@@ -242,13 +246,7 @@ class CodeComp extends React.Component {
         case "REQUEST_CANCELD":
           return(<div className="alert alert-info" role="alert"><b>הבקשה בוטלה.</b> הזן או סרוק קוד חדש</div>)
         case "CONTINUE":
-          let reducePoints = 0;
-          if (this.state.reducePoints){
-            reducePoints = this.state.reducePoints
-          } else if (this.state.approvalRequest.typeOfRequest == "use"){
-            reducePoints = 1;
-          }
-          return(<div className="alert alert-success alert-dismissible" role="alert"> <b>הבקשה אושרה!</b> ללקוח: {this.state.approvalRequest.customerFirstName} {this.state.approvalRequest.customerLastName} ירדו {reducePoints} נקודות . הזן או סרוק קוד חדש</div>)
+          return(<div className="alert alert-success alert-dismissible" role="alert"> <b>הבקשה אושרה!</b> ללקוח: {this.state.approvalRequest.customerFirstName} {this.state.approvalRequest.customerLastName} ירדו {this.state.approvalRequest.reducePoints} נקודות . הזן או סרוק קוד חדש</div>)
         case "NO_ENOUGH_POINTS":
         return(<div className="alert alert-warning alert-dismissible" role="alert"> אין מספיק נקובים למימוש, נסה שנית</div>)
         case "ENTER_CODE":

@@ -1,8 +1,8 @@
 import React from 'react';
-import { PadModalComp } from './index';
-import { Redirect } from 'react-router-dom';
+import { Button, Modal } from 'react-bootstrap';
+import { Navigate } from 'react-router-dom';
 import { userService } from '../_services';
-import { Button,Modal } from 'react-bootstrap'
+import { PadModalComp } from './index';
 
 
 const ScannerActivationCode = "~&</>";
@@ -132,7 +132,7 @@ class AddBenefitToClient extends React.Component {
       .then(benefits => this.setState({ benefits }))
       .catch(e => {
         console.log("getBusinessBenefits error");
-        return ( <Redirect to={{ pathname: '/', state: { from: this.props.location } }} /> )
+        return ( <Navigate to={{ pathname: '/', state: { from: this.props.location } }} replace/> )
       });
     }
 
@@ -431,3 +431,4 @@ class AddBenefitToClient extends React.Component {
 }
 
 export { AddBenefitToClient };
+

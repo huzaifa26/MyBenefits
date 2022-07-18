@@ -1,6 +1,6 @@
 import React from 'react';
-import { Link, NavLink, Route, Redirect } from 'react-router-dom';
-import { CodeComp, RequestComp, HistoryComp, HistorySelectorComp,AddBenefitToClient } from './index';
+import { Link, Navigate, NavLink, Route } from 'react-router-dom';
+import { AddBenefitToClient, CodeComp, HistoryComp, HistorySelectorComp, RequestComp } from './index';
 
 import { userService } from '../_services';
 
@@ -29,7 +29,7 @@ class HomePage extends React.Component {
         .then(business => this.setState({ business }))
         .catch(e => {
           console.log("getInfo error");
-          return ( <Redirect to={{ pathname: '/login', state: { from: this.props.location } }} /> )
+          return ( <Navigate to={{ pathname: '/login', state: { from: this.props.location } }} replace/> )
         });
     }
 
@@ -54,7 +54,7 @@ class HomePage extends React.Component {
             <div className="page">
               <div>
               { this.props.location.pathname === '/' ?
-                <Redirect to='/code' />
+                <Navigate to='/code' replace />
                 : null
               }
               <nav className="navbar navbar-expand-lg navbar-dark bg-dark" id="navbarCollapse">
@@ -106,3 +106,4 @@ class HomePage extends React.Component {
 }
 
 export { HomePage };
+

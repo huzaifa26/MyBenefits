@@ -1,16 +1,15 @@
-import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
+import React from "react";
+import { Navigate } from "react-router-dom";
 //import { userService } from '../_services';
 
-export const PrivateRoute = ({ component: Component, ...rest }) => (
-    <Route {...rest} render={props => (
-        (localStorage.getItem('user'))
-            ? <Component {...props} />
-            : <Redirect to={{ pathname: '/login' }} />
-    )} />
-)
-
+export const PrivateRoute = ({ component: Component, ...rest }) => {
+  return (
+    localStorage.getItem("user") 
+    ? <Component {...props} /> 
+    : <Navigate to={{ pathname: "/login" }} replace />
+  );
+};
 // if (localStorage.getItem('user') && userService.checkInfoAvailable()){
 //   <Component {...props} />
 // } else {

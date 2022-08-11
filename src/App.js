@@ -1,31 +1,79 @@
 import BrandInfo from "./Components/BrandInfo";
 import ClubOffer from "./Components/ClubOffer";
 import Registeration from "./Components/Registeration";
-import ReactDOM from "react-dom/client";
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-} from "react-router-dom";
+import Login from "./Components/Login";
+import {BrowserRouter,Routes,Route, Navigate,} from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {auth,db} from "./Components/Firebase/firebase";
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth'
+import { collection, query, where, getDocs,addDoc,setDoc,doc } from "firebase/firestore";
+import Home from "./Components/Home/Home";
+import Main from "./Components/Home/Main";
+import DailyReport from "./Components/Home/DailyReport";
+import AddBenefit from "./Components/Home/AddBenefit";
 
 function App() {
 
-  let data;
+  let data={};
+  let arr=[];
 
   const getDataFromRegisteration=(rdata)=>{
     data=rdata;
     console.log(data);
   }
+
+  const getDataFromClubOffer=(cdata)=>{
+    arr.push(cdata);
+    data.benefits=arr;
+    console.log(data);
+  }
+
+  const getDataFromBrandInfo=(bdata)=>{
+    data.brandInfo=bdata;
+    console.log(data);
+
+    toast.dismiss();
+    toast.loading("Registering User");
+    createUserWithEmailAndPassword(auth, data.brandInfo.email, data.brandInfo.password)
+    .then(async (response) => {
+      console.log(response.user.uid)
+      // const docRef = await setDoc(collection(db, "user", data,response.user.uid));
+      try{
+        const docRef=await setDoc(doc(db, "users", response.user.uid), data)
+        console.log(docRef);
+        toast.dismiss();
+        toast.success("User Registeration Success.");
+        return <Navigate to={"/"}/>;
+      }catch(e){
+        console.log(e)
+        toast.dismiss();
+        toast.error("User Registeration fail.")
+      }
+    }).catch((e)=>{
+      console.log(e)
+      toast.dismiss();
+      toast.error("User Registeration fail of user already exists.")
+    })
+  }
+
+  
   
   return (
     <>
     <BrowserRouter>
       <Routes>
+      <Route path="/" element={<Login/>}/>
+
           <Route path="registeration" element={<Registeration getDataFromRegisteration={getDataFromRegisteration}/>}/>
-          <Route path="brandinfo" element={<BrandInfo />}></Route>
-          <Route path="cluboffer" element={<ClubOffer />}></Route>
+          <Route path="brandinfo" element={<BrandInfo getDataFromBrandInfo={getDataFromBrandInfo}/>}></Route>
+          <Route path="cluboffer" element={<ClubOffer getDataFromClubOffer={getDataFromClubOffer}/>}></Route>
+
+          <Route path="home" element={<Home />}>
+            <Route path="code" element={<Main/>}/>
+            <Route path="history" element={<DailyReport/>}/>
+            <Route path="Add_Benefit_To_Client" element={<AddBenefit/>}/>
+          </Route>
       </Routes>
     </BrowserRouter>
     <ToastContainer theme="dark"/>

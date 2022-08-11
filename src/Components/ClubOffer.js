@@ -1,13 +1,14 @@
 import "./ClubOffer.css";
-import { useLocation,useNavigate,Navigate} from "react-router-dom";
+import { useLocation,useNavigate,Navigate, Link} from "react-router-dom";
 import { useRef, useState } from "react";
 import {ref,uploadBytes,getDownloadURL} from "firebase/storage"
 import { Storage } from "./Firebase/firebase";
 import { ToastContainer, toast } from 'react-toastify';
 
 
-export default function ClubOffer(){
+export default function ClubOffer({getDataFromClubOffer}){
     const location =useLocation();
+    console.log(location);
     const navigate=useNavigate();
     const clubOfferRef=useRef();
 
@@ -43,11 +44,9 @@ export default function ClubOffer(){
         getDownloadURL(ref(Storage, `/logo/${e.target.files[0].name}`)).then((url) => {
             console.log(url);
             setsmallImageURL(url);
-        }).catch((err)=>{
-
-        });
+        })
+        e.target.value="";
     }
-
 
     const [largeimageURL , setlargeImageURL] = useState('');
     const largeImageHandler= async (e)=>{
@@ -71,11 +70,58 @@ export default function ClubOffer(){
             console.log(url);
             setlargeImageURL(url);
         });
+        e.target.value="";
     }
 
+    const [benefitType,setBenefitType]=useState("");
     const clubOfferSubmitHandler=(e)=>{
         e.preventDefault();
-        console.log(clubOfferRef.current.possiblePurchase.value);
+
+        if(benefitType === ""){
+            toast.error("Please select benefit type.");
+            return
+        }
+
+        if(clubOfferRef.current.possiblePurchase.value === "choose option"){
+            toast.error("Please choose option from Possible Purchase.");
+            return
+        }
+
+        if(largeimageURL === "" || smallimageURL === ""){
+            toast.error("Please add both Logos");
+            return
+        }
+
+        let data={
+            type:benefitType,
+            price:clubOfferRef.current.price.value,
+            points:clubOfferRef.current.points.value,
+            possiblePurchase:clubOfferRef.current.possiblePurchase.value,
+            discount:clubOfferRef.current.discount.value,
+            description:clubOfferRef.current.description.value,
+            longDescription:clubOfferRef.current.longDescription.value,
+            smallLogo:smallimageURL,
+            biglogo:largeimageURL,
+        }
+        getDataFromClubOffer(data);
+        clearValues();
+    }
+
+    const clearValues=()=>{
+        setBenefitType("");
+        clubOfferRef.current.price.value=""
+        clubOfferRef.current.points.value=""
+        clubOfferRef.current.possiblePurchase.value=""
+        clubOfferRef.current.discount.value=""
+        clubOfferRef.current.description.value=""
+        clubOfferRef.current.longDescription.value=""
+        setsmallImageURL("");
+        setlargeImageURL("");
+        setAllFalse();
+    }
+
+    const gotoNextPage=()=>{
+        navigate("/brandinfo",{state:{sequence:true}});
     }
 
     if(location.state === null){
@@ -105,54 +151,55 @@ export default function ClubOffer(){
             </div>
 
 
-            <div className="relative z-50 m-auto pt-[60px] pb-[21px] flex justify-between items-start w-[80%]">
+            <div className="relative z-40 m-auto pt-[60px] pb-[21px] flex justify-between items-start w-[80%]">
             <div className="w-[43.51vw] h-[909.25px] bg-[#1D262D] rounded-[57px]">
                     <form ref={clubOfferRef} onSubmit={clubOfferSubmitHandler} className="flex flex-wrap items-center x gap-x-[4.1666vw] xl:w-[95%] w-[80%] h-[100%] m-auto">
                         <div className="flex justify-between gap-[10px]">
-                            <button onClick={()=>{setAllFalse();setButton1IsActive(true);}} className={button1IsActive ?"w-[10.748vw] h-[50.78px] text-[clamp(16px,1.302vw,25px)] text-[#EBBC33] font-bold bg-[#fff] rounded-[57px]":"w-[10.748vw] h-[50.78px] text-[clamp(16px,1.302vw,25px)] text-[#fff] font-bold bg-[#EBBC33] rounded-[57px]"}>Prepaid</button>
-                            <button onClick={()=>{setAllFalse();setButton2IsActive(true);}} className={button2IsActive ?"w-[10.748vw] h-[50.78px] text-[clamp(16px,1.302vw,25px)] text-[#EBBC33] font-bold bg-[#fff] rounded-[57px]":"w-[10.748vw] h-[50.78px] text-[clamp(16px,1.302vw,25px)] text-[#fff] font-bold bg-[#EBBC33] rounded-[57px]"}>Punchchard</button>
-                            <button onClick={()=>{setAllFalse();setButton3IsActive(true);}} className={button3IsActive ?"w-[10.748vw] h-[50.78px] text-[clamp(16px,1.302vw,25px)] text-[#EBBC33] font-bold bg-[#fff] rounded-[57px]":"w-[10.748vw] h-[50.78px] text-[clamp(16px,1.302vw,25px)] text-[#fff] font-bold bg-[#EBBC33] rounded-[57px]"}>Free</button>
+                            <button type="button" onClick={()=>{setBenefitType("prepaid");setAllFalse();setButton1IsActive(true);}} className={button1IsActive ?"w-[10.748vw] h-[50.78px] text-[clamp(16px,1.302vw,25px)] text-[#EBBC33] font-bold bg-[#fff] rounded-[57px]":"w-[10.748vw] h-[50.78px] text-[clamp(16px,1.302vw,25px)] text-[#fff] font-bold bg-[#EBBC33] rounded-[57px]"}>Prepaid</button>
+                            <button type="button" onClick={()=>{setBenefitType("punchchard");setAllFalse();setButton2IsActive(true);}} className={button2IsActive ?"w-[10.748vw] h-[50.78px] text-[clamp(16px,1.302vw,25px)] text-[#EBBC33] font-bold bg-[#fff] rounded-[57px]":"w-[10.748vw] h-[50.78px] text-[clamp(16px,1.302vw,25px)] text-[#fff] font-bold bg-[#EBBC33] rounded-[57px]"}>Punchchard</button>
+                            <button type="button" onClick={()=>{setBenefitType("free");setAllFalse();setButton3IsActive(true);}} className={button3IsActive ?"w-[10.748vw] h-[50.78px] text-[clamp(16px,1.302vw,25px)] text-[#EBBC33] font-bold bg-[#fff] rounded-[57px]":"w-[10.748vw] h-[50.78px] text-[clamp(16px,1.302vw,25px)] text-[#fff] font-bold bg-[#EBBC33] rounded-[57px]"}>Free</button>
                         </div>
                         <div className="inline-block">
                             <label className="text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold block">Price</label>
-                            <input name="price" required className="indent-[27px] w-[14.85vw] h-[42.76px]"/>
+                            <input type={"number"} min="0" name="price" required className="indent-[27px] w-[14.85vw] h-[42.76px]"/>
                         </div>
 
                         <div className="inline-block">
                             <label className="text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold block">Points</label>
-                            <input name="points" required className="indent-[27px] w-[14.85vw] h-[42.76px]"/>
+                            <input type={"number"} name="points" required className="indent-[27px] w-[14.85vw] h-[42.76px]"/>
                         </div>
 
                         <div>
                             <label className="text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold block">Possible Purchase</label>
-                            {/* <input name="possiblePurchase" required className="w-[14.85vw] h-[42.76px]"/> */}
                             <select name="possiblePurchase" required className="indent-[27px] rounded-[57px] w-[14.85vw] h-[42.76px]">
                                 <option disabled selected value={"choose option"}>Choose Option</option>
+                                <option value={"1"}>1</option>
+                                <option value={"Endless"}>Endless</option>
                             </select>
                         </div>
 
                         <div>
                             <label className="text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold block">Discount Ammount</label>
-                            <input name="discount" required className="indent-[27px] w-[14.85vw] h-[42.76px]"/>
+                            <input type={"number"} name="discount" required className="indent-[27px] w-[14.85vw] h-[42.76px]"/>
                         </div>
 
                         <div>
                             <label className="text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold block">Description</label>
-                            <textarea rows='3' className="indent-[27px] pt-[10px] w-[29.21vw]"></textarea>
+                            <textarea name="description" rows='3' className="indent-[27px] pt-[10px] w-[29.21vw]"></textarea>
                         </div>
 
                         <div>
                             <label className="text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold block">Long Description</label>
-                            <textarea rows='6' className="indent-[27px] pt-[10px] w-[29.21vw]"></textarea>
+                            <textarea name="longDescription" rows='6' className="indent-[27px] pt-[10px] w-[29.21vw]"></textarea>
                         </div>
 
                         
                         <div className="flex justify-between w-[100%]">
                             <div className="flex gap-[20px]">
                                 <div className="text-[clamp(16px,1.302vw,25px)] text-[#fff] font-bold">
-                                    <h2 className="font-[25px] font-bold ">Bid Logo</h2>
+                                    <h2 className="font-[25px] font-bold ">Small Logo</h2>
                                     <div className="flex justify-center items-center w-[119px] h-[89px] bg-white rounded-[18px]">
-                                        <input onChange={smallImageHandler} name="img1" id="files1" type={"file"} className="hidden w-[301px] h-[42.76px]"/>
+                                        <input defaultValue={smallimageURL} onChange={smallImageHandler} name="img1" id="files1" type={"file"} className="hidden w-[301px] h-[42.76px]"/>
                                         <label className="text-[14px] text-center w-[62px] h-[24px] bg-[#FDC11F] border-[1px] border-[#707070]" for="files1">Upload</label>
                                     </div>
                                     <h2 className="font-[15px] font-bold text-center">80*80 or square</h2>
@@ -161,7 +208,7 @@ export default function ClubOffer(){
                                 <div className="text-[clamp(16px,1.302vw,25px)] text-[#fff] font-bold">
                                     <h2 className="font-[25px] font-bold ">Bid Logo</h2>
                                     <div className="flex justify-center items-center w-[129px] h-[119px] bg-white rounded-[18px]">
-                                        <input onChange={largeImageHandler} name="img2" id="files2" type={"file"} className="hidden w-[301px] h-[42.76px]"/>
+                                        <input defaultValue={largeimageURL} onChange={largeImageHandler} name="img2" id="files2" type={"file"} className="hidden w-[301px] h-[42.76px]"/>
                                         <label className="text-[14px] text-center w-[62px] h-[24px] bg-[#FDC11F] border-[1px] border-[#707070]" for="files2">Upload</label>
                                     </div>
                                     <h2 className="font-[15px] font-bold text-center">80*80 or square</h2>
@@ -177,6 +224,10 @@ export default function ClubOffer(){
                 </div>
                 
                 <img className="w-[37.13vw] sm:hidden xsm:hidden md:hidden self-center" src="/images/Repeat Grid 3.svg" alt=""/>
+            </div>
+            <div onClick={gotoNextPage} className="z-50 cursor-pointer flex items-center gap-[10px] absolute top-[83%] left-[54%]">
+                <button  className="bg-transparent text-[23px] font-bold text-[#FDC11F]">Next</button>
+                <img src="/images/Repeat Grid 4.png" alt=""/>
             </div>
         </div>
     )

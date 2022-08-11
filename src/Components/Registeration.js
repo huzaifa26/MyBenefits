@@ -51,7 +51,6 @@ export default function Registeration({getDataFromRegisteration}){
     }
 
     const [smallimageURL , setsmallImageURL] = useState('');
-
     const smallImageHandler= async (e)=>{
         console.log(e.target.files);
         
@@ -78,9 +77,7 @@ export default function Registeration({getDataFromRegisteration}){
         });
     }
 
-
     const [largeimageURL , setlargeImageURL] = useState('');
-
     const largeImageHandler= async (e)=>{
         console.log(e.target.files);
         

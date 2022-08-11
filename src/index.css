@@ -8,4 +8,13 @@ input,textarea{
     border-bottom-right-radius: 50px 50px;
     border-top-left-radius: 50px 50px;  
     border-bottom-left-radius: 50px 50px;
+    outline: none;
+}
+
+.react-tel-input .selected-flag:hover, .react-tel-input .selected-flag:focus{
+    background-color: rgba(255, 255, 255, 0) !important;
+}
+
+.active{
+    color: #fff;
 }

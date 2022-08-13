@@ -3,9 +3,9 @@ import {useRef,useState} from 'react';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 import {ref,uploadBytes,getDownloadURL} from "firebase/storage"
-import { Storage } from "./Firebase/firebase";
+import { Storage } from "../Firebase/firebase";
 import { ToastContainer, toast } from 'react-toastify';
-import { useNavigate,Navigate } from "react-router-dom";
+import { useNavigate,Navigate, Link } from "react-router-dom";
 
 export default function Registeration({getDataFromRegisteration}){
     const navigate=useNavigate();
@@ -47,7 +47,7 @@ export default function Registeration({getDataFromRegisteration}){
         data.largeLogo=largeimageURL
 
         getDataFromRegisteration(data);
-        navigate("/cluboffer",{state:{sequence:true}});
+        navigate("/cluboffer",{state:{prevRoute:"registeration"}});
     }
 
     const [smallimageURL , setsmallImageURL] = useState('');
@@ -111,25 +111,32 @@ export default function Registeration({getDataFromRegisteration}){
             <img className="absolute top-[450px] left-[-256px]" src="/images/Path 18.png" alt=""/>
             <img className="absolute top-[119px] left-[205px]" src="/images/Repeat Grid 1.png" alt=""/>
             <img className="absolute top-[749px] left-[680px]" src="/images/Group 31.png" alt=""/>
-            <div className=" flex  justify-center items-center gap-[20px] max-w-[1920px] w-[calc(100vw - 100%)] h-[99.63px]">
-                <div className="flex gap-[4px]">
-                    <span className="pt-[10px] border-[1px] border-[#1D262D] w-[46px] h-[44px] bg-[#FDC11F] text-[15px] text-center rounded-full">1</span>
-                    <h2 className="text-[25px] text-[#1D262D] font-bold">Building loyalty club</h2>
-                </div>
-                <span className="w-[37px] h-[2px] bg-[#707070]"></span>
-                <div className="flex gap-[4px]">
-                    <span className="pt-[10px] border-[1px] border-[#1D262D] w-[46px] h-[44px] bg-[#fff] text-[15px] text-center rounded-full">2</span>
-                    <h2 className="text-[25px] text-[#1D262D] font-bold">Adding Business to club</h2>
-                </div>
-                <span className="w-[37px] h-[2px] bg-[#707070]"></span>
-                <div className="flex gap-[4px]">
-                    <span className="pt-[10px] border-[1px] border-[#1D262D] w-[46px] h-[44px] bg-[#fff] text-[15px] text-center rounded-full">3</span>
-                    <h2 className="text-[25px] text-[#1D262D] font-bold">Define Brand</h2>
+            
+
+            <div className=" flex items-center justify-center gap-[20px] max-w-[1920px] w-[calc(100vw - 100%)] h-[99.63px]">
+                
+                <Link to={"/"}><img className="self-center ml-[20px] cursor-pointer" src="/images/Group 757.png" alt=""/></Link>
+                
+                <div className="flex justify-center items-center flex-1"    >
+                    <div className="flex gap-[4px] items-center">
+                        <span className="pt-[10px] border-[1px] border-[#1D262D] w-[46px] h-[44px] bg-[#FDC11F] text-[15px] text-center rounded-full">1</span>
+                        <h2 className="text-[clamp(16px,1.30vw,25px)] text-[#1D262D] font-bold">Building loyalty club</h2>
+                    </div>
+                    <span className="w-[37px] h-[2px] bg-[#707070]"></span>
+                    <div className="flex gap-[4px] items-center">
+                        <span className="pt-[10px] border-[1px] border-[#1D262D] w-[46px] h-[44px] bg-[#fff] text-[15px] text-center rounded-full">2</span>
+                        <h2 className="text-[clamp(16px,1.30vw,25px)] text-[#1D262D] font-bold">Adding Business to club</h2>
+                    </div>
+                    <span className="w-[37px] h-[2px] bg-[#707070]"></span>
+                    <div className="flex gap-[4px] items-center">
+                        <span className="pt-[10px] border-[1px] border-[#1D262D] w-[46px] h-[44px] bg-[#fff] text-[15px] text-center rounded-full">3</span>
+                        <h2 className="text-[clamp(16px,1.30vw,25px)] text-[#1D262D] font-bold">Define Brand</h2>
+                    </div>
                 </div>
             </div>
 
             <div className="flex-row-reverse relative z-50 m-auto pt-[60px] pb-[21px] flex justify-between items-start w-[80%]">
-                <img className="w-[18.07vw] self-center " src="/images/Group 757.png" alt=""/>
+                <img className="w-[18.07vw] self-center " src="/images/Group 7571.png" alt=""/>
                 <div className="pt-[30px] w-[34.047vw] h-[899.25px] bg-[#1D262D] rounded-[57px]">
                     <form onSubmit={registerationFormSubmitHandler} ref={registerationRef} className="flex flex-col w-[80%] gap-[15px] h-[100%] m-auto">
                         <div className="flex justify-between">
@@ -138,7 +145,7 @@ export default function Registeration({getDataFromRegisteration}){
                             <button type="button" onClick={(e)=>{setStatus('private');setButton2IsActive(true);setButton1IsActive(false)}} className={button2IsActive?"bg-white w-[158.14px] h-[50.78px] text-[25px] font-bold rounded-[57px]":"w-[158.14px] h-[50.78px] text-[25px] font-bold bg-[#EBBC33] rounded-[57px]"}>Private </button>
                         </div>
                         <input name="clubName" type={"text"} required placeholder="Club Name" className="indent-[27px] w-[301px] h-[67px]"/>
-                        <input name="email" type={"email"} required placeholder="Email" className="indent-[27px] w-[301px] h-[67px]"/>
+                        <input name="email" type={"email"} required placeholder="Email" className="bg-[#FDC11F] indent-[27px] w-[301px] h-[67px]"/>
                         {/* <input name="phoneNumber" type={"phone"} required placeholder="Phone Number" className="indent-[27px] w-[301px] h-[67px]"/> */}
                         <PhoneInput prefix="+" buttonStyle={{height:"67px",borderRadius:"57px 0 0 57px"}} inputStyle={{width:"271px",borderRadius:"0 57px 57px 0",height:"67px"}} className="indent-[27px] w-[301px] h-[67px]" placeholder="Enter phone number" value={value} onChange={setValue}/>
                         <input name="description" type={"text"} required placeholder="Description" className="indent-[27px] w-[301px] h-[67px]"/>

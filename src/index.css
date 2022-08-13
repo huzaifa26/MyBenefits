@@ -18,3 +18,7 @@ input,textarea{
 .active{
     color: #fff;
 }
+
+.gradientBackground{
+    background-image: linear-gradient(to bottom, #26CDBD,#16756C,#13675F);
+}

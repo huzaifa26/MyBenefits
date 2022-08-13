@@ -2,7 +2,7 @@ import "./BrandInfo.css";
 import { useLocation,useNavigate,Navigate} from "react-router-dom";
 import { useRef, useState } from "react";
 import {ref,uploadBytes,getDownloadURL} from "firebase/storage"
-import { Storage } from "./Firebase/firebase";
+import { Storage } from "../Firebase/firebase";
 import { toast } from 'react-toastify';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
@@ -73,7 +73,13 @@ export default function BrandInfo({getDataFromBrandInfo}){
         getDataFromBrandInfo(data)
     }
 
-    if(location.state === null){
+    // Clearing the location.state.prevRoute if user directly enter route in browser bar. i-e it enforce registeration flow.
+    window.onbeforeunload = function(event){
+        window.history.replaceState({},document.title);
+    }
+
+    // Code to redirect to registertation route when user manually enter /brandinfo route
+    if(location.state === null || location.state.prevRoute !== "cluboffer"){
         return <Navigate to="/registeration" />
     }
 
@@ -107,7 +113,7 @@ export default function BrandInfo({getDataFromBrandInfo}){
                 <div className="flex-1 flex flex-col gap-[10px] w-[80%] m-auto">
                     <h2 className="text-[35px] text-[#FDC11F] font-bold">Create Business Account</h2>
                     <input type={"email"} name="email" required placeholder="Email" className="indent-[15px] w-[301px] h-[60px]"/>
-                    <input type={"password"} name="password" required placeholder="Password" className="indent-[15px] w-[301px] h-[60px]"/>
+                    <input type={"password"} name="password" required placeholder="Password" className="bg-[#FDC11F] indent-[15px] w-[301px] h-[60px]"/>
                     <input type={"text"} name="accountName" required placeholder="Account Name" className="indent-[15px] w-[301px] h-[60px]"/>
                     <input type={"text"} name="brandID" required placeholder="Brand ID" className="indent-[15px] w-[301px] h-[60px]"/>
                     <input type={"text"} name="businessName" required placeholder="Business Name" className="indent-[15px] w-[301px] h-[60px]"/>

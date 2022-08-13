@@ -2,11 +2,11 @@ import "./ClubOffer.css";
 import { useLocation,useNavigate,Navigate, Link} from "react-router-dom";
 import { useRef, useState } from "react";
 import {ref,uploadBytes,getDownloadURL} from "firebase/storage"
-import { Storage } from "./Firebase/firebase";
+import { Storage } from "../Firebase/firebase";
 import { ToastContainer, toast } from 'react-toastify';
 
 
-export default function ClubOffer({getDataFromClubOffer}){
+export default function ClubOffer({getDataFromClubOffer,benefitArray}){
     const location =useLocation();
     console.log(location);
     const navigate=useNavigate();
@@ -15,6 +15,10 @@ export default function ClubOffer({getDataFromClubOffer}){
     const [button1IsActive,setButton1IsActive]=useState(false);
     const [button2IsActive,setButton2IsActive]=useState(false);
     const [button3IsActive,setButton3IsActive]=useState(false);
+
+
+    const [descriptionLength,setdescriptionLength]=useState(false);
+    const [longdescriptionLength,setlongdescriptionLength]=useState(false);
 
     const setAllFalse=()=>{
         setButton1IsActive(false);
@@ -98,6 +102,7 @@ export default function ClubOffer({getDataFromClubOffer}){
             points:clubOfferRef.current.points.value,
             possiblePurchase:clubOfferRef.current.possiblePurchase.value,
             discount:clubOfferRef.current.discount.value,
+            code:clubOfferRef.current.code.value,
             description:clubOfferRef.current.description.value,
             longDescription:clubOfferRef.current.longDescription.value,
             smallLogo:smallimageURL,
@@ -113,6 +118,7 @@ export default function ClubOffer({getDataFromClubOffer}){
         clubOfferRef.current.points.value=""
         clubOfferRef.current.possiblePurchase.value=""
         clubOfferRef.current.discount.value=""
+        clubOfferRef.current.code.value=""
         clubOfferRef.current.description.value=""
         clubOfferRef.current.longDescription.value=""
         setsmallImageURL("");
@@ -121,12 +127,23 @@ export default function ClubOffer({getDataFromClubOffer}){
     }
 
     const gotoNextPage=()=>{
-        navigate("/brandinfo",{state:{sequence:true}});
+        if(benefitArray.length === 0){
+            toast.error("Please add Benefit before proceeding.");
+            return
+        }
+        navigate("/brandinfo",{state:{prevRoute:"cluboffer"}});
     }
 
-    if(location.state === null){
+    // Clearing the location.state.prevRoute if user directly enter route in browser bar. i-e it enforce registeration flow.
+    window.onbeforeunload = function(event){
+        window.history.replaceState({},document.title);
+    }
+
+    // Code to redirect to registertation route when user manually enter /cluboffer route
+    if(location.state === null || location.state.prevRoute !== "registeration"){
         return <Navigate to="/registeration" />
     }
+
     return(
         <div className="max-w-[1920px] w-[calc(100vw - 100%)] h-[100%] max-h-[1080px] overflow-y-hidden linearBG">
             <div className="flex justify-center items-center gap-[20px] max-w-[1920px] w-[calc(100vw - 100%)] h-[99.63px]">
@@ -168,6 +185,7 @@ export default function ClubOffer({getDataFromClubOffer}){
                             <label className="text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold block">Points</label>
                             <input type={"number"} name="points" required className="indent-[27px] w-[14.85vw] h-[42.76px]"/>
                         </div>
+                        
 
                         <div>
                             <label className="text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold block">Possible Purchase</label>
@@ -183,17 +201,24 @@ export default function ClubOffer({getDataFromClubOffer}){
                             <input type={"number"} name="discount" required className="indent-[27px] w-[14.85vw] h-[42.76px]"/>
                         </div>
 
+                        <div className="inline-block">
+                            <label className="text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold block">Code</label>
+                            <input type={"number"} name="code" required className="indent-[27px] w-[14.85vw] h-[42.76px]"/>
+                        </div>
+
                         <div>
                             <label className="text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold block">Description</label>
-                            <textarea name="description" rows='3' className="indent-[27px] pt-[10px] w-[29.21vw]"></textarea>
+                            <textarea onChange={(e)=>{setdescriptionLength(e.target.value)}} maxLength={30} name="description" rows='3' className="indent-[27px] pt-[10px] w-[29.21vw]"></textarea>
+                            <p className="text-white text-[12px] text-right">{ descriptionLength?.length || 0}/30</p>
                         </div>
 
                         <div>
                             <label className="text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold block">Long Description</label>
-                            <textarea name="longDescription" rows='6' className="indent-[27px] pt-[10px] w-[29.21vw]"></textarea>
+                            <textarea onChange={(e)=>{setlongdescriptionLength(e.target.value)}} maxLength={150} name="longDescription" rows='6' className="indent-[27px] pt-[10px] w-[29.21vw]"></textarea>
+                            <p className="text-white text-[12px] text-right">{longdescriptionLength?.length || 0}/150</p>
                         </div>
 
-                        
+
                         <div className="flex justify-between w-[100%]">
                             <div className="flex gap-[20px]">
                                 <div className="text-[clamp(16px,1.302vw,25px)] text-[#fff] font-bold">

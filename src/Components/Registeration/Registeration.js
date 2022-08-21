@@ -6,6 +6,8 @@ import {ref,uploadBytes,getDownloadURL} from "firebase/storage"
 import { Storage } from "../Firebase/firebase";
 import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate,Navigate, Link } from "react-router-dom";
+import {registerUser} from "../../_services/index";
+
 
 export default function Registeration({getDataFromRegisteration}){
     const navigate=useNavigate();
@@ -15,7 +17,7 @@ export default function Registeration({getDataFromRegisteration}){
     const [status,setStatus]=useState("")
     let data={};
 
-    const registerationFormSubmitHandler=(e)=>{
+    const registerationFormSubmitHandler=async(e)=>{
         e.preventDefault();
 
         if(status===""){
@@ -27,27 +29,38 @@ export default function Registeration({getDataFromRegisteration}){
             toast.dark("please Enter Phone number");
             return
         }
-        if(largeimageURL === "" || smallimageURL === ""){
-            toast.dark("Please add both Logos");
-            return
-        }
+        // if(largeimageURL === "" || smallimageURL === ""){
+        //     toast.dark("Please add both Logos");
+        //     return
+        // }
         if(registerationRef.current.terms.checked === false){
             toast.dark("Please agree to Terms of service & Privacy Policy");
             return
         }
 
-        data.clubName=registerationRef.current.clubName.value;
+        data.name=registerationRef.current.clubName.value;
         data.email=registerationRef.current.email.value;
-        data.phoneNumber=value;
-        data.status=status;
+        data.phoneNum=value;
+        data.type=status;
         data.description=registerationRef.current.description.value;
         data.website=registerationRef.current.website.value;
         data.extraInfo=registerationRef.current.extraInfo.value;
-        data.smallLogo=smallimageURL;
-        data.largeLogo=largeimageURL
+        data.smallLogoUrl=smallimageURL;
+        data.largeLogoUrl=largeimageURL;
 
-        getDataFromRegisteration(data);
-        navigate("/cluboffer",{state:{prevRoute:"registeration"}});
+        try{
+            let user=await registerUser(data)
+            user=JSON.parse(user)
+            if(Object.keys(user).length === 0 && user.constructor === Object){
+                alert("Not registered");
+                return;
+            }else{
+                localStorage.setItem("clubId",JSON.stringify(user));
+                navigate("/cluboffer",{state:{prevRoute:"registeration"}});
+            }
+        }catch(err){
+            console.log(err);
+        }
     }
 
     const [smallimageURL , setsmallImageURL] = useState('');

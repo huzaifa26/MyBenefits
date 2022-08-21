@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { doc, getDoc } from "firebase/firestore";
 import { async } from "@firebase/util";
 import { Link, useNavigate } from "react-router-dom";
+import {login} from "../_services/index.js";
 
 
 
@@ -17,34 +18,18 @@ export default function Login(){
         e.preventDefault();
         let email=loginFormRef.current.email.value;
         let password=loginFormRef.current.password.value;
-        toast.loading("Signing in.");
-        signInWithEmailAndPassword (auth, email, password)
-            .then(async(userCredential) => {
-                const user = userCredential.user;
-                toast.dismiss()
-                toast.success("Signing in Successfull");
-
-                const docRef = doc(db, "users", user.uid);
-                const docSnap = await getDoc(docRef);
-
-                if (docSnap.exists()) {
-                    const userData=docSnap.data();
-                    userData.uid=user.uid;
-                    console.log(localStorage.getItem("user"));
-                    localStorage.setItem('user', JSON.stringify(userData));
-                    console.log("Document data:", docSnap.data());
-                    navigate("/home/code");
-                } else {
-                    console.log("No such document!");
-                }
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                toast.dismiss()
-                toast.error("Signing in failed");
-                console.log(errorMessage);
-            });
+        try{
+            toast.loading("Signing in.");
+            const userData=login(email,password);
+            localStorage.setItem('user', JSON.stringify(userData));
+            toast.dismiss()
+            toast.success("Signing in Successfull");
+            navigate("/home/code");
+        }catch(err){
+            toast.dismiss()
+            toast.error("Signing in failed");
+            console.log(err);
+        }
     }
 
     return(
@@ -64,7 +49,7 @@ export default function Login(){
                     {/* {error &&
                     <div>Error Logging In.</div>
                     } */}
-                    <Link to={"/registeratoin"}><p className="text-[14px] text-[#777] hover:text-[#6ec1d6] mt-[5px]">Create Account.</p></Link>
+                    <Link to={"/registeration"}><p className="text-[14px] text-[#777] hover:text-[#6ec1d6] mt-[5px]">Create Account.</p></Link>
                 </form>
             </div>
         </div>

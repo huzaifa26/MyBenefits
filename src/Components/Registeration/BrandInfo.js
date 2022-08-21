@@ -7,8 +7,9 @@ import { toast } from 'react-toastify';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 import { sendPasswordResetEmail } from "firebase/auth";
+import { addBrand, addbusinessToClub, brandInfo, clubOffer } from "../../_services";
 
-export default function BrandInfo({getDataFromBrandInfo}){
+export default function BrandInfo({getDataFromBrandInfo,benefitArrayFC}){
     const location =useLocation();
     const navigate=useNavigate();
     const brandInfoRef=useRef();
@@ -49,39 +50,75 @@ export default function BrandInfo({getDataFromBrandInfo}){
             toast.dark("please Enter Phone number");
             return
         }
-        if(smallimageURL === ""){
-            toast.dark("Please add Logo");
-            return
+        // if(smallimageURL === ""){
+        //     toast.dark("Please add Logo");
+        //     return
+        // }
+
+        let brandData={
+            name:brandInfoRef.current.brandName.value,
+            description:brandInfoRef.current.brandName.value,
+            // logoUrl:brandInfoRef?.current?.smallimageURL?.value,
+            logoUrl:smallimageURL,
+        }
+
+        let brand;
+        try{
+            brand=await addBrand(brandData);
+            brand=(JSON.parse(brand));
+        }catch(err){
+            console.log(err);
         }
 
         let data={
             email:brandInfoRef.current.email.value,
             password:brandInfoRef.current.password.value,
-            accountName:brandInfoRef.current.accountName.value,
-            brandID:brandInfoRef.current.brandID.value,
-            businessName:brandInfoRef.current.businessName.value,
-            businessAddress:brandInfoRef.current.businessAddress.value,
-            phoneNo:value,
-            openingHours:brandInfoRef.current.openingHours.value,
-            specialOpeningHours:brandInfoRef.current.specialOpeningHours.value,
-            contactName:brandInfoRef.current.contactName.value,
-            description:brandInfoRef.current.description.value,
-            brandName:brandInfoRef.current.brandName.value,
-            longDescription:brandInfoRef.current.longDescription.value,
-            brandInfoSmallLogo:smallimageURL,
+            name:brandInfoRef.current.accountName.value,
+            brandId:brand.id,
+            information:{
+                name:brandInfoRef.current.businessName.value,
+                address:brandInfoRef.current.businessAddress.value,
+                phone:value,
+                openingHours1:brandInfoRef.current.openingHours.value,
+                openingHours2:brandInfoRef.current.specialOpeningHours.value,
+                contactName:brandInfoRef.current.contactName.value,
+                description:brandInfoRef.current.description.value,
+                picture_url:smallimageURL,
+                brandInfoSmallLogo:smallimageURL,
+            }
         }
-        getDataFromBrandInfo(data)
+        let business;
+        try{
+            business=await brandInfo(data);
+            business=(JSON.parse(business));
+            let addbusinesstoclub=await addbusinessToClub(business);
+            console.log(addbusinesstoclub);
+            for(let i = 0;i<benefitArrayFC.length;i++){
+                try{
+                    benefitArrayFC[i].businessId=business.id;
+                    console.log(benefitArrayFC[i])
+                    let benefits=await clubOffer(benefitArrayFC[i]);
+                    // console.log(benefits);
+                }catch(err){
+                    console.log(err);
+                }
+            }
+        }catch(err){
+            console.log(err);
+        }
+
+        
     }
 
-    // Clearing the location.state.prevRoute if user directly enter route in browser bar. i-e it enforce registeration flow.
-    window.onbeforeunload = function(event){
-        window.history.replaceState({},document.title);
-    }
+    // // Clearing the location.state.prevRoute if user directly enter route in browser bar. i-e it enforce registeration flow.
+    // window.onbeforeunload = function(event){
+    //     window.history.replaceState({},document.title);
+    // }
 
-    // Code to redirect to registertation route when user manually enter /brandinfo route
-    if(location.state === null || location.state.prevRoute !== "cluboffer"){
-        return <Navigate to="/registeration" />
-    }
+    // // Code to redirect to registertation route when user manually enter /brandinfo route
+    // if(location.state === null || location.state.prevRoute !== "cluboffer"){
+    //     return <Navigate to="/registeration" />
+    // }
 
     return(
     <div className="max-w-[1920px] w-[calc(100vw - 100%)] h-[100%] min-h-[1080px] overflow-y-hidden linearBG">

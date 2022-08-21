@@ -4,11 +4,11 @@ import { useRef, useState } from "react";
 import {ref,uploadBytes,getDownloadURL} from "firebase/storage"
 import { Storage } from "../Firebase/firebase";
 import { ToastContainer, toast } from 'react-toastify';
+import { clubOffer } from "../../_services";
 
 
-export default function ClubOffer({getDataFromClubOffer,benefitArray}){
+export default function ClubOffer({getDataFromClubOffer}){
     const location =useLocation();
-    console.log(location);
     const navigate=useNavigate();
     const clubOfferRef=useRef();
 
@@ -77,6 +77,8 @@ export default function ClubOffer({getDataFromClubOffer,benefitArray}){
         e.target.value="";
     }
 
+
+    const [benefitArray,setBenefitArray]=useState([]);
     const [benefitType,setBenefitType]=useState("");
     const clubOfferSubmitHandler=(e)=>{
         e.preventDefault();
@@ -91,10 +93,10 @@ export default function ClubOffer({getDataFromClubOffer,benefitArray}){
             return
         }
 
-        if(largeimageURL === "" || smallimageURL === ""){
-            toast.error("Please add both Logos");
-            return
-        }
+        // if(largeimageURL === "" || smallimageURL === ""){
+        //     toast.error("Please add both Logos");
+        //     return
+        // }
 
         let data={
             type:benefitType,
@@ -102,13 +104,15 @@ export default function ClubOffer({getDataFromClubOffer,benefitArray}){
             points:clubOfferRef.current.points.value,
             possiblePurchase:clubOfferRef.current.possiblePurchase.value,
             discount:clubOfferRef.current.discount.value,
-            code:clubOfferRef.current.code.value,
             description:clubOfferRef.current.description.value,
             longDescription:clubOfferRef.current.longDescription.value,
             smallLogo:smallimageURL,
             biglogo:largeimageURL,
         }
-        getDataFromClubOffer(data);
+
+        setBenefitArray((prev)=>{
+            return [...prev,data];
+        });
         clearValues();
     }
 
@@ -118,7 +122,6 @@ export default function ClubOffer({getDataFromClubOffer,benefitArray}){
         clubOfferRef.current.points.value=""
         clubOfferRef.current.possiblePurchase.value=""
         clubOfferRef.current.discount.value=""
-        clubOfferRef.current.code.value=""
         clubOfferRef.current.description.value=""
         clubOfferRef.current.longDescription.value=""
         setsmallImageURL("");
@@ -126,23 +129,26 @@ export default function ClubOffer({getDataFromClubOffer,benefitArray}){
         setAllFalse();
     }
 
-    const gotoNextPage=()=>{
+    const gotoNextPage=async()=>{
+        console.log(benefitArray)
         if(benefitArray.length === 0){
             toast.error("Please add Benefit before proceeding.");
             return
         }
+
+        getDataFromClubOffer(benefitArray);
         navigate("/brandinfo",{state:{prevRoute:"cluboffer"}});
     }
 
-    // Clearing the location.state.prevRoute if user directly enter route in browser bar. i-e it enforce registeration flow.
-    window.onbeforeunload = function(event){
-        window.history.replaceState({},document.title);
-    }
+    // // Clearing the location.state.prevRoute if user directly enter route in browser bar. i-e it enforce registeration flow.
+    // window.onbeforeunload = function(event){
+    //     window.history.replaceState({},document.title);
+    // }
 
-    // Code to redirect to registertation route when user manually enter /cluboffer route
-    if(location.state === null || location.state.prevRoute !== "registeration"){
-        return <Navigate to="/registeration" />
-    }
+    // // Code to redirect to registertation route when user manually enter /cluboffer route
+    // if(location.state === null || location.state.prevRoute !== "registeration"){
+    //     return <Navigate to="/registeration" />
+    // }
 
     return(
         <div className="max-w-[1920px] w-[calc(100vw - 100%)] h-[100%] max-h-[1080px] overflow-y-hidden linearBG">
@@ -199,11 +205,6 @@ export default function ClubOffer({getDataFromClubOffer,benefitArray}){
                         <div>
                             <label className="text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold block">Discount Ammount</label>
                             <input type={"number"} name="discount" required className="indent-[27px] w-[14.85vw] h-[42.76px]"/>
-                        </div>
-
-                        <div className="inline-block">
-                            <label className="text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold block">Code</label>
-                            <input type={"number"} name="code" required className="indent-[27px] w-[14.85vw] h-[42.76px]"/>
                         </div>
 
                         <div>

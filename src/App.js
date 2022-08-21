@@ -13,44 +13,34 @@ import Main from "./Components/Home/Main";
 import DailyReport from "./Components/Home/DailyReport";
 import AddBenefit from "./Components/Home/AddBenefit";
 import Protected from "./Components/Protected/Protected";
+import { useState } from "react";
+
 
 function App() {
 
   let data={};
-  let benefitArray=[];
 
-  const getDataFromRegisteration=(rdata)=>{
+  const getDataFromRegisteration=async (rdata)=>{
     data=rdata;
     console.log(data);
   }
 
-  const getDataFromClubOffer=(cdata)=>{
-    benefitArray.push(cdata);
+  const [benefitArrayFC,setBenefitArrayFC]=useState([]);
+  const getDataFromClubOffer=(benefitArray)=>{
+    setBenefitArrayFC(benefitArray);
   }
 
   const getDataFromBrandInfo=(bdata)=>{
     data.brandInfo=bdata;
     console.log(data);
-    console.log(benefitArray);
 
     toast.dismiss();
     toast.loading("Registering User");
     createUserWithEmailAndPassword(auth, data.brandInfo.email, data.brandInfo.password)
     .then(async (response) => {
-      console.log(response.user.uid)
-      for(let i=0;i<benefitArray.length;i++){
-        benefitArray[i].uid=response.user.uid;
-      }
-      // const docRef = await setDoc(collection(db, "user", data,));
       try{
         const userdocRef=await setDoc(doc(db, "users", response.user.uid), data);
-        try{
-          for(let i = 0;i<benefitArray.length;i++){
-            const benefitdocRef = await addDoc(collection(db, "benefits"), benefitArray[i]);
-          }
-        }catch(e){
-          console.log(e)
-        }
+        
         toast.dismiss();
         toast.success("User Registeration Success.");
         return <Navigate to={"/"}/>;
@@ -72,8 +62,8 @@ function App() {
       <Routes>
       <Route path="/" element={<Login/>}/>
       <Route path="registeration" element={<Registeration getDataFromRegisteration={getDataFromRegisteration}/>}/>
-      <Route path="brandinfo" element={<BrandInfo getDataFromBrandInfo={getDataFromBrandInfo}/>}></Route>
-      <Route path="cluboffer" element={<ClubOffer benefitArray={benefitArray} getDataFromClubOffer={getDataFromClubOffer}/>}></Route>
+      <Route path="brandinfo" element={<BrandInfo benefitArrayFC={benefitArrayFC} getDataFromBrandInfo={getDataFromBrandInfo}/>}></Route>
+      <Route path="cluboffer" element={<ClubOffer getDataFromClubOffer={getDataFromClubOffer}/>}></Route>
 
       <Route path="/" element={<Protected/>}>  
         <Route path="home" element={<Home />}>

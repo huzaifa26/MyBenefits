@@ -1,4 +1,5 @@
 import {useState} from "react";
+import { userService } from "../../_services";
 
 export default function Main(){
 
@@ -20,8 +21,12 @@ export default function Main(){
         })
     }
 
+    const submitCodeHandler=()=>{
+        userService.getRequestByCode(code)
+    }
+
     return(
-        <div className="w-[600px] m-auto flex flex-col items-center">
+        <div  className="w-[600px] m-auto flex flex-col items-center">
             <h2 className="mt-[30px] pt-[5px] mb-[16px] text-[32px] text-[#0c5460] rounded-[0.25rem] w-[100%] h-[65px]  bg-[#d1ecf1] border border-[#bee5eb]">Enter or scan a code</h2>
             <input className="w-[285px] h-[70px] !rounded-[0.3rem] border-[1px] border-black bg-[#e9ecef]" type={"text"} disabled value={code}></input>
 
@@ -39,7 +44,7 @@ export default function Main(){
                 <button onClick={numericBtnHandler} value={"delete"} className="hover:text-white py-[6px] px-[12px] w-[190px] h-[74px] border-[1px] border-black border-collapse hover:bg-[#343a40] transition-all duration-200 text-[40px] text-[#212529]">Delete</button>
                 <button onClick={numericBtnHandler} value={"0"} className="hover:text-white py-[6px] px-[12px] w-[190px] h-[74px] border-[1px] border-black border-collapse hover:bg-[#343a40] transition-all duration-200 text-[40px] text-[#212529]">0</button>
             </div>
-            <button className="rounded-full mt-[20px] w-[600px] h-[50px] bg-[#EBBC33] text-[22px] text-white">Submit</button>
+            <button onClick={submitCodeHandler} className="rounded-full mt-[20px] w-[600px] h-[50px] bg-[#EBBC33] text-[22px] text-white">Submit</button>
         
         </div>
     )

@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/MyBenefits/static/css/main.9166d049.css",
+    "main.js": "/MyBenefits/static/js/main.9dfed8fd.js",
+    "index.html": "/MyBenefits/index.html",
+    "main.9166d049.css.map": "/MyBenefits/static/css/main.9166d049.css.map",
+    "main.9dfed8fd.js.map": "/MyBenefits/static/js/main.9dfed8fd.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.9166d049.css",
+    "static/js/main.9dfed8fd.js"
+  ]
+}

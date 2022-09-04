@@ -166,7 +166,7 @@ export default function Registeration({getDataFromRegisteration}){
                         <input name="extraInfo" type={"text"} required placeholder="Extra Information" className="indent-[27px] w-[301px] h-[67px]"/>
                         <div className="flex justify-between">
                             <div className="text-[clamp(16px,1.302vw,25px)] text-[#fff] font-bold">
-                                <h2 className="font-[25px] font-bold ">Bid Logo</h2>
+                                <h2 className="font-[25px] font-bold ">Small Logo</h2>
                                 <div className="flex justify-center items-center w-[119px] h-[89px] bg-white rounded-[18px]">
                                     <input onChange={smallImageHandler} name="img1" id="files1" type={"file"} className="hidden w-[301px] h-[42.76px]"/>
                                     <label className="text-[14px] text-center w-[62px] h-[24px] bg-[#FDC11F] border-[1px] border-[#707070]" for="files1">Upload</label>
@@ -175,7 +175,7 @@ export default function Registeration({getDataFromRegisteration}){
                             </div>
 
                             <div className="text-[clamp(16px,1.302vw,25px)] text-[#fff] font-bold">
-                                <h2 className="font-[25px] font-bold ">Bid Logo</h2>
+                                <h2 className="font-[25px] font-bold ">Big Logo</h2>
                                 <div className="flex justify-center items-center w-[129px] h-[119px] bg-white rounded-[18px]">
                                     <input onChange={largeImageHandler} name="img2" id="files2" type={"file"} className="hidden w-[301px] h-[42.76px]"/>
                                     <label className="text-[14px] text-center w-[62px] h-[24px] bg-[#FDC11F] border-[1px] border-[#707070]" for="files2">Upload</label>
@@ -184,7 +184,7 @@ export default function Registeration({getDataFromRegisteration}){
                             </div>
                         </div>
                         <label className="text-[15px] text-[#fff]"><input name="terms" type={"checkbox"}/> I agree to Terms of service <span className="text-[#FDC11F]">&</span> Privacy Policy</label>
-                        <button type="submit" className="w-[8.750vw] rounded-[57px] h-[64.87px] text-[clamp(18px,1.562vw,30px)] self-center bg-[#FDC11F] text-[#1D262D] font-bold">Register</button>
+                        <button type="submit" className="w-[8.750vw] rounded-[57px] h-[64.87px] text-[clamp(18px,1.562vw,30px)] self-center bg-[#FDC11F] text-[#1D262D] font-bold">Next</button>
                     </form>
                 </div>
             </div>

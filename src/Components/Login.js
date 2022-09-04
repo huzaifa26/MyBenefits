@@ -14,13 +14,18 @@ export default function Login(){
 
     const loginFormRef=useRef();
     
-    const loginFormSubmitHandler=(e)=>{
+    const loginFormSubmitHandler=async (e)=>{
         e.preventDefault();
         let email=loginFormRef.current.email.value;
         let password=loginFormRef.current.password.value;
         try{
             toast.loading("Signing in.");
-            const userData=login(email,password);
+            const userData=await login(email,password);
+            if(userData.error === "unauthorized"){
+                toast.dismiss()
+                toast("No user found")
+                return
+            }
             localStorage.setItem('user', JSON.stringify(userData));
             toast.dismiss()
             toast.success("Signing in Successfull");

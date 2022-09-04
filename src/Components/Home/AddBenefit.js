@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import AddBenefitModel from "../Model/AddBenefitModel";
 import { db } from "../Firebase/firebase";
 import { getMetadata } from "firebase/storage";
+import { userService } from "../../_services";
 
 export default function AddBenefit(){
 
@@ -25,22 +26,19 @@ export default function AddBenefit(){
         setShowModal(false);
     }
 
-    const getData=async ()=>{
-        const querySnapshot = await getDocs(collection(db, "benefits"));
-        let arr=[];
-        querySnapshot.docs.map(doc => arr.push(doc.data()));
-        setBenefitArray(arr);
-        console.log(arr);
-    }
-
     useEffect(()=>{
-        getData();
+        const fetch=async()=>{
+            // const res=await userService.getRequsts();
+            const res=await userService.allBusinessBenefitOffer();
+            setBenefitArray(res);
+        }
+        fetch();
     },[])
 
     return(
         <>
         {showModal &&
-            <AddBenefitModel closeModal={closeModal}/>
+            <AddBenefitModel item={getDetail} pointValue={pointValue} closeModal={closeModal}/>
         }
         <div className="flex justify-around gap-[15px] m-auto w-[1080px] pt-[30px]">
             <div className="w-[418px] rounded-[0.25rem]">
@@ -83,12 +81,11 @@ export default function AddBenefit(){
                 {benefitsArray && 
                     benefitsArray.map((item)=>{
                         return(
-                            <div onClick={()=>{setDetails(item);}} className="flex justify-center items-center w-[100%] h-[65px] bg-[#0069d9] text-[#fff] text-[20px] rounded-[0.25rem]">
+                            <div key={item.id} onClick={()=>{setDetails(item);}} className="flex justify-center items-center w-[100%] h-[65px] bg-[#0069d9] text-[#fff] text-[20px] rounded-[0.25rem]">
                                 {item.description}
                             </div>
                         )
                     })
-                    
                 }
                 
             </div>

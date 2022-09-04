@@ -1,16 +1,17 @@
 import { authHeader } from '../_helpers';
 
 export const userService = {
-    logout,
+    logout, // done
     getInfo,
     checkInfoAvailable,
     getRequsts,
-    getRequestByCode,
-    approveRequestByID,
-    getBenefitPurchased,
-    getBenefitUsage,
-    getDailyHistory,
-    undoTransaction,
+    getRequestByCode, // done
+    approveRequestByID, // done
+    getBenefitPurchased, // Not used
+    getBenefitUsage,  // Not used
+    getDailyHistory, // done
+    undoTransaction, // done
+    allBusinessBenefitOffer,
 };
 const globalHeaders = {
   'Content-Type': 'application/json',
@@ -18,7 +19,8 @@ const globalHeaders = {
   'Access-Control-Allow-Credentials': true,
 };
 // let serverUrl = "http://localhost:8090";
-let serverUrl = "https://api.test.mybenefitz.com";
+// let serverUrl = "https://api.test.mybenefitz.com";
+let serverUrl = "https://api.mybenefitz.com";
 if (process.env.REACT_APP_ENV_TYPE === "test"){
   serverUrl = "https://api.test.mybenefitz.com";
 } else if (process.env.REACT_APP_ENV_TYPE === "development"){
@@ -28,7 +30,59 @@ if (process.env.REACT_APP_ENV_TYPE === "test"){
 }
 console.log("API Path", serverUrl);
 
-export const registerUser= ({name,description,phoneNum,email,website,extraInfo,type,smallLogoUrl,largeLogoUrl})=>{
+async function allBusinessBenefitOffer() {
+    const requestOptions = {
+        method: 'GET',
+        headers: {...authHeader(), ...globalHeaders}
+    };
+    let user = JSON.parse(localStorage.getItem('user'));
+    return fetch(`${serverUrl}/admin/business/${user.business_id}/benefit_offer`, requestOptions)
+    .then(res => res.json())
+    .then(res => {return res})
+    .catch(err => {return err});
+}
+
+// function approveRequestByID(reqID, points) {
+  //   let data = {
+    //     "requestId": reqID,
+//     "pointsToReduce": points,
+//   }
+//   const requestOptions = {
+//       method: 'POST',
+//       headers: {...authHeader(), ...globalHeaders},
+//       body: JSON.stringify(data),
+//   };
+//   let user = JSON.parse(localStorage.getItem('user'));
+//   return fetch(`${serverUrl}/admin/club`, requestOptions)
+//   .then(response => response.json())
+//   .then(user => {
+//       resolve(JSON.stringify(user));
+//   }).catch((err)=>{
+//     console.log(err)
+//   })
+// }
+
+
+export const addBenefit= async ({benefitOfferId,pointsStatus,code})=>{
+  const requestOptions = {
+    method: 'POST',
+    headers: {...authHeader(), ...globalHeaders},
+    body: JSON.stringify({benefitOfferId,pointsStatus,code}),
+};
+
+  let user=localStorage.getItem("user");
+  user=JSON.parse(user);
+
+  return fetch(`${serverUrl}/business/${user.business_id}/used_benefit`, requestOptions)
+  .then(response => response.json())
+  .then(user => {
+      return(JSON.stringify(user));
+  }).catch((err)=>{
+    console.log(err)
+  })
+}
+
+export const registerUser= async ({name,description,phoneNum,email,website,extraInfo,type,smallLogoUrl,largeLogoUrl})=>{
   const requestOptions = {
     method: 'POST',
     cache: 'no-cache',
@@ -41,15 +95,13 @@ export const registerUser= ({name,description,phoneNum,email,website,extraInfo,t
     body: JSON.stringify({name,description,phoneNum,email,website,extraInfo,type,smallLogoUrl,largeLogoUrl}),
   };
 
-  return new Promise(resolve => {
-    fetch(`${serverUrl}/admin/club`, requestOptions)
-    .then(handleResponse)
-    .then(user => {
-        resolve(JSON.stringify(user));
-    }).catch((err)=>{
-      console.log(err)
-    })
-  });
+  return fetch(`${serverUrl}/admin/club`, requestOptions)
+  .then(response => response.json())
+  .then(user => {
+      return(JSON.stringify(user));
+  }).catch((err)=>{
+    console.log(err)
+  })
 }
 
 export const clubOffer= ({price,points,possiblePurchase,discount,description,longDescription})=>{
@@ -167,9 +219,8 @@ export function login(email, password) {
     };
 
     return fetch(`${serverUrl}/business/login`, requestOptions)
-        .then(handleResponse)
+        .then(response => response.json())
         .then(user => {
-          console.log(JSON.stringify(user));
             // login successful if there's a user in the response
             if (user) {
                 // store user details and basic auth credentials in local storage
@@ -177,6 +228,7 @@ export function login(email, password) {
                 user.authdata = window.btoa(email + ':' + password);
                 localStorage.setItem('user', JSON.stringify(user));
             }
+            console.log(user)
             return user;
         });
 }
@@ -194,6 +246,8 @@ function getInfo() {
     let user = JSON.parse(localStorage.getItem('user'));
     return fetch(`${serverUrl}/business/${user.business_id}`, requestOptions).then(handleResponse).catch(handleError);
 }
+
+
 function checkInfoAvailable() {
     getInfo()
     .then(x => {
@@ -213,10 +267,12 @@ function getRequestByCode(code) {
         headers: {...authHeader(), ...globalHeaders}
     };
     let user = JSON.parse(localStorage.getItem('user'));
-    return fetch(`${serverUrl}/business/${user.business_id}/request/${code}`, requestOptions).then(handleResponse).catch(handleError);
+    return fetch(`${serverUrl}/business/${user.business_id}/request/${code}`, requestOptions)
+    .then(response => response.json())
+    .then(response => {return response})
 }
 
-function approveRequestByID(reqID, points) {
+async function approveRequestByID(reqID, points) {
     let data = {
       "requestId": reqID,
       "pointsToReduce": points,
@@ -227,7 +283,10 @@ function approveRequestByID(reqID, points) {
         body: JSON.stringify(data),
     };
     let user = JSON.parse(localStorage.getItem('user'));
-    return fetch(`${serverUrl}/business/${user.business_id}/request/redeem`, requestOptions).then(handleResponse).catch(handleError);
+    return fetch(`${serverUrl}/business/${user.business_id}/request/redeem`, requestOptions)
+    .then(res=>res.json())
+    .then(res=>{return res})
+    .catch(err => console.log(err))
 }
 
 function getDailyHistory(dateRange) {
@@ -241,7 +300,7 @@ function getDailyHistory(dateRange) {
       + `&fromDate=${dateRange.fromDate ? dateRange.fromDate : ""}`
       + `&toDate=${dateRange.toDate ? dateRange.toDate : ""}`;
 
-    return fetch(url, requestOptions).then(handleResponse).catch(handleError)
+    return fetch(url, requestOptions).then(response => response.json())
     .then( res =>{
         var array = [];
         res.purchesed.forEach(purchase => {
@@ -272,7 +331,10 @@ function getRequsts() {
         headers: {...authHeader(), ...globalHeaders}
     };
     let user = JSON.parse(localStorage.getItem('user'));
-    return fetch(`${serverUrl}/business/${user.business_id}/request`, requestOptions).then(handleResponse).catch(handleError);
+    return fetch(`${serverUrl}/business/${user.business_id}/request`, requestOptions)
+    .then(res => res.json())
+    .then(res => {return res})
+    .catch(err => {return err});
 }
 function getBenefitPurchased() {
     const requestOptions = {
@@ -298,9 +360,13 @@ function undoTransaction(type, id) {
     let user = JSON.parse(localStorage.getItem('user'));
     switch(type) {
       case "purchased":
-        return fetch(`${serverUrl}/business/${user.business_id}/benefit_purchased/${id}/refund`, requestOptions).then(handleResponse).catch(handleError);
+        return fetch(`${serverUrl}/business/${user.business_id}/benefit_purchased/${id}/refund`, requestOptions)
+        .then(response => response.json())
+        .then(response => {return response})
       case "usage":
-        return fetch(`${serverUrl}/business/${user.business_id}/benefit_usage/${id}/refund`, requestOptions).then(handleResponse).catch(handleError);
+        return fetch(`${serverUrl}/business/${user.business_id}/benefit_usage/${id}/refund`, requestOptions)
+        .then(response => response.json())
+        .then(response => {return response})
       default:
         return Promise.reject("Unknown type: " + type);
     }

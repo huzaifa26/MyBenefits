@@ -175,7 +175,7 @@ export default function ClubOffer({getDataFromClubOffer}){
 
 
             <div className="relative z-40 m-auto pt-[60px] pb-[21px] flex justify-between items-start w-[80%]">
-            <div className="w-[43.51vw] h-[909.25px] bg-[#1D262D] rounded-[57px]">
+            <div className="w-[43.51vw] h-[800.25px] bg-[#1D262D] rounded-[57px]">
                     <form ref={clubOfferRef} onSubmit={clubOfferSubmitHandler} className="flex flex-wrap items-center x gap-x-[4.1666vw] xl:w-[95%] w-[80%] h-[100%] m-auto">
                         <div className="flex justify-between gap-[10px]">
                             <button type="button" onClick={()=>{setBenefitType("prepaid");setAllFalse();setButton1IsActive(true);}} className={button1IsActive ?"w-[10.748vw] h-[50.78px] text-[clamp(16px,1.302vw,25px)] text-[#EBBC33] font-bold bg-[#fff] rounded-[57px]":"w-[10.748vw] h-[50.78px] text-[clamp(16px,1.302vw,25px)] text-[#fff] font-bold bg-[#EBBC33] rounded-[57px]"}>Prepaid</button>
@@ -183,39 +183,39 @@ export default function ClubOffer({getDataFromClubOffer}){
                             <button type="button" onClick={()=>{setBenefitType("free");setAllFalse();setButton3IsActive(true);}} className={button3IsActive ?"w-[10.748vw] h-[50.78px] text-[clamp(16px,1.302vw,25px)] text-[#EBBC33] font-bold bg-[#fff] rounded-[57px]":"w-[10.748vw] h-[50.78px] text-[clamp(16px,1.302vw,25px)] text-[#fff] font-bold bg-[#EBBC33] rounded-[57px]"}>Free</button>
                         </div>
                         <div className="inline-block">
-                            <label className="text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold block">Price</label>
-                            <input type={"number"} min="0" name="price" required className="indent-[27px] w-[14.85vw] h-[42.76px]"/>
+                            {/* <label className="text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold block">Price</label> */}
+                            <input type={"number"} min="0" name="price" placeholder="Price" required className="indent-[27px] w-[14.85vw] h-[42.76px]"/>
                         </div>
 
                         <div className="inline-block">
-                            <label className="text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold block">Points</label>
-                            <input type={"number"} name="points" required className="indent-[27px] w-[14.85vw] h-[42.76px]"/>
+                            {/* <label className="text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold block">Points</label> */}
+                            <input type={"number"} name="points" placeholder="Points" required className="indent-[27px] w-[14.85vw] h-[42.76px]"/>
                         </div>
                         
 
                         <div>
-                            <label className="text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold block">Possible Purchase</label>
+                            {/* <label className="text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold block">Possible Purchase</label> */}
                             <select name="possiblePurchase" required className="indent-[27px] rounded-[57px] w-[14.85vw] h-[42.76px]">
-                                <option disabled selected value={"choose option"}>Choose Option</option>
+                                <option disabled selected value={"choose option"}>Possible Purchase</option>
                                 <option value={"1"}>1</option>
                                 <option value={"Endless"}>Endless</option>
                             </select>
                         </div>
 
                         <div>
-                            <label className="text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold block">Discount Ammount</label>
-                            <input type={"number"} name="discount" required className="indent-[27px] w-[14.85vw] h-[42.76px]"/>
+                            {/* <label className="text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold block">Discount Ammount</label> */}
+                            <input type={"number"} name="discount" required placeholder="Discount Ammount" className="indent-[27px] w-[14.85vw] h-[42.76px]"/>
                         </div>
 
                         <div>
-                            <label className="text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold block">Description</label>
-                            <textarea onChange={(e)=>{setdescriptionLength(e.target.value)}} maxLength={30} name="description" rows='3' className="indent-[27px] pt-[10px] w-[29.21vw]"></textarea>
+                            {/* <label className="text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold block">Description</label> */}
+                            <textarea placeholder="Description" onChange={(e)=>{setdescriptionLength(e.target.value)}} maxLength={30} name="description" rows='3' className="indent-[27px] pt-[10px] w-[29.21vw]"></textarea>
                             <p className="text-white text-[12px] text-right">{ descriptionLength?.length || 0}/30</p>
                         </div>
 
                         <div>
-                            <label className="text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold block">Long Description</label>
-                            <textarea onChange={(e)=>{setlongdescriptionLength(e.target.value)}} maxLength={150} name="longDescription" rows='6' className="indent-[27px] pt-[10px] w-[29.21vw]"></textarea>
+                            {/* <label className="text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold block">Long Description</label> */}
+                            <textarea placeholder="Long Description" onChange={(e)=>{setlongdescriptionLength(e.target.value)}} maxLength={150} name="longDescription" rows='6' className="indent-[27px] pt-[10px] w-[29.21vw]"></textarea>
                             <p className="text-white text-[12px] text-right">{longdescriptionLength?.length || 0}/150</p>
                         </div>
 

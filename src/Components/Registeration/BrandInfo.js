@@ -98,7 +98,8 @@ export default function BrandInfo({getDataFromBrandInfo,benefitArrayFC}){
                     benefitArrayFC[i].businessId=business.id;
                     console.log(benefitArrayFC[i])
                     let benefits=await clubOffer(benefitArrayFC[i]);
-                    // console.log(benefits);
+                    toast("Account created");
+                    navigate("/");
                 }catch(err){
                     console.log(err);
                 }

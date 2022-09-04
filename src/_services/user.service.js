@@ -19,8 +19,9 @@ const globalHeaders = {
   'Access-Control-Allow-Credentials': true,
 };
 // let serverUrl = "http://localhost:8090";
-// let serverUrl = "https://api.test.mybenefitz.com";
-let serverUrl = "https://api.mybenefitz.com";
+let serverUrl = "https://api.test.mybenefitz.com";
+// let serverUrl = "https://api.mybenefitz.com";
+
 if (process.env.REACT_APP_ENV_TYPE === "test"){
   serverUrl = "https://api.test.mybenefitz.com";
 } else if (process.env.REACT_APP_ENV_TYPE === "development"){

@@ -113,6 +113,7 @@ export default function ClubOffer({getDataFromClubOffer}){
         setBenefitArray((prev)=>{
             return [...prev,data];
         });
+        toast("Benefit Added");
         clearValues();
     }
 

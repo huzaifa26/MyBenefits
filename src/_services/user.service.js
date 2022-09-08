@@ -78,11 +78,11 @@ export const addBenefit= async ({benefitOfferId,pointsStatus,code})=>{
   .then(response => response.json())
   .then(user => {
       return(JSON.stringify(user));
-  }).catch((err)=>{
-    console.log(err)
-  })
+  }).catch(handleError)
 }
 
+
+// Add club // POSTMAN
 export const registerUser= async ({name,description,phoneNum,email,website,extraInfo,type,smallLogoUrl,largeLogoUrl})=>{
   const requestOptions = {
     method: 'POST',
@@ -105,7 +105,8 @@ export const registerUser= async ({name,description,phoneNum,email,website,extra
   })
 }
 
-export const clubOffer= ({price,points,possiblePurchase,discount,description,longDescription})=>{
+export const clubOffer= ({price,points,possiblePurchases,discountAmount,smallPicturlUrl,LargePicturlUrl,type,description,longDescription})=>{
+  console.log(type)
   const requestOptions = {
     method: 'POST',
     cache: 'no-cache',
@@ -115,7 +116,7 @@ export const clubOffer= ({price,points,possiblePurchase,discount,description,lon
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Credentials': true,
     },
-    body: JSON.stringify({price,points,possiblePurchase,discount,description,longDescription}),
+    body: JSON.stringify({price,points,possiblePurchases,discountAmount,smallPicturlUrl,LargePicturlUrl,type,description,longDescription}),
   };
 
   const clubId=JSON.parse(localStorage.getItem("clubId"));
@@ -144,7 +145,7 @@ export const brandInfo= (data)=>{
     },
     body: JSON.stringify(data),
   };
-
+  console.log(data);
   return new Promise((resolve,reject) => {
     fetch(`${serverUrl}/admin/business`, requestOptions)
     .then(handleResponse)
@@ -182,6 +183,7 @@ export const addbusinessToClub= ({id})=>{
   });
 }
 
+// Add Brand //POSTMAN
 export const addBrand= ({name,description,logoUrl})=>{
   const requestOptions = {
     method: 'POST',
@@ -229,7 +231,6 @@ export function login(email, password) {
                 user.authdata = window.btoa(email + ':' + password);
                 localStorage.setItem('user', JSON.stringify(user));
             }
-            console.log(user)
             return user;
         });
 }
@@ -245,7 +246,9 @@ function getInfo() {
         headers: {...authHeader(), ...globalHeaders}
     };
     let user = JSON.parse(localStorage.getItem('user'));
-    return fetch(`${serverUrl}/business/${user.business_id}`, requestOptions).then(handleResponse).catch(handleError);
+    return fetch(`${serverUrl}/business/${user.business_id}`, requestOptions).then((res)=>res.json())
+    .then(res=>{return res})
+    .catch(err=>{return err})
 }
 
 

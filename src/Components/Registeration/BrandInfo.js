@@ -6,7 +6,6 @@ import { Storage } from "../Firebase/firebase";
 import { toast } from 'react-toastify';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
-import { sendPasswordResetEmail } from "firebase/auth";
 import { addBrand, addbusinessToClub, brandInfo, clubOffer } from "../../_services";
 
 export default function BrandInfo({getDataFromBrandInfo,benefitArrayFC}){
@@ -50,20 +49,16 @@ export default function BrandInfo({getDataFromBrandInfo,benefitArrayFC}){
             toast.dark("please Enter Phone number");
             return
         }
-        // if(smallimageURL === ""){
-        //     toast.dark("Please add Logo");
-        //     return
-        // }
 
         let brandData={
             name:brandInfoRef.current.brandName.value,
             description:brandInfoRef.current.brandName.value,
-            // logoUrl:brandInfoRef?.current?.smallimageURL?.value,
             logoUrl:smallimageURL,
         }
 
         let brand;
         try{
+            // Add Brand //POSTMAN
             brand=await addBrand(brandData);
             brand=(JSON.parse(brand));
         }catch(err){
@@ -96,7 +91,6 @@ export default function BrandInfo({getDataFromBrandInfo,benefitArrayFC}){
             for(let i = 0;i<benefitArrayFC.length;i++){
                 try{
                     benefitArrayFC[i].businessId=business.id;
-                    console.log(benefitArrayFC[i])
                     let benefits=await clubOffer(benefitArrayFC[i]);
                     toast("Account created");
                     navigate("/");
@@ -106,9 +100,7 @@ export default function BrandInfo({getDataFromBrandInfo,benefitArrayFC}){
             }
         }catch(err){
             console.log(err);
-        }
-
-        
+        }        
     }
 
     // // Clearing the location.state.prevRoute if user directly enter route in browser bar. i-e it enforce registeration flow.

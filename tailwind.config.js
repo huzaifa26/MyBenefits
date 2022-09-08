@@ -17,7 +17,11 @@ module.exports = {
 
       '2xl': {'min': '1536px'},
     },
-    extend: {},
+    extend: {
+      boxShadow: {
+        'xsm': '0 0px 1x',
+      }
+    },
   },
   plugins: [],
 }

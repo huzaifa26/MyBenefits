@@ -99,17 +99,18 @@ export default function ClubOffer({getDataFromClubOffer}){
         // }
 
         let data={
-            type:benefitType,
             price:clubOfferRef.current.price.value,
             points:clubOfferRef.current.points.value,
-            possiblePurchase:clubOfferRef.current.possiblePurchase.value,
-            discount:clubOfferRef.current.discount.value,
+            possiblePurchases:clubOfferRef.current.possiblePurchase.value === "null"? null:clubOfferRef.current.possiblePurchase.value,
+            discountAmount:clubOfferRef.current.discount.value,
             description:clubOfferRef.current.description.value,
             longDescription:clubOfferRef.current.longDescription.value,
-            smallLogo:smallimageURL,
-            biglogo:largeimageURL,
+            smallPicturlUrl:smallimageURL,
+            LargePicturlUrl:largeimageURL,
+            type:benefitType,
         }
 
+        console.log(data);
         setBenefitArray((prev)=>{
             return [...prev,data];
         });
@@ -131,6 +132,17 @@ export default function ClubOffer({getDataFromClubOffer}){
     }
 
     const gotoNextPage=async()=>{
+
+        if(clubOfferRef.current.price.value !== "" || 
+        clubOfferRef.current.points.value !== "" || 
+        // clubOfferRef.current.possiblePurchase.value !== "" || 
+        clubOfferRef.current.discount.value !== "" || 
+        clubOfferRef.current.description.value !== "" || 
+        clubOfferRef.current.longDescription.value !== "" ){
+            toast("Please add existing benefit before proceeding")
+            return
+        }
+
         console.log(benefitArray)
         if(benefitArray.length === 0){
             toast.error("Please add Benefit before proceeding.");
@@ -180,7 +192,7 @@ export default function ClubOffer({getDataFromClubOffer}){
                     <form ref={clubOfferRef} onSubmit={clubOfferSubmitHandler} className="flex flex-wrap items-center x gap-x-[4.1666vw] xl:w-[95%] w-[80%] h-[100%] m-auto">
                         <div className="flex justify-between gap-[10px]">
                             <button type="button" onClick={()=>{setBenefitType("prepaid");setAllFalse();setButton1IsActive(true);}} className={button1IsActive ?"w-[10.748vw] h-[50.78px] text-[clamp(16px,1.302vw,25px)] text-[#EBBC33] font-bold bg-[#fff] rounded-[57px]":"w-[10.748vw] h-[50.78px] text-[clamp(16px,1.302vw,25px)] text-[#fff] font-bold bg-[#EBBC33] rounded-[57px]"}>Prepaid</button>
-                            <button type="button" onClick={()=>{setBenefitType("punchchard");setAllFalse();setButton2IsActive(true);}} className={button2IsActive ?"w-[10.748vw] h-[50.78px] text-[clamp(16px,1.302vw,25px)] text-[#EBBC33] font-bold bg-[#fff] rounded-[57px]":"w-[10.748vw] h-[50.78px] text-[clamp(16px,1.302vw,25px)] text-[#fff] font-bold bg-[#EBBC33] rounded-[57px]"}>Punchchard</button>
+                            <button type="button" onClick={()=>{setBenefitType("punch");setAllFalse();setButton2IsActive(true);}} className={button2IsActive ?"w-[10.748vw] h-[50.78px] text-[clamp(16px,1.302vw,25px)] text-[#EBBC33] font-bold bg-[#fff] rounded-[57px]":"w-[10.748vw] h-[50.78px] text-[clamp(16px,1.302vw,25px)] text-[#fff] font-bold bg-[#EBBC33] rounded-[57px]"}>Punchchard</button>
                             <button type="button" onClick={()=>{setBenefitType("free");setAllFalse();setButton3IsActive(true);}} className={button3IsActive ?"w-[10.748vw] h-[50.78px] text-[clamp(16px,1.302vw,25px)] text-[#EBBC33] font-bold bg-[#fff] rounded-[57px]":"w-[10.748vw] h-[50.78px] text-[clamp(16px,1.302vw,25px)] text-[#fff] font-bold bg-[#EBBC33] rounded-[57px]"}>Free</button>
                         </div>
                         <div className="inline-block">
@@ -199,7 +211,7 @@ export default function ClubOffer({getDataFromClubOffer}){
                             <select name="possiblePurchase" required className="indent-[27px] rounded-[57px] w-[14.85vw] h-[42.76px]">
                                 <option disabled selected value={"choose option"}>Possible Purchase</option>
                                 <option value={"1"}>1</option>
-                                <option value={"Endless"}>Endless</option>
+                                <option value={'null'}>Endless</option>
                             </select>
                         </div>
 
@@ -250,7 +262,7 @@ export default function ClubOffer({getDataFromClubOffer}){
                     </form>
                 </div>
                 
-                <img className="w-[37.13vw] sm:hidden xsm:hidden md:hidden self-center" src="/images/Repeat Grid 3.svg" alt=""/>
+                <img className="w-[37.13vw] sm:hidden xsm:hidden md:hidden self-center" src={"./images/Repeat Grid 3.svg"} alt=""/>
             </div>
             <div onClick={gotoNextPage} className="z-50 cursor-pointer flex items-center gap-[10px] absolute top-[83%] left-[54%]">
                 <button  className="bg-transparent text-[23px] font-bold text-[#FDC11F]">Next</button>

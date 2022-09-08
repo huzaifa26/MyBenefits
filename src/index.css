@@ -2,23 +2,40 @@
 @tailwind components;
 @tailwind utilities;
 
-
-input,textarea{
-    border-top-right-radius: 50px 50px;  
+input,
+textarea {
+    border-top-right-radius: 50px 50px;
     border-bottom-right-radius: 50px 50px;
-    border-top-left-radius: 50px 50px;  
+    border-top-left-radius: 50px 50px;
     border-bottom-left-radius: 50px 50px;
     outline: none;
 }
 
-.react-tel-input .selected-flag:hover, .react-tel-input .selected-flag:focus{
+.react-tel-input .selected-flag:hover,
+.react-tel-input .selected-flag:focus {
     background-color: rgba(255, 255, 255, 0) !important;
 }
 
-.active{
+.active {
     color: #fff;
 }
 
-.gradientBackground{
-    background-image: linear-gradient(to bottom, #26CDBD,#16756C,#13675F);
+.gradientBackground {
+    background-image: linear-gradient(to bottom, #26CDBD, #16756C, #13675F);
+}
+
+.animation {
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 0.25s, opacity 0.25s ease-out;
+}
+
+.react-tel-input .form-control {
+    width: 90% !important;
+}
+
+@media screen and (max-width: 576px) {
+    .react-tel-input .form-control {
+        width: 90% !important;
+    }
 }

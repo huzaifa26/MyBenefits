@@ -49,6 +49,8 @@ export default function Registeration({getDataFromRegisteration}){
         data.largeLogoUrl=largeimageURL;
 
         try{
+            console.log(data);
+            // Add club // POSTMAN
             let user=await registerUser(data)
             user=JSON.parse(user)
             if(Object.keys(user).length === 0 && user.constructor === Object){
@@ -122,53 +124,54 @@ export default function Registeration({getDataFromRegisteration}){
         <div className="max-w-[1920px] w-[calc(100vw - 100%)] h-[100%] max-h-[1080px] overflow-y-hidden linearBG">
             <img className="absolute left-[86%] top-[-500px]" src="/images/Path 28.png" alt=""/>
             <img className="absolute top-[450px] left-[-256px]" src="/images/Path 18.png" alt=""/>
-            <img className="absolute top-[119px] left-[205px]" src="/images/Repeat Grid 1.png" alt=""/>
+            <img className="absolute top-[119px] left-[70%]" src="/images/Repeat Grid 1.png" alt=""/>
             <img className="absolute top-[749px] left-[680px]" src="/images/Group 31.png" alt=""/>
             
 
             <div className=" flex items-center justify-center gap-[20px] max-w-[1920px] w-[calc(100vw - 100%)] h-[99.63px]">
                 
-                <Link to={"/"}><img className="self-center ml-[20px] cursor-pointer" src="/images/Group 757.png" alt=""/></Link>
+                <Link to={"/"}><img className="xsm:hidden self-center xsm:ml-0 ml-[20px] cursor-pointer" src="./images/Group 757.png" alt=""/></Link>
                 
-                <div className="flex justify-center items-center flex-1"    >
+                <div className="flex justify-center items-center flex-1">
                     <div className="flex gap-[4px] items-center">
                         <span className="pt-[10px] border-[1px] border-[#1D262D] w-[46px] h-[44px] bg-[#FDC11F] text-[15px] text-center rounded-full">1</span>
-                        <h2 className="text-[clamp(16px,1.30vw,25px)] text-[#1D262D] font-bold">Building loyalty club</h2>
+                        <h2 className="text-[clamp(12px,1.30vw,25px)] text-[#1D262D] font-bold">Building loyalty club</h2>
                     </div>
-                    <span className="w-[37px] h-[2px] bg-[#707070]"></span>
-                    <div className="flex gap-[4px] items-center">
+                    <span className="w-[37px] h-[2px] bg-[#707070] xsm:hidden"></span>
+                    <div className="flex gap-[4px] items-center xsm:hidden">
                         <span className="pt-[10px] border-[1px] border-[#1D262D] w-[46px] h-[44px] bg-[#fff] text-[15px] text-center rounded-full">2</span>
-                        <h2 className="text-[clamp(16px,1.30vw,25px)] text-[#1D262D] font-bold">Adding Business to club</h2>
+                        <h2 className="text-[clamp(12px,1.30vw,25px)] text-[#1D262D] font-bold">Adding Business to club</h2>
                     </div>
-                    <span className="w-[37px] h-[2px] bg-[#707070]"></span>
-                    <div className="flex gap-[4px] items-center">
+                    <span className="w-[37px] h-[2px] bg-[#707070] xsm:hidden"></span>
+                    <div className="flex gap-[4px] items-center xsm:hidden">
                         <span className="pt-[10px] border-[1px] border-[#1D262D] w-[46px] h-[44px] bg-[#fff] text-[15px] text-center rounded-full">3</span>
-                        <h2 className="text-[clamp(16px,1.30vw,25px)] text-[#1D262D] font-bold">Define Brand</h2>
+                        <h2 className="text-[clamp(12px,1.30vw,25px)] text-[#1D262D] font-bold">Define Brand</h2>
                     </div>
                 </div>
             </div>
 
-            <div className="flex-row-reverse relative z-50 m-auto pt-[60px] pb-[21px] flex justify-between items-start w-[80%]">
-                <img className="w-[18.07vw] self-center " src="/images/Group 7571.png" alt=""/>
-                <div className="pt-[30px] w-[34.047vw] h-[899.25px] bg-[#1D262D] rounded-[57px]">
-                    <form onSubmit={registerationFormSubmitHandler} ref={registerationRef} className="flex flex-col w-[80%] gap-[15px] h-[100%] m-auto">
+            <div className="flex-row-reverse relative z-50 m-auto pt-[60px] pb-[21px] flex xsm:justify-center justify-between items-start xsm:items-center xsm:w-[100%] w-[80%]">
+                <img className="xsm:hidden w-[18.07vw] self-center " src="./images/Group 7571.png" alt=""/>
+                <div className="pt-[30px] w-[34.047vw] h-[899.25px] xsm:w-[90vw] bg-[#1D262D] rounded-[57px]">
+                    
+                    <form onSubmit={registerationFormSubmitHandler} ref={registerationRef} className="flex flex-col w-[90%] gap-[15px] h-[100%] m-auto">
                         <div className="flex justify-between">
                             <button type="button" onClick={(e)=>{setStatus('public');setButton1IsActive(true);setButton2IsActive(false)}} className={button1IsActive?"bg-white w-[158.14px] h-[50.78px] text-[25px] font-bold rounded-[57px]":"w-[158.14px] h-[50.78px] text-[25px] font-bold bg-[#EBBC33] rounded-[57px]"}>Public</button>
                             <span className="text-center w-[158.14px] h-[50.78px] text-[25px] font-bold text-[#EBBC33] rounded-[57px]">OR</span>
                             <button type="button" onClick={(e)=>{setStatus('private');setButton2IsActive(true);setButton1IsActive(false)}} className={button2IsActive?"bg-white w-[158.14px] h-[50.78px] text-[25px] font-bold rounded-[57px]":"w-[158.14px] h-[50.78px] text-[25px] font-bold bg-[#EBBC33] rounded-[57px]"}>Private </button>
                         </div>
-                        <input name="clubName" type={"text"} required placeholder="Club Name" className="indent-[27px] w-[301px] h-[67px]"/>
-                        <input name="email" type={"email"} required placeholder="Email" className="bg-[#FDC11F] indent-[27px] w-[301px] h-[67px]"/>
-                        {/* <input name="phoneNumber" type={"phone"} required placeholder="Phone Number" className="indent-[27px] w-[301px] h-[67px]"/> */}
-                        <PhoneInput prefix="+" buttonStyle={{height:"67px",borderRadius:"57px 0 0 57px"}} inputStyle={{width:"271px",borderRadius:"0 57px 57px 0",height:"67px"}} className="indent-[27px] w-[301px] h-[67px]" placeholder="Enter phone number" value={value} onChange={setValue}/>
-                        <input name="description" type={"text"} required placeholder="Description" className="indent-[27px] w-[301px] h-[67px]"/>
-                        <input name="website" type={"url"} required placeholder="Website" className="indent-[27px] w-[301px] h-[67px]"/>
-                        <input name="extraInfo" type={"text"} required placeholder="Extra Information" className="indent-[27px] w-[301px] h-[67px]"/>
+                        <input name="clubName" type={"text"} required placeholder="Club Name" className="indent-[27px] w-[95%] max-w-[280px] h-[67px]"/>
+                        <input name="email" type={"email"} required placeholder="Email" className="bg-[#FDC11F] indent-[27px] w-[95%] max-w-[280px] h-[67px]"/>
+                        {/* <input name="phoneNumber" type={"phone"} required placeholder="Phone Number" className="indent-[27px] w-[95%] max-w-[280px] h-[67px]"/> */}
+                        <PhoneInput prefix="+" buttonStyle={{height:"67px",borderRadius:"57px 0 0 57px"}} inputStyle={{borderRadius:"0 57px 57px 0",height:"67px"}} className="indent-[27px] w-[95%] max-w-[280px] h-[67px]" placeholder="Enter phone number" value={value} onChange={setValue}/>
+                        <input name="description" type={"text"} required placeholder="Description" className="indent-[27px] w-[95%] max-w-[280px] h-[67px]"/>
+                        <input name="website" type={"url"} required placeholder="Website" className="indent-[27px] w-[95%] max-w-[280px] h-[67px]"/>
+                        <input name="extraInfo" type={"text"} required placeholder="Extra Information" className="indent-[27px] w-[95%] max-w-[280px] h-[67px]"/>
                         <div className="flex justify-between">
                             <div className="text-[clamp(16px,1.302vw,25px)] text-[#fff] font-bold">
                                 <h2 className="font-[25px] font-bold ">Small Logo</h2>
                                 <div className="flex justify-center items-center w-[119px] h-[89px] bg-white rounded-[18px]">
-                                    <input onChange={smallImageHandler} name="img1" id="files1" type={"file"} className="hidden w-[301px] h-[42.76px]"/>
+                                    <input onChange={smallImageHandler} name="img1" id="files1" type={"file"} className="hidden w-[95%] max-w-[280px] h-[42.76px]"/>
                                     <label className="text-[14px] text-center w-[62px] h-[24px] bg-[#FDC11F] border-[1px] border-[#707070]" for="files1">Upload</label>
                                 </div>
                                 <h2 className="font-[15px] font-bold text-center">80*80 or square</h2>
@@ -177,14 +180,14 @@ export default function Registeration({getDataFromRegisteration}){
                             <div className="text-[clamp(16px,1.302vw,25px)] text-[#fff] font-bold">
                                 <h2 className="font-[25px] font-bold ">Big Logo</h2>
                                 <div className="flex justify-center items-center w-[129px] h-[119px] bg-white rounded-[18px]">
-                                    <input onChange={largeImageHandler} name="img2" id="files2" type={"file"} className="hidden w-[301px] h-[42.76px]"/>
+                                    <input onChange={largeImageHandler} name="img2" id="files2" type={"file"} className="hidden w-[95%] max-w-[280px] h-[42.76px]"/>
                                     <label className="text-[14px] text-center w-[62px] h-[24px] bg-[#FDC11F] border-[1px] border-[#707070]" for="files2">Upload</label>
                                 </div>
                                 <h2 className="font-[15px] font-bold text-center">80*80 or square</h2>
                             </div>
                         </div>
                         <label className="text-[15px] text-[#fff]"><input name="terms" type={"checkbox"}/> I agree to Terms of service <span className="text-[#FDC11F]">&</span> Privacy Policy</label>
-                        <button type="submit" className="w-[8.750vw] rounded-[57px] h-[64.87px] text-[clamp(18px,1.562vw,30px)] self-center bg-[#FDC11F] text-[#1D262D] font-bold">Next</button>
+                        <button type="submit" className="min-w-[120px] w-[8.750vw] rounded-[57px] h-[64.87px] text-[clamp(18px,1.562vw,30px)] self-center bg-[#FDC11F] text-[#1D262D] font-bold">Next</button>
                     </form>
                 </div>
             </div>

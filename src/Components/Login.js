@@ -21,11 +21,19 @@ export default function Login(){
         try{
             toast.loading("Signing in.");
             const userData=await login(email,password);
+            console.log(userData)
             if(userData.error === "unauthorized"){
                 toast.dismiss()
-                toast("No user found")
+                toast("Incorrect email or passowrd")
                 return
             }
+
+            if(userData.message === "Please input correct email type."){
+                toast.dismiss()
+                toast("Please input correct email type.")
+                return
+            }
+
             localStorage.setItem('user', JSON.stringify(userData));
             toast.dismiss()
             toast.success("Signing in Successfull");
@@ -39,8 +47,8 @@ export default function Login(){
 
     return(
         <div className="bg-[#00b9bf] w-[calc(100vw - 100%)] h-[100vh] pt-[30px] gradientBackground">
-            <div className="flex flex-col w-[555px] h-[384px] bg-white rounded-[10px] m-auto p-[20px]">
-                <h2 className="font-bold text-[32px] text-[#212529] my-[12px]">Login to MyBenefitz</h2>
+            <div className="flex flex-col xsm:w-[85vw] w-[43.92386530014641vw] bg-white rounded-[10px] m-auto p-[20px]">
+                <h2 className="font-bold text-[32px] text-[#212529] my-[12px] xsm:text-[24px]">Login to MyBenefitz</h2>
                 <form onSubmit={loginFormSubmitHandler} ref={loginFormRef} className="flex flex-col" >
                     <div className="flex flex-col mb-[20px]">
                         <label className="text-[18px] font-medium" htmlFor="email">Email</label>

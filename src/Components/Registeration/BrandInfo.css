@@ -3,3 +3,14 @@
     position: relative;
     overflow: hidden;
 }
+
+.phone-input2 .react-tel-input .special-label + .form-control {
+    width: 76% !important;
+}
+
+@media screen and (max-width: 576px) {
+    .phone-input2 .react-tel-input .special-label + .form-control {
+        width:58% !important;
+        min-width: 245px;
+    }
+}

@@ -164,7 +164,7 @@ export default function ClubOffer({ getDataFromClubOffer }) {
     // }
 
     return (
-        <div className="max-w-[1920px] w-[calc(100vw - 100%)] h-[100%] max-h-[1080px] overflow-y-hidden linearBG">
+        <div className="max-w-[1920px] w-[calc(100vw - 100%)] h-[100%] overflow-y-hidden linearBG">
             <div className="flex justify-center items-center gap-[20px] max-w-[1920px] w-[calc(100vw - 100%)] h-[99.63px]">
                 <div className="flex gap-[4px] xsm:hidden">
                     <span className="pt-[10px] border-[1px] border-[#1D262D] w-[46px] h-[44px] bg-[#fff] text-[15px] text-center rounded-full">1</span>
@@ -188,27 +188,27 @@ export default function ClubOffer({ getDataFromClubOffer }) {
 
 
             <div className="relative z-40 m-auto pt-[60px] pb-[21px] flex justify-between items-start w-[80%] xsm:w-[95%]">
-                <div className="xsm:flex-1 w-[43.51vw] h-[800.25px] bg-[#1D262D] rounded-[57px]">
-                    <form ref={clubOfferRef} onSubmit={clubOfferSubmitHandler} className="flex flex-wrap items-center xsm:justify-center x gap-x-[4.1666vw] xl:w-[95%] xsm:w-[100%] w-[80%] h-[100%] m-auto">
+                <div className="pb-[120px] xsm:flex-1 w-[43.51vw] py-[10px] bg-[#1D262D] rounded-[57px]">
+                    <form ref={clubOfferRef} onSubmit={clubOfferSubmitHandler} className="flex gap-[10px] flex-wrap items-center xsm:justify-center x gap-x-[4.1666vw] xl:w-[95%] xsm:w-[100%] w-[80%] h-[100%] m-auto">
                         <div className="flex justify-between gap-[10px]">
-                            <button type="button" onClick={() => { setBenefitType("prepaid"); setAllFalse(); setButton1IsActive(true); }} className={button1IsActive ? "w-[10.748vw] h-[50.78px] text-[clamp(16px,1.302vw,25px)] text-[#EBBC33] font-bold bg-[#fff] rounded-[57px] min-w-[80px] xsm:text-[14px]" : "xsm:text-[14px] min-w-[80px] w-[10.748vw] h-[50.78px] text-[clamp(16px,1.302vw,25px)] text-[#fff] font-bold bg-[#EBBC33] rounded-[57px]"}>Prepaid</button>
-                            <button type="button" onClick={() => { setBenefitType("punch"); setAllFalse(); setButton2IsActive(true); }} className={button2IsActive ? "w-[10.748vw] h-[50.78px] text-[clamp(16px,1.302vw,25px)] text-[#EBBC33] font-bold bg-[#fff] rounded-[57px] min-w-[80px] xsm:text-[14px]" : "xsm:text-[14px] min-w-[80px] w-[10.748vw] h-[50.78px] text-[clamp(16px,1.302vw,25px)] text-[#fff] font-bold bg-[#EBBC33] rounded-[57px]"}>Punchcard</button>
-                            <button type="button" onClick={() => { setBenefitType("free"); setAllFalse(); setButton3IsActive(true); }} className={button3IsActive ? "w-[10.748vw] h-[50.78px] text-[clamp(16px,1.302vw,25px)] text-[#EBBC33] font-bold bg-[#fff] rounded-[57px] min-w-[80px] xsm:text-[14px]" : "xsm:text-[14px] min-w-[80px] w-[10.748vw] h-[50.78px] text-[clamp(16px,1.302vw,25px)] text-[#fff] font-bold bg-[#EBBC33] rounded-[57px]"}>Free</button>
+                            <button type="button" onClick={() => { setBenefitType("prepaid"); setAllFalse(); setButton1IsActive(true); }} className={button1IsActive ? "flex justify-center items-center gap-[5px] w-[10.748vw] h-[50.78px] text-[clamp(16px,1.302vw,25px)] text-[#EBBC33] font-bold bg-[#fff] rounded-[57px] min-w-[80px] xsm:text-[14px]" : "flex justify-center items-center gap-[5px] xsm:text-[14px] min-w-[80px] w-[10.748vw] h-[50.78px] text-[clamp(16px,1.302vw,25px)] text-[#fff] font-bold bg-[#EBBC33] rounded-[57px]"}>Prepaid <img className="w-[1.6473958333333334vw] min-w-[20px]" src="./images/black-mark-center.png"/></button>
+                            <button type="button" onClick={() => { setBenefitType("punch"); setAllFalse(); setButton2IsActive(true); }} className={button2IsActive ? "flex justify-center items-center gap-[5px] w-[10.748vw] h-[50.78px] text-[clamp(16px,1.302vw,25px)] text-[#EBBC33] font-bold bg-[#fff] rounded-[57px] min-w-[80px] xsm:text-[14px]" : "flex justify-center items-center gap-[5px] xsm:text-[14px] min-w-[80px] w-[10.748vw] h-[50.78px] text-[clamp(16px,1.302vw,25px)] text-[#fff] font-bold bg-[#EBBC33] rounded-[57px]"}>Punchcard <img className="w-[1.6473958333333334vw] min-w-[20px]" src="./images/black-mark-center.png"/></button>
+                            <button type="button" onClick={() => { setBenefitType("free"); setAllFalse(); setButton3IsActive(true); }} className={button3IsActive ? "flex justify-center items-center gap-[5px] w-[10.748vw] h-[50.78px] text-[clamp(16px,1.302vw,25px)] text-[#EBBC33] font-bold bg-[#fff] rounded-[57px] min-w-[80px] xsm:text-[14px]" : "flex justify-center items-center gap-[5px] xsm:text-[14px] min-w-[80px] w-[10.748vw] h-[50.78px] text-[clamp(16px,1.302vw,25px)] text-[#fff] font-bold bg-[#EBBC33] rounded-[57px]"}>Free <img className="w-[1.6473958333333334vw] min-w-[20px]" src="./images/black-mark-center.png"/></button>
                         </div>
                         <div className="inline-block">
-                            {/* <label className="text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold block">Price</label> */}
-                            <input type={"number"} min="0" name="price" placeholder="Price" required className="min-w-[280px] indent-[27px] w-[14.85vw] h-[42.76px]" />
+                            <label className="flex items-center gap-[10px] text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold ">Price <img className="w-[1.6473958333333334vw] min-w-[20px]" src="./images/yellow-mark.png"/></label>
+                            <input type={"number"} min="0" name="price" placeholder="Price" required className="xsm:min-w-[280px]  indent-[27px] w-[14.85vw] h-[42.76px]" />
                         </div>
 
                         <div className="inline-block">
-                            {/* <label className="text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold block">Points</label> */}
-                            <input type={"number"} name="points" placeholder="Points" required className="min-w-[280px] indent-[27px] w-[14.85vw] h-[42.76px]" />
+                            <label className="flex items-center gap-[10px] text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold">Points <img className="w-[1.6473958333333334vw] min-w-[20px]" src="./images/yellow-mark.png"/></label>
+                            <input type={"number"} name="points" placeholder="Points" required className="xsm:min-w-[280px]  indent-[27px] w-[14.85vw] h-[42.76px]" />
                         </div>
 
 
                         <div>
-                            {/* <label className="text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold block">Possible Purchase</label> */}
-                            <select name="possiblePurchase" required className="min-w-[280px] indent-[27px] rounded-[57px] w-[14.85vw] h-[42.76px]">
+                            <label className=" flex items-center gap-[10px] text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold ">Possible Purchase <img className="w-[1.6473958333333334vw] min-w-[20px]" src="./images/yellow-mark.png"/></label>
+                            <select name="possiblePurchase" required className="xsm:min-w-[280px]  indent-[27px] rounded-[57px] w-[14.85vw] h-[42.76px]">
                                 <option disabled selected value={"choose option"}>Possible Purchase</option>
                                 <option value={"1"}>1</option>
                                 <option value={'null'}>Endless</option>
@@ -216,24 +216,24 @@ export default function ClubOffer({ getDataFromClubOffer }) {
                         </div>
 
                         <div>
-                            {/* <label className="text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold block">Discount Ammount</label> */}
-                            <input type={"number"} name="discount" required placeholder="Discount Ammount" className="min-w-[280px] indent-[27px] w-[14.85vw] h-[42.76px]" />
+                            <label className="flex items-center gap-[10px] text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold ">Discount Ammount <img className="w-[1.6473958333333334vw] min-w-[20px]" src="./images/yellow-mark.png"/></label>
+                            <input type={"number"} name="discount" required placeholder="Discount Ammount" className="xsm:min-w-[280px]  indent-[27px] w-[14.85vw] h-[42.76px]" />
                         </div>
 
                         <div>
-                            {/* <label className="text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold block">Description</label> */}
-                            <textarea placeholder="Description" onChange={(e) => { setdescriptionLength(e.target.value) }} maxLength={30} name="description" rows='3' className="min-w-[280px] indent-[27px] pt-[10px] w-[29.21vw]"></textarea>
+                            <label className="flex items-center gap-[10px] text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold ">Description <img className="w-[1.6473958333333334vw] min-w-[20px]" src="./images/yellow-mark.png"/></label>
+                            <textarea placeholder="Description" onChange={(e) => { setdescriptionLength(e.target.value) }} maxLength={30} name="description" rows='3' className="xsm:min-w-[280px]  indent-[27px] pt-[10px] w-[29.21vw]"></textarea>
                             <p className="text-white text-[12px] text-right">{descriptionLength?.length || 0}/30</p>
                         </div>
 
                         <div>
-                            {/* <label className="text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold block">Long Description</label> */}
-                            <textarea placeholder="Long Description" onChange={(e) => { setlongdescriptionLength(e.target.value) }} maxLength={150} name="longDescription" rows='6' className="min-w-[280px] indent-[27px] pt-[10px] w-[29.21vw]"></textarea>
+                            <label className="flex items-center gap-[10px] text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold ">Long Description <img className="w-[1.6473958333333334vw] min-w-[20px]" src="./images/yellow-mark.png"/></label>
+                            <textarea placeholder="Long Description" onChange={(e) => { setlongdescriptionLength(e.target.value) }} maxLength={150} name="longDescription" rows='6' className="xsm:min-w-[280px]  indent-[27px] pt-[10px] w-[29.21vw]"></textarea>
                             <p className="text-white text-[12px] text-right">{longdescriptionLength?.length || 0}/150</p>
                         </div>
 
 
-                        <div className="flex justify-between w-[100%]">
+                        <div className="flex justify-between w-[100%] xsm:items-center xsm:flex-col">
                             <div className="flex gap-[20px]">
                                 <div className="text-[clamp(16px,1.302vw,25px)] text-[#fff] font-bold">
                                     <h2 className="font-[25px] font-bold ">Small Logo</h2>
@@ -254,7 +254,7 @@ export default function ClubOffer({ getDataFromClubOffer }) {
                                 </div>
                             </div>
 
-                            <div className="flex flex-col items-center gap-[10px]">
+                            <div className="flex flex-col xsm: items-center gap-[10px]">
                                 <button type="submit" className="w-[140px] h-[34px] bg-[#FDC11F] border-[1px] border-[#707070]">Add Benefits</button>
                                 <img src="/images/Group 771.png" alt="" />
                             </div>
@@ -264,7 +264,7 @@ export default function ClubOffer({ getDataFromClubOffer }) {
 
                 <img className="w-[37.13vw] sm:hidden xsm:hidden md:hidden self-center" src={"./images/Repeat Grid 3.svg"} alt="" />
             </div>
-            <div onClick={gotoNextPage} className="z-50 cursor-pointer flex items-center gap-[10px] absolute top-[83%] left-[54%]">
+            <div onClick={gotoNextPage} className="xsm:top-[90%]  z-50 cursor-pointer flex items-center gap-[10px] absolute top-[83%] left-[54%] xsm:left-[31%]">
                 <button className="bg-transparent text-[23px] font-bold text-[#FDC11F]">Next</button>
                 <img src="/images/Repeat Grid 4.png" alt="" />
             </div>

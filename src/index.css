@@ -30,12 +30,3 @@ textarea {
     transition: max-height 0.25s, opacity 0.25s ease-out;
 }
 
-.react-tel-input .form-control {
-    width: 90% !important;
-}
-
-@media screen and (max-width: 576px) {
-    .react-tel-input .form-control {
-        width: 90% !important;
-    }
-}

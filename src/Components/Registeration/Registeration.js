@@ -121,7 +121,7 @@ export default function Registeration({getDataFromRegisteration}){
 
     return(
         <>
-        <div className="max-w-[1920px] w-[calc(100vw - 100%)] h-[100%] max-h-[1080px] overflow-y-hidden linearBG">
+        <div className="max-w-[1920px] w-[calc(100vw - 100%)] h-[100%] overflow-y-hidden linearBG">
             <img className="absolute left-[86%] top-[-500px]" src="/images/Path 28.png" alt=""/>
             <img className="absolute top-[450px] left-[-256px]" src="/images/Path 18.png" alt=""/>
             <img className="absolute top-[119px] left-[70%]" src="/images/Repeat Grid 1.png" alt=""/>

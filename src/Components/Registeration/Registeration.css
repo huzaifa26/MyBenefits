@@ -3,3 +3,13 @@
     position: relative;
     overflow: hidden;
 }
+
+.react-tel-input .form-control {
+    width: 90% !important;
+}
+
+@media screen and (max-width: 576px) {
+    .react-tel-input .form-control {
+        width: 90% !important;
+    }
+}

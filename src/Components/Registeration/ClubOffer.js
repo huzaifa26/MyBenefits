@@ -191,43 +191,43 @@ export default function ClubOffer({ getDataFromClubOffer }) {
                 <div className="pb-[120px] xsm:flex-1 w-[43.51vw] py-[10px] bg-[#1D262D] rounded-[57px]">
                     <form ref={clubOfferRef} onSubmit={clubOfferSubmitHandler} className="flex gap-[10px] flex-wrap items-center xsm:justify-center x gap-x-[4.1666vw] xl:w-[95%] xsm:w-[100%] w-[80%] h-[100%] m-auto">
                         <div className="flex justify-between gap-[10px]">
-                            <button type="button" onClick={() => { setBenefitType("prepaid"); setAllFalse(); setButton1IsActive(true); }} className={button1IsActive ? "flex justify-center items-center gap-[5px] w-[10.748vw] h-[50.78px] text-[clamp(16px,1.302vw,25px)] text-[#EBBC33] font-bold bg-[#fff] rounded-[57px] min-w-[80px] xsm:text-[14px]" : "flex justify-center items-center gap-[5px] xsm:text-[14px] min-w-[80px] w-[10.748vw] h-[50.78px] text-[clamp(16px,1.302vw,25px)] text-[#fff] font-bold bg-[#EBBC33] rounded-[57px]"}>Prepaid <img className="w-[1.6473958333333334vw] min-w-[20px]" src="./images/black-mark-center.png"/></button>
-                            <button type="button" onClick={() => { setBenefitType("punch"); setAllFalse(); setButton2IsActive(true); }} className={button2IsActive ? "flex justify-center items-center gap-[5px] w-[10.748vw] h-[50.78px] text-[clamp(16px,1.302vw,25px)] text-[#EBBC33] font-bold bg-[#fff] rounded-[57px] min-w-[80px] xsm:text-[14px]" : "flex justify-center items-center gap-[5px] xsm:text-[14px] min-w-[80px] w-[10.748vw] h-[50.78px] text-[clamp(16px,1.302vw,25px)] text-[#fff] font-bold bg-[#EBBC33] rounded-[57px]"}>Punchcard <img className="w-[1.6473958333333334vw] min-w-[20px]" src="./images/black-mark-center.png"/></button>
-                            <button type="button" onClick={() => { setBenefitType("free"); setAllFalse(); setButton3IsActive(true); }} className={button3IsActive ? "flex justify-center items-center gap-[5px] w-[10.748vw] h-[50.78px] text-[clamp(16px,1.302vw,25px)] text-[#EBBC33] font-bold bg-[#fff] rounded-[57px] min-w-[80px] xsm:text-[14px]" : "flex justify-center items-center gap-[5px] xsm:text-[14px] min-w-[80px] w-[10.748vw] h-[50.78px] text-[clamp(16px,1.302vw,25px)] text-[#fff] font-bold bg-[#EBBC33] rounded-[57px]"}>Free <img className="w-[1.6473958333333334vw] min-w-[20px]" src="./images/black-mark-center.png"/></button>
+                            <button type="button" onClick={() => { setBenefitType("prepaid"); setAllFalse(); setButton1IsActive(true); }} className={button1IsActive ? "flex justify-center items-center gap-[5px] w-[10.748vw] h-[50.78px] text-[clamp(16px,1.302vw,25px)] text-[#EBBC33] font-bold bg-[#fff] rounded-[57px] min-w-[80px] xsm:text-[14px]" : "flex justify-center items-center gap-[5px] xsm:text-[14px] min-w-[80px] w-[10.748vw] h-[50.78px] text-[clamp(16px,1.302vw,25px)] text-[#fff] font-bold bg-[#EBBC33] rounded-[57px]"}>Prepaid <div data-title="button 1" className="helpDiv"><img className="w-[1.6473958333333334vw] min-w-[20px]" src="./images/black-mark-center.png"/></div></button>
+                            <button type="button" onClick={() => { setBenefitType("punch"); setAllFalse(); setButton2IsActive(true); }} className={button2IsActive ? "flex justify-center items-center gap-[5px] w-[10.748vw] h-[50.78px] text-[clamp(16px,1.302vw,25px)] text-[#EBBC33] font-bold bg-[#fff] rounded-[57px] min-w-[80px] xsm:text-[14px]" : "flex justify-center items-center gap-[5px] xsm:text-[14px] min-w-[80px] w-[10.748vw] h-[50.78px] text-[clamp(16px,1.302vw,25px)] text-[#fff] font-bold bg-[#EBBC33] rounded-[57px]"}>Punchcard <div data-title="button 2" className="helpDiv"><img className="w-[1.6473958333333334vw] min-w-[20px]" src="./images/black-mark-center.png"/></div></button>
+                            <button type="button" onClick={() => { setBenefitType("free"); setAllFalse(); setButton3IsActive(true); }} className={button3IsActive ? "flex justify-center items-center gap-[5px] w-[10.748vw] h-[50.78px] text-[clamp(16px,1.302vw,25px)] text-[#EBBC33] font-bold bg-[#fff] rounded-[57px] min-w-[80px] xsm:text-[14px]" : "flex justify-center items-center gap-[5px] xsm:text-[14px] min-w-[80px] w-[10.748vw] h-[50.78px] text-[clamp(16px,1.302vw,25px)] text-[#fff] font-bold bg-[#EBBC33] rounded-[57px]"}>Free <div data-title="button 3" className="helpDiv"><img className="w-[1.6473958333333334vw] min-w-[20px]" src="./images/black-mark-center.png"/></div></button>
                         </div>
                         <div className="inline-block">
-                            <label className="flex items-center gap-[10px] text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold ">Price <img className="w-[1.6473958333333334vw] min-w-[20px]" src="./images/yellow-mark.png"/></label>
+                            <label className="flex items-center gap-[10px] text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold ">Price * <div data-title="price" className="helpDiv"><img className="cursor-pointer w-[1.6473958333333334vw] min-w-[20px]" src="./images/yellow-mark.png"/></div></label>
                             <input type={"number"} min="0" name="price" placeholder="Price" required className="xsm:min-w-[280px]  indent-[27px] w-[14.85vw] h-[42.76px]" />
                         </div>
 
                         <div className="inline-block">
-                            <label className="flex items-center gap-[10px] text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold">Points <img className="w-[1.6473958333333334vw] min-w-[20px]" src="./images/yellow-mark.png"/></label>
+                            <label className="flex items-center gap-[10px] text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold">Points * <div data-title="points" className="helpDiv"><img className="cursor-pointer w-[1.6473958333333334vw] min-w-[20px]" src="./images/yellow-mark.png"/></div></label>
                             <input type={"number"} name="points" placeholder="Points" required className="xsm:min-w-[280px]  indent-[27px] w-[14.85vw] h-[42.76px]" />
                         </div>
 
 
                         <div>
-                            <label className=" flex items-center gap-[10px] text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold ">Possible Purchase <img className="w-[1.6473958333333334vw] min-w-[20px]" src="./images/yellow-mark.png"/></label>
+                            <label className=" flex items-center gap-[10px] text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold ">Possible Purchase * <div data-title="possible purchase" className="helpDiv"><img className="cursor-pointer w-[1.6473958333333334vw] min-w-[20px]" src="./images/yellow-mark.png"/></div></label>
                             <select name="possiblePurchase" required className="xsm:min-w-[280px]  indent-[27px] rounded-[57px] w-[14.85vw] h-[42.76px]">
-                                <option disabled selected value={"choose option"}>Possible Purchase</option>
+                                <option disabled selected value={"choose option"}>Possible Purchase *</option>
                                 <option value={"1"}>1</option>
                                 <option value={'null'}>Endless</option>
                             </select>
                         </div>
 
                         <div>
-                            <label className="flex items-center gap-[10px] text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold ">Discount Ammount <img className="w-[1.6473958333333334vw] min-w-[20px]" src="./images/yellow-mark.png"/></label>
+                            <label className="flex items-center gap-[10px] text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold ">Discount Ammount * <div data-title="discount ammount" className="helpDiv"><img className="cursor-pointer w-[1.6473958333333334vw] min-w-[20px]" src="./images/yellow-mark.png"/></div></label>
                             <input type={"number"} name="discount" required placeholder="Discount Ammount" className="xsm:min-w-[280px]  indent-[27px] w-[14.85vw] h-[42.76px]" />
                         </div>
 
                         <div>
-                            <label className="flex items-center gap-[10px] text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold ">Description <img className="w-[1.6473958333333334vw] min-w-[20px]" src="./images/yellow-mark.png"/></label>
+                            <label className="flex items-center gap-[10px] text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold ">Description * <div data-title="description" className="helpDiv"><img className="cursor-pointer w-[1.6473958333333334vw] min-w-[20px]" src="./images/yellow-mark.png"/></div></label>
                             <textarea placeholder="Description" onChange={(e) => { setdescriptionLength(e.target.value) }} maxLength={30} name="description" rows='3' className="xsm:min-w-[280px]  indent-[27px] pt-[10px] w-[29.21vw]"></textarea>
                             <p className="text-white text-[12px] text-right">{descriptionLength?.length || 0}/30</p>
                         </div>
 
                         <div>
-                            <label className="flex items-center gap-[10px] text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold ">Long Description <img className="w-[1.6473958333333334vw] min-w-[20px]" src="./images/yellow-mark.png"/></label>
+                            <label className="flex items-center gap-[10px] text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold ">Long Description * <div data-title="long discription" className="helpDiv"><img className="cursor-pointer w-[1.6473958333333334vw] min-w-[20px]" src="./images/yellow-mark.png"/></div></label>
                             <textarea placeholder="Long Description" onChange={(e) => { setlongdescriptionLength(e.target.value) }} maxLength={150} name="longDescription" rows='6' className="xsm:min-w-[280px]  indent-[27px] pt-[10px] w-[29.21vw]"></textarea>
                             <p className="text-white text-[12px] text-right">{longdescriptionLength?.length || 0}/150</p>
                         </div>

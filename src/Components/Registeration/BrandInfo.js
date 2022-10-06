@@ -117,19 +117,19 @@ export default function BrandInfo({getDataFromBrandInfo,benefitArrayFC}){
     <div className="max-w-[1920px] w-[calc(100vw - 100%)] h-[100%] min-h-[1080px] overflow-y-hidden linearBG">
         
         <div className="flex justify-center items-center gap-[20px] max-w-[1920px] w-[calc(100vw - 100%)] h-[99.63px]">
-                <div className="flex gap-[4px] xsm:hidden">
+                <div className="flex gap-[4px] xsm:hidden sm:hidden">
                     <span className="pt-[10px] border-[1px] border-[#1D262D] w-[46px] h-[44px] bg-[#fff] text-[15px] text-center rounded-full">1</span>
                     <h2 className="text-[25px] text-[#1D262D] font-bold">Building loyalty club</h2>
                 </div>
 
-                <span className="w-[37px] h-[2px] bg-[#707070] xsm:hidden"></span>
+                <span className="w-[37px] h-[2px] bg-[#707070] xsm:hidden sm:hidden"></span>
 
-                <div className="flex gap-[4px] xsm:hidden">
+                <div className="flex gap-[4px] xsm:hidden sm:hidden">
                     <span className="pt-[10px] border-[1px] border-[#1D262D] w-[46px] h-[44px] bg-[#fff] text-[15px] text-center rounded-full">2</span>
                     <h2 className="text-[25px] text-[#1D262D] font-bold">Adding Business to club</h2>
                 </div>
 
-                <span className="w-[37px] h-[2px] bg-[#707070] xsm:hidden"></span>
+                <span className="w-[37px] h-[2px] bg-[#707070] xsm:hidden sm:hidden"></span>
 
 
                 <div className="flex gap-[4px]">
@@ -138,32 +138,32 @@ export default function BrandInfo({getDataFromBrandInfo,benefitArrayFC}){
                 </div>
             </div>
         
-        <div className="flex xsm:w-[90vw] w-[82.58vw] py-[20px] bg-[#1D262D] m-auto rounded-[57px]">
-            <form ref={brandInfoRef} onSubmit={brandInfoSubmitHandler} className="flex xsm:flex-col xsm:w-[100%] w-[80%] m-auto">
+        <div className="flex xsm:w-[90vw] sm:w-[90vw] w-[82.58vw] py-[20px] bg-[#1D262D] m-auto rounded-[57px]">
+            <form ref={brandInfoRef} onSubmit={brandInfoSubmitHandler} className="flex xsm:flex-col xsm:w-[100%] sm:flex-col sm:w-[100%] w-[80%] m-auto">
                 <div className="flex-1 flex flex-col gap-[10px] xsm:w-[97%] w-[80%] m-auto">
                     <h2 className="text-[35px] text-[#FDC11F] font-bold">Create Business Account</h2>
-                    <input type={"email"} name="email" required placeholder="Email" className="indent-[15px] xsm:min-w-[280px] w-[22.03513909224012vw] h-[60px]"/>
-                    <input type={"password"} name="password" required placeholder="Password" className="bg-[#FDC11F] indent-[15px] xsm:min-w-[280px] w-[22.03513909224012vw] h-[60px]"/>
-                    <input type={"text"} name="accountName" required placeholder="Account Name" className="indent-[15px] xsm:min-w-[280px] w-[22.03513909224012vw] h-[60px]"/>
-                    <input type={"text"} name="brandID" required placeholder="Brand ID" className="indent-[15px] xsm:min-w-[280px] w-[22.03513909224012vw] h-[60px]"/>
-                    <input type={"text"} name="businessName" required placeholder="Business Name" className="indent-[15px] xsm:min-w-[280px] w-[22.03513909224012vw] h-[60px]"/>
-                    <input type={"address"} name="businessAddress" required placeholder="Business Address" className="indent-[15px] xsm:min-w-[280px] w-[22.03513909224012vw] h-[60px]"/>
+                    <input type={"email"} name="email" required placeholder="Email" className="indent-[15px] xsm:min-w-[280px] sm:min-w-[280px] w-[22.03513909224012vw] h-[60px]"/>
+                    <input type={"password"} name="password" required placeholder="Password" className="bg-[#FDC11F] indent-[15px] xsm:min-w-[280px] sm:min-w-[280px] w-[22.03513909224012vw] h-[60px]"/>
+                    <input type={"text"} name="accountName" required placeholder="Account Name" className="indent-[15px] xsm:min-w-[280px] sm:min-w-[280px] w-[22.03513909224012vw] h-[60px]"/>
+                    <input type={"text"} name="brandID" required placeholder="Brand ID" className="indent-[15px] xsm:min-w-[280px] sm:min-w-[280px] w-[22.03513909224012vw] h-[60px]"/>
+                    <input type={"text"} name="businessName" required placeholder="Business Name" className="indent-[15px] xsm:min-w-[280px] sm:min-w-[280px] w-[22.03513909224012vw] h-[60px]"/>
+                    <input type={"address"} name="businessAddress" required placeholder="Business Address" className="indent-[15px] xsm:min-w-[280px] sm:min-w-[280px] w-[22.03513909224012vw] h-[60px]"/>
                     {/* <input name="" required placeholder="Phone No" className="indent-[15px] xsm:min-w-[280px] w-[22.03513909224012vw] h-[60px]"/> */}
                     <div className="phone-input2">
                         <PhoneInput prefix="+" buttonStyle={{height:"67px",borderRadius:"57px 0 0 57px"}} inputStyle={{width:"271px",borderRadius:"0 57px 57px 0",height:"67px"}} className="indent-[27px] w-[301px] h-[67px]" placeholder="Enter phone number" value={value} onChange={setValue}/>
                     </div>
-                    <input type={"number"} name="openingHours" required placeholder="Opening Hours" className="indent-[15px] xsm:min-w-[280px] w-[22.03513909224012vw] h-[60px]"/>
+                    <input type={"number"} name="openingHours" required placeholder="Opening Hours" className="indent-[15px] xsm:min-w-[280px] sm:min-w-[280px] w-[22.03513909224012vw] h-[60px]"/>
                     <div className="relative flex">
-                        <input type={"number"} name="specialOpeningHours" required placeholder="Special Opening Hours" className="relative indent-[15px] xsm:min-w-[280px] w-[22.03513909224012vw] h-[60px]"/>
-                        <label className="absolute top-5 right-[-25%] flex items-center text-[#FDC11F]">Holiday,Vacation <img className="w-[1.6473958333333334vw] min-w-[20px]" src="./images/yellow-mark.png"/></label>
+                        <input type={"number"} name="specialOpeningHours" required placeholder="Special Opening Hours" className="relative indent-[15px] xsm:min-w-[280px] sm:min-w-[280px] w-[22.03513909224012vw] h-[60px]"/>
+                        <label className="absolute top-5 xsm:right-[2%] sm:right-[0%] right-[-25%] flex items-center text-[#FDC11F]">Holiday,Vacation <div data-title="holiday, vacations" className="helpDiv"><img className="cursor-pointer w-[1.6473958333333334vw] min-w-[20px]" src="./images/yellow-mark.png"/></div></label>
                     </div>
-                    <input type={"text"} name="contactName" required placeholder="Contact Name" className="indent-[15px] xsm:min-w-[280px] w-[22.03513909224012vw] h-[60px]"/>
-                    <input type={"text"} name="description" required placeholder="Description" className="indent-[15px] xsm:min-w-[280px] w-[22.03513909224012vw] h-[60px]"/>
+                    <input type={"text"} name="contactName" required placeholder="Contact Name" className="indent-[15px] xsm:min-w-[280px] sm:min-w-[280px] w-[22.03513909224012vw] h-[60px]"/>
+                    <input type={"text"} name="description" required placeholder="Description" className="indent-[15px] xsm:min-w-[280px] sm:min-w-[280px] w-[22.03513909224012vw] h-[60px]"/>
                 </div>
-                <div className="flex-1 flex flex-col gap-[20px] xsm:w-[97%] xsm:m-auto">
+                <div className="flex-1 flex flex-col gap-[20px] xsm:w-[97%] xsm:m-auto sm:w-[80%] sm:m-auto">
                     <h2 className="text-[35px] text-[#FDC11F] font-bold ">Brand Information</h2>
-                    <input type={'text'} name="brandName" placeholder="Brand Name" className="indent-[15px] xsm:min-w-[280px] w-[22.03513909224012vw] h-[60px]"/>
-                    <textarea name="longDescription" placeholder="Long Description" className="indent-[15px] pt-[20px] xsm:min-w-[280px] w-[39.53147877013177vw] h-[181.2px]"></textarea>
+                    <input type={'text'} name="brandName" placeholder="Brand Name" className="indent-[15px] xsm:min-w-[280px] sm:min-w-[280px] w-[22.03513909224012vw] h-[60px]"/>
+                    <textarea name="longDescription" placeholder="Long Description" className="indent-[15px] pt-[20px] xsm:min-w-[280px] sm:min-w-[280px] w-[39.53147877013177vw] h-[181.2px]"></textarea>
                     <div className="text-[clamp(16px,1.302vw,25px)] text-[#fff] font-bold">
                         <h2 className="font-[25px] font-bold ">Small Logo</h2>
                         <div className="flex justify-center items-center w-[119px] h-[89px] bg-white rounded-[18px]">

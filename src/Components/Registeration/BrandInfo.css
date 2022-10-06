@@ -11,6 +11,15 @@
 @media screen and (max-width: 576px) {
     .phone-input2 .react-tel-input .special-label + .form-control {
         width:58% !important;
+        /* min-width: 205px; */
+    }
+
+    
+}
+
+@media screen and (max-width: 767px) {
+    .phone-input2 .react-tel-input .special-label + .form-control {
+        width:48% !important;
         min-width: 245px;
     }
 }

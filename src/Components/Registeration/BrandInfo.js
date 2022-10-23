@@ -8,6 +8,12 @@ import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 import { addBrand, addbusinessToClub, brandInfo, clubOffer } from "../../_services";
 
+const ToastError=(props)=>{
+    return(
+        <div>{props.error}</div>
+    )
+}
+
 export default function BrandInfo({getDataFromBrandInfo,benefitArrayFC}){
     let [disableBtn,setDisableBtn]=useState(false);
     const location =useLocation();
@@ -67,6 +73,7 @@ export default function BrandInfo({getDataFromBrandInfo,benefitArrayFC}){
             brand=(JSON.parse(brand));
         }catch(err){
             console.log(err);
+            // toast.error(<ToastError error={err}></ToastError>)
         }
 
         let data={
@@ -90,7 +97,6 @@ export default function BrandInfo({getDataFromBrandInfo,benefitArrayFC}){
             business=await brandInfo(data);
             business=(JSON.parse(business));
             let addbusinesstoclub=await addbusinessToClub(business);
-            console.log(addbusinesstoclub);
             for(let i = 0;i<benefitArrayFC.length;i++){
                 try{
                     benefitArrayFC[i].businessId=business.id;
@@ -99,10 +105,15 @@ export default function BrandInfo({getDataFromBrandInfo,benefitArrayFC}){
                     navigate("/");
                 }catch(err){
                     console.log(err);
+                    toast.error(<ToastError error={err.message}></ToastError>)
                 }
             }
         }catch(err){
-            console.log(err);
+            if(err.status === 409){
+                toast.error(<ToastError error={"Account already exists with this email"}></ToastError>)
+                return
+            }
+            toast.error(<ToastError error={"Error Occured while registering user."}></ToastError>)
         }        
     }
 
@@ -146,37 +157,37 @@ export default function BrandInfo({getDataFromBrandInfo,benefitArrayFC}){
                 <div className="flex-1 flex flex-col gap-[1.03vh] xsm:w-[97%] w-[80%] m-auto pb-[1.62962962962963vh]">
                     <h2 className="text-[clamp(24px,1.8229166666666667vw,35px)] text-[#FDC11F] font-bold">Create Business Account</h2>
                     <div className="inline-block">
-                        <label className="flex items-center gap-[10px] text-[clamp(14px,0.9375vw,18px)] text-[#FDC11F] font-bold ">Email * <div data-title="Email" className="helpDiv"><img className="cursor-pointer w-[1.6473958333333334vw] min-w-[20px]" src="./images/yellow-mark.png"/></div></label>
+                        <label className="flex items-center gap-[10px] text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold ">Email * <div data-title="Email" className="helpDiv"><img className="cursor-pointer w-[1.6473958333333334vw] min-w-[20px]" src="./images/yellow-mark.png"/></div></label>
                         <input type={"email"} name="email" required placeholder="Email" className="indent-[15px] xsm:min-w-[280px] sm:min-w-[280px] w-[22.03513909224012vw] min-h-[30px] h-[5.555555555555555vh] max-h-[60px]"/>
                     </div>
                     <div className="inline-block">
-                        <label className="flex items-center gap-[10px] text-[clamp(14px,0.9375vw,18px)] text-[#FDC11F] font-bold ">Password * <div data-title="Password" className="helpDiv"><img className="cursor-pointer w-[1.6473958333333334vw] min-w-[20px]" src="./images/yellow-mark.png"/></div></label>
+                        <label className="flex items-center gap-[10px] text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold ">Password * <div data-title="Password" className="helpDiv"><img className="cursor-pointer w-[1.6473958333333334vw] min-w-[20px]" src="./images/yellow-mark.png"/></div></label>
                         <input type={"password"} name="password" required placeholder="Password" className="bg-[#FDC11F] indent-[15px] xsm:min-w-[280px] sm:min-w-[280px] w-[22.03513909224012vw] min-h-[30px] h-[5.555555555555555vh] max-h-[60px]"/>
                     </div>
                     <div className="inline-block">
-                        <label className="flex items-center gap-[10px] text-[clamp(14px,0.9375vw,18px)] text-[#FDC11F] font-bold ">Account Name * <div data-title="Account Name" className="helpDiv"><img className="cursor-pointer w-[1.6473958333333334vw] min-w-[20px]" src="./images/yellow-mark.png"/></div></label>
+                        <label className="flex items-center gap-[10px] text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold ">Account Name * <div data-title="Account Name" className="helpDiv"><img className="cursor-pointer w-[1.6473958333333334vw] min-w-[20px]" src="./images/yellow-mark.png"/></div></label>
                         <input type="text" name="accountName" required placeholder="Account Name" className="indent-[15px] xsm:min-w-[280px] sm:min-w-[280px] w-[22.03513909224012vw] min-h-[30px] h-[5.555555555555555vh] max-h-[60px]"/>
                     </div>
                     <div className="inline-block">
-                        <label className="flex items-center gap-[10px] text-[clamp(14px,0.9375vw,18px)] text-[#FDC11F] font-bold ">Business Name * <div data-title="Business Name" className="helpDiv"><img className="cursor-pointer w-[1.6473958333333334vw] min-w-[20px]" src="./images/yellow-mark.png"/></div></label>
+                        <label className="flex items-center gap-[10px] text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold ">Business Name * <div data-title="Business Name" className="helpDiv"><img className="cursor-pointer w-[1.6473958333333334vw] min-w-[20px]" src="./images/yellow-mark.png"/></div></label>
                         <input type={"text"} name="businessName" required placeholder="Business Name" className="indent-[15px] xsm:min-w-[280px] sm:min-w-[280px] w-[22.03513909224012vw] min-h-[30px] h-[5.555555555555555vh] max-h-[60px]"/>
                     </div>
                     <div className="inline-block">
-                        <label className="flex items-center gap-[10px] text-[clamp(14px,0.9375vw,18px)] text-[#FDC11F] font-bold ">Business Address * <div data-title="Business Address" className="helpDiv"><img className="cursor-pointer w-[1.6473958333333334vw] min-w-[20px]" src="./images/yellow-mark.png"/></div></label>
+                        <label className="flex items-center gap-[10px] text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold ">Business Address * <div data-title="Business Address" className="helpDiv"><img className="cursor-pointer w-[1.6473958333333334vw] min-w-[20px]" src="./images/yellow-mark.png"/></div></label>
                         <input type={"address"} name="businessAddress" required placeholder="Business Address" className="indent-[15px] xsm:min-w-[280px] sm:min-w-[280px] w-[22.03513909224012vw] min-h-[30px] h-[5.555555555555555vh] max-h-[60px]"/>
                     </div>
                     <div className="inline-block">
-                        <label className="flex items-center gap-[10px] text-[clamp(14px,0.9375vw,18px)] text-[#FDC11F] font-bold ">Enter Phone * <div data-title="Enter Phone" className="helpDiv"><img className="cursor-pointer w-[1.6473958333333334vw] min-w-[20px]" src="./images/yellow-mark.png"/></div></label>
+                        <label className="flex items-center gap-[10px] text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold ">Enter Phone * <div data-title="Enter Phone" className="helpDiv"><img className="cursor-pointer w-[1.6473958333333334vw] min-w-[20px]" src="./images/yellow-mark.png"/></div></label>
                         <div className="phone-input2">
                             <PhoneInput prefix="+" buttonStyle={{height:"5.555555555555555vh",borderRadius:"57px 0 0 57px",maxHeight:"60px",minHeight:"30px"}} inputStyle={{width:"271px",borderRadius:"0 57px 57px 0",height:"5.555555555555555vh",maxHeight:"60px",minHeight:"30px"}} className="indent-[27px] w-[301px]" placeholder="Enter Phone number" value={value} onChange={setValue}/>
                         </div>
                     </div>
                     <div className="inline-block">
-                        <label className="flex items-center gap-[10px] text-[clamp(14px,0.9375vw,18px)] text-[#FDC11F] font-bold ">Opening Hours * <div data-title="Opening Hours" className="helpDiv"><img className="cursor-pointer w-[1.6473958333333334vw] min-w-[20px]" src="./images/yellow-mark.png"/></div></label>
+                        <label className="flex items-center gap-[10px] text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold ">Opening Hours * <div data-title="Opening Hours" className="helpDiv"><img className="cursor-pointer w-[1.6473958333333334vw] min-w-[20px]" src="./images/yellow-mark.png"/></div></label>
                         <input type={"number"} name="openingHours" required placeholder="Opening Hours" className="indent-[15px] xsm:min-w-[280px] sm:min-w-[280px] w-[22.03513909224012vw] min-h-[30px] h-[5.555555555555555vh] max-h-[60px]"/>
                     </div>
                     <div className="inline-block">
-                        <label className="flex items-center gap-[10px] text-[clamp(14px,0.9375vw,18px)] text-[#FDC11F] font-bold ">Special Opening Hours * <div data-title="Opening Hours" className="helpDiv"><img className="cursor-pointer w-[1.6473958333333334vw] min-w-[20px]" src="./images/yellow-mark.png"/></div></label>
+                        <label className="flex items-center gap-[10px] text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold ">Special Opening Hours * <div data-title="Opening Hours" className="helpDiv"><img className="cursor-pointer w-[1.6473958333333334vw] min-w-[20px]" src="./images/yellow-mark.png"/></div></label>
                         <div className="relative flex">
                             <input type={"number"} name="specialOpeningHours" required placeholder="Special Opening Hours" className="relative indent-[15px] xsm:min-w-[280px] sm:min-w-[280px] w-[22.03513909224012vw] min-h-[30px] h-[5.555555555555555vh] max-h-[60px]"/>
                             <label className="absolute top-[25%] xsm:right-[2%] sm:right-[0%] right-[-25%] flex items-center text-[#FDC11F]">Holiday,Vacation <div data-title="holiday, vacations" className="helpDiv"><img className="cursor-pointer w-[1.6473958333333334vw] min-w-[20px]" src="./images/yellow-mark.png"/></div></label>
@@ -184,12 +195,12 @@ export default function BrandInfo({getDataFromBrandInfo,benefitArrayFC}){
                     </div>
                     
                     <div className="inline-block">
-                        <label className="flex items-center gap-[10px] text-[clamp(14px,0.9375vw,18px)] text-[#FDC11F] font-bold ">Contact Name * <div data-title="Contact Name" className="helpDiv"><img className="cursor-pointer w-[1.6473958333333334vw] min-w-[20px]" src="./images/yellow-mark.png"/></div></label>
+                        <label className="flex items-center gap-[10px] text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold ">Contact Name * <div data-title="Contact Name" className="helpDiv"><img className="cursor-pointer w-[1.6473958333333334vw] min-w-[20px]" src="./images/yellow-mark.png"/></div></label>
                         <input type={"text"} name="contactName" required placeholder="Contact Name" className="indent-[15px] xsm:min-w-[280px] sm:min-w-[280px] w-[22.03513909224012vw] min-h-[30px] h-[5.555555555555555vh] max-h-[60px]"/>
                     </div>
 
                     <div className="inline-block">
-                        <label className="flex items-center gap-[10px] text-[clamp(14px,0.9375vw,18px)] text-[#FDC11F] font-bold ">Description * <div data-title="Description" className="helpDiv"><img className="cursor-pointer w-[1.6473958333333334vw] min-w-[20px]" src="./images/yellow-mark.png"/></div></label>
+                        <label className="flex items-center gap-[10px] text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold ">Description * <div data-title="Description" className="helpDiv"><img className="cursor-pointer w-[1.6473958333333334vw] min-w-[20px]" src="./images/yellow-mark.png"/></div></label>
                         <input type={"text"} name="description" required placeholder="Description" className="indent-[15px] xsm:min-w-[280px] sm:min-w-[280px] w-[22.03513909224012vw] min-h-[30px] h-[5.555555555555555vh] max-h-[60px]"/>
                     </div>
 
@@ -197,11 +208,11 @@ export default function BrandInfo({getDataFromBrandInfo,benefitArrayFC}){
                 <div className="flex-1 flex flex-col gap-[1.03vh] xsm:w-[97%] xsm:m-auto sm:w-[80%] sm:m-auto">
                     <h2 className="text-[clamp(24px,1.8229166666666667vw,35px)] text-[#FDC11F] font-bold ">Brand Information</h2>
                     <div className="inline-block">
-                        <label className="flex items-center gap-[10px] text-[clamp(14px,0.9375vw,18px)] text-[#FDC11F] font-bold ">Brand Name * <div data-title="Brand Name" className="helpDiv"><img className="cursor-pointer w-[1.6473958333333334vw] min-w-[20px]" src="./images/yellow-mark.png"/></div></label>
+                        <label className="flex items-center gap-[10px] text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold ">Brand Name * <div data-title="Brand Name" className="helpDiv"><img className="cursor-pointer w-[1.6473958333333334vw] min-w-[20px]" src="./images/yellow-mark.png"/></div></label>
                         <input type={'text'} name="brandName" placeholder="Brand Name" className="indent-[15px] xsm:min-w-[280px] sm:min-w-[280px] w-[22.03513909224012vw] min-h-[30px] h-[5.555555555555555vh] max-h-[60px]"/>
                     </div>
                     <div className="inline-block">
-                        <label className="flex items-center gap-[10px] text-[clamp(14px,0.9375vw,18px)] text-[#FDC11F] font-bold ">Long Description * <div data-title="Long Description" className="helpDiv"><img className="cursor-pointer w-[1.6473958333333334vw] min-w-[20px]" src="./images/yellow-mark.png"/></div></label>
+                        <label className="flex items-center gap-[10px] text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold ">Long Description * <div data-title="Long Description" className="helpDiv"><img className="cursor-pointer w-[1.6473958333333334vw] min-w-[20px]" src="./images/yellow-mark.png"/></div></label>
                         <textarea name="longDescription" placeholder="Long Description" className="indent-[15px] pt-[20px] xsm:min-w-[280px] sm:min-w-[280px] w-[39.53147877013177vw] min-h-[80px] h-[16.77777777777778vh] max-h-[181.2px]"></textarea>
                     </div>
                     <div className="text-[clamp(16px,1.302vw,25px)] text-[#fff] font-bold">

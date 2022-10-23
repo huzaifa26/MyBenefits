@@ -2,6 +2,12 @@ import { useRef, useState } from "react";
 import {toast} from "react-toastify";
 import { addBenefit, userService } from "../../_services";
 
+const ToastError=(props)=>{
+    return(
+        <div>{props.error}</div>
+    )
+}
+
 export default function AddBenefitModel(props){
 
     const [code,setCode]=useState("");
@@ -21,7 +27,6 @@ export default function AddBenefitModel(props){
             return prevState+=e.target.value;
         })
     }
-    console.log(props);
 
 
     const formSubmitHandler=(e)=>{
@@ -44,7 +49,8 @@ export default function AddBenefitModel(props){
                     toast("Request Approved");
                     props.closeModal();
                 }else{
-                    toast("Request approval error");
+                    toast.error(<ToastError error={res.message}></ToastError>);
+                    props.closeModal();
                 }
             }
         }

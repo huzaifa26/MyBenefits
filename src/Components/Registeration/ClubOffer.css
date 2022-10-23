@@ -30,5 +30,5 @@
     left: 100%;
     word-wrap: normal;
     border: 1px solid #121212;
-    z-index: 1000;
+    z-index: 10000;
 }

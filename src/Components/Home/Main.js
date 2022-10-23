@@ -33,7 +33,6 @@ export default function Main(){
     const submitCodeHandler=()=>{
         const fetch=async()=>{
             const res=await userService.getRequestByCode(code)
-            console.log(res);
             if(res.status === "NOT_FOUND" || res.length === 0){
                 toast("Invalid code");
                 return

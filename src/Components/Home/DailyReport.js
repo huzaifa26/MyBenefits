@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { userService } from "../../_services";
-import moment from "moment";
+import moment from "moment-timezone";
 
 export default function DailyReport(){
     let user=localStorage.getItem("user")
@@ -30,14 +30,13 @@ export default function DailyReport(){
             }
 
             {todayHistory?.length > 0 && todayHistory.map((t,index)=>{
-                let d=t.createDate.split("T")
-                d=d[0];
-                let hours=new Date("2022-08-31T17:41:32.488+0000").getHours();
-                let mints=new Date("2022-08-31T17:41:32.488+0000").getMinutes();
-                let date=new Date()
-                let diff = date.getTimezoneOffset()/60;
+                const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                const currentTime = moment(t.createDate).tz(timezone).format();
+                let datetime = currentTime.slice(0, 19).replace('T', ' ');
+                datetime=datetime.split(" ")
+                let d=datetime[0]
+                let hours=datetime[1]
 
-                hours=hours+diff;
 
                 return(
                 <div className="xsm:w-[80vw] w-[50vw] p-[10px] rounded-[0.25rem] border-[1px] py-[30px] mt-[35px] mb-[35px] bg-white flex flex-col gap-[15px]">
@@ -48,7 +47,7 @@ export default function DailyReport(){
                     }
                     
                     <div className="flex gap-[8px]">
-                        <label className="font-bold xsm:text-[14px] text-[18px]">Date: </label><h2 className="xsm:text-[14px]">{d+" | "+hours+":"+mints}</h2>
+                        <label className="font-bold xsm:text-[14px] text-[18px]">Date: </label><h2 className="xsm:text-[14px]">{d+" | "+hours}</h2>
                     </div>
 
                     {t.objectType !== "canceled" && 
@@ -79,7 +78,7 @@ export default function DailyReport(){
                     </div>
 
                     <div className="flex gap-[8px]">
-                        <label className="font-bold xsm:text-[14px] text-[18px]">Points Reduced: </label><h2 className="xsm:text-[14px]">{t.pointsReduced}</h2>
+                        <label className="font-bold xsm:text-[14px] text-[18px]">Points Reduced: </label><h2 className="xsm:text-[14px]">{t.pointsReduced || t.pointsPurchased}</h2>
                     </div>
 
                     <div className="flex gap-[8px]">

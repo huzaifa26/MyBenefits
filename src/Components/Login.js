@@ -47,7 +47,8 @@ export default function Login(){
 
     return(
         <div className="bg-[#00b9bf] w-[calc(100vw - 100%)] h-[100vh] pt-[30px] gradientBackground">
-            <div className="flex flex-col xsm:w-[85vw] w-[43.92386530014641vw] bg-white rounded-[10px] m-auto p-[20px]">
+            <div className="flex flex-col xsm:w-[85vw] w-[43.92386530014641vw] bg-white rounded-[10px] m-auto p-[20px] ">
+                <Link to={"/registeration"}><p className="flex justify-end text-[14px] text-[#777] hover:text-[#6ec1d6] mt-[5px] place-content-end">Create Account.</p></Link>
                 <h2 className="font-bold text-[32px] text-[#212529] my-[12px] xsm:text-[24px]">Login to MyBenefitz</h2>
                 <form onSubmit={loginFormSubmitHandler} ref={loginFormRef} className="flex flex-col" >
                     <div className="flex flex-col mb-[20px]">
@@ -62,7 +63,6 @@ export default function Login(){
                     {/* {error &&
                     <div>Error Logging In.</div>
                     } */}
-                    <Link to={"/registeration"}><p className="text-[14px] text-[#777] hover:text-[#6ec1d6] mt-[5px]">Create Account.</p></Link>
                 </form>
             </div>
         </div>

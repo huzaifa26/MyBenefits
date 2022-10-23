@@ -11,6 +11,13 @@ textarea {
     outline: none;
 }
 
+.borderRadius {
+    border-top-right-radius: 50px 50px;
+    border-bottom-right-radius: 50px 50px;
+    border-top-left-radius: 50px 50px;
+    border-bottom-left-radius: 50px 50px;
+}
+
 .react-tel-input .selected-flag:hover,
 .react-tel-input .selected-flag:focus {
     background-color: rgba(255, 255, 255, 0) !important;
@@ -30,3 +37,27 @@ textarea {
     transition: max-height 0.25s, opacity 0.25s ease-out;
 }
 
+.side_bar {
+
+}
+
+/* width */
+.side_bar::-webkit-scrollbar {
+    width: 5px;
+    height: 100px;
+}
+
+/* Track */
+.side_bar::-webkit-scrollbar-track {
+    background: #fff;
+}
+
+/* Handle */
+.side_bar::-webkit-scrollbar-thumb {
+    background: #FDC11F;
+}
+
+/* Handle on hover */
+.side_bar::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}

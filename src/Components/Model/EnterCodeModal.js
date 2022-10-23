@@ -1,15 +1,13 @@
 import { useRef } from "react";
 import { userService } from "../../_services";
-import {toast} from "react-toastify";
+import {toast, ToastContainer} from "react-toastify";
 
 export default function EnterCodeModal(props){
-    const formRef=useRef()
+    const formRef=useRef();
+    console.log(props);
 
     const approveRequestSubmitHandler=(e)=>{
         e.preventDefault();
-        
-
-
         const fetch=async()=>{
             const res=await userService.approveRequestByID(props?.codeRes?.id,formRef.current.points.value);
             console.log(res);
@@ -17,13 +15,17 @@ export default function EnterCodeModal(props){
                 toast("Invalid code");
                 return
             }
-            toast("Benefit redeemed for "+props?.codeRes?.customer?.firstName);
+            toast("Benefit redeemed for "+props?.codeRes?.customer?.firstName+" for "+formRef.current.points.value+" points",{autoClose:false});
+            // console.log(props.codeRes.benefitOfferId,props.codeRes.code,formRef.current.points.value)
+            // const res2=await userService.postAddBenefitToUser(props.codeRes.benefitOfferId,props.codeRes.code,formRef.current.points.value);
+            // console.log(res2);
             props.hideModalHandler();
         }
         fetch();
     }
 
     return(
+        <>
         <div className="absolute w-[100vw] ">
             <div className="w-[100vw] h-[100vh] fixed bg-[#000] opacity-50 top-0 z-10 "></div>
 
@@ -60,5 +62,6 @@ export default function EnterCodeModal(props){
                 </div>
             </form>
     </div>
+    </>
     )
 }

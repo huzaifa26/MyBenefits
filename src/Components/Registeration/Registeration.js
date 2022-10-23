@@ -164,29 +164,29 @@ export default function Registeration({getDataFromRegisteration}){
                             <button type="button" onClick={(e)=>{setStatus('private');setButton2IsActive(true);setButton1IsActive(false)}} className={button2IsActive?"flex justify-center items-center bg-white w-[158.14px] h-[4.701851851851852vh] min-h-[30px] max-h-[50.78px] text-[25px] font-bold rounded-[57px]":"min-h-[30px] flex justify-center items-center w-[158.14px] h-[4.701851851851852vh] max-h-[50.78px] text-[25px] font-bold bg-[#EBBC33] rounded-[57px]"}>Private </button>
                         </div>
                         <div className="inline-block">
-                            <label className="flex items-center gap-[10px] text-[clamp(14px,0.9375vw,18px)] text-[#FDC11F] font-bold">Club Name * <div data-title="Club Name" className="helpDiv"><img className="cursor-pointer w-[1.6473958333333334vw] min-w-[20px]" src="./images/yellow-mark.png"/></div></label>
+                            <label className="flex items-center gap-[10px] text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold">Club Name * <div data-title="Club Name" className="helpDiv"><img className="cursor-pointer w-[1.6473958333333334vw] min-w-[20px]" src="./images/yellow-mark.png"/></div></label>
                             <input name="clubName" type={"text"} required placeholder="Club Name" className="indent-[27px] w-[95%] max-w-[290.67px] h-[6.203703703703703vh] min-h-[30px] max-h-[67px]"/>
                         </div>
                         <div className="inline-block">
-                            <label className="flex items-center gap-[10px] text-[clamp(14px,0.9375vw,18px)] text-[#FDC11F] font-bold">Email * <div data-title="Email" className="helpDiv"><img className="cursor-pointer w-[1.6473958333333334vw] min-w-[20px]" src="./images/yellow-mark.png"/></div></label>
+                            <label className="flex items-center gap-[10px] text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold">Email * <div data-title="Email" className="helpDiv"><img className="cursor-pointer w-[1.6473958333333334vw] min-w-[20px]" src="./images/yellow-mark.png"/></div></label>
                             <input name="email" type={"email"} required placeholder="Email" className="bg-[#FDC11F] indent-[27px] w-[95%] max-w-[290.67px] h-[6.203703703703703vh] min-h-[30px] max-h-[67px]"/>
                         </div>
                         <div className="inline-block">
-                            <label className="flex items-center gap-[10px] text-[clamp(14px,0.9375vw,18px)] text-[#FDC11F] font-bold">Enter Phone * <div data-title="Enter Phone" className="helpDiv"><img className="cursor-pointer w-[1.6473958333333334vw] min-w-[20px]" src="./images/yellow-mark.png"/></div></label>
+                            <label className="flex items-center gap-[10px] text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold">Enter Phone * <div data-title="Enter Phone" className="helpDiv"><img className="cursor-pointer w-[1.6473958333333334vw] min-w-[20px]" src="./images/yellow-mark.png"/></div></label>
                             <PhoneInput prefix="+" buttonStyle={{height:"6.203703703703703vh",maxHeight:"67px",borderRadius:"57px 0 0 57px",minHeight:"30px"}} inputStyle={{borderRadius:"0 57px 57px 0",height:"6.203703703703703vh",maxHeight:"67px",minHeight:"30px" }} className="indent-[27px] w-[95%] max-w-[290.67px] h-[6.203703703703703vh]" placeholder="Enter phone number" value={value} onChange={setValue}/>
                         </div>
 
                         <div className="inline-block">
-                            <label className="flex items-center gap-[10px] text-[clamp(14px,0.9375vw,18px)] text-[#FDC11F] font-bold">Description * <div data-title="Description" className="helpDiv"><img className="cursor-pointer w-[1.6473958333333334vw] min-w-[20px]" src="./images/yellow-mark.png"/></div></label>
+                            <label className="flex items-center gap-[10px] text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold">Description * <div data-title="Description" className="helpDiv"><img className="cursor-pointer w-[1.6473958333333334vw] min-w-[20px]" src="./images/yellow-mark.png"/></div></label>
                             <input name="description" type={"text"} required placeholder="Description" className="indent-[27px] w-[95%] max-w-[290.67px] h-[6.203703703703703vh] min-h-[30px] max-h-[67px]"/>
                         </div>
 
                         <div className="inline-block">
-                            <label className="flex items-center gap-[10px] text-[clamp(14px,0.9375vw,18px)] text-[#FDC11F] font-bold">Website * <div data-title="Website" className="helpDiv"><img className="cursor-pointer w-[1.6473958333333334vw] min-w-[20px]" src="./images/yellow-mark.png"/></div></label>
+                            <label className="flex items-center gap-[10px] text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold">Website * <div data-title="Website" className="helpDiv"><img className="cursor-pointer w-[1.6473958333333334vw] min-w-[20px]" src="./images/yellow-mark.png"/></div></label>
                             <input name="website" type={"url"} required placeholder="Website" className="indent-[27px] w-[95%] max-w-[290.67px] h-[6.203703703703703vh] min-h-[30px] max-h-[67px]"/>
                         </div>
                         <div className="inline-block">
-                            <label className="flex items-center gap-[10px] text-[clamp(14px,0.9375vw,18px)] text-[#FDC11F] font-bold">Extra Information * <div data-title="Extra Information" className="helpDiv"><img className="cursor-pointer w-[1.6473958333333334vw] min-w-[20px]" src="./images/yellow-mark.png"/></div></label>
+                            <label className="flex items-center gap-[10px] text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold">Extra Information * <div data-title="Extra Information" className="helpDiv"><img className="cursor-pointer w-[1.6473958333333334vw] min-w-[20px]" src="./images/yellow-mark.png"/></div></label>
                             <input name="extraInfo" type={"text"} required placeholder="Extra Information" className="indent-[27px] w-[95%] max-w-[290.67px] h-[6.203703703703703vh] min-h-[30px] max-h-[67px]"/>
                         </div>
                         <div className="flex justify-between">

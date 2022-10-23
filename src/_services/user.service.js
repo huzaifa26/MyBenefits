@@ -12,6 +12,7 @@ export const userService = {
     getDailyHistory, // done
     undoTransaction, // done
     allBusinessBenefitOffer,
+    postAddBenefitToUser,
 };
 const globalHeaders = {
   'Content-Type': 'application/json',
@@ -125,7 +126,6 @@ export const clubOffer= ({price,points,possiblePurchases,discountAmount,smallPic
     fetch(`${serverUrl}/admin/club/${clubId.id}/benefit_offer`, requestOptions)
     .then(handleResponse)
     .then(benefit => {
-        console.log(benefit)
         resolve(JSON.stringify(benefit));
     }).catch((err)=>{
       console.log(err)
@@ -145,16 +145,15 @@ export const brandInfo= (data)=>{
     },
     body: JSON.stringify(data),
   };
-  console.log(data);
-  return new Promise((resolve,reject) => {
+  return new Promise((resolve,reject)=>{
     fetch(`${serverUrl}/admin/business`, requestOptions)
-    .then(handleResponse)
-    .then(brand => {
-      resolve(JSON.stringify(brand));
-    }).catch((err)=>{
-      reject(err)
-    })
-  });
+      .then(handleResponse)
+      .then(res => {
+        resolve(JSON.stringify(res));
+      }).catch((err)=>{
+        reject(err)
+      })
+  })
 }
 
 export const addbusinessToClub= ({id})=>{
@@ -197,15 +196,10 @@ export const addBrand= ({name,description,logoUrl})=>{
     body: JSON.stringify({name,description,logoUrl}),
   };
 
-  return new Promise((resolve,reject) => {
-    fetch(`${serverUrl}/admin/brand`, requestOptions)
-    .then(handleResponse)
-    .then(brand => {
-      resolve(JSON.stringify(brand));
-    }).catch((err)=>{
-      reject(err)
-    })
-  });
+  return fetch(`${serverUrl}/admin/brand`, requestOptions)
+    .then((res)=>res.json())
+    .then(res=>{return res})
+    .catch(err=>{return err})
 }
 
 export function login(email, password) {
@@ -383,6 +377,10 @@ function handleResponse(response) {
     // logout();
     // window.location.reload(true);
   }
+
+  if (response.status === 409) {
+
+  }
   return response.text().then(text => {
 
       const data = text && JSON.parse(text);
@@ -395,6 +393,25 @@ function handleResponse(response) {
       return data;
   });
 }
+
+function postAddBenefitToUser(benefitOfferId, pointsStatus, code) {
+  let data = {
+    "benefitOfferId": benefitOfferId,
+    "pointsStatus": pointsStatus,
+    "code":code,
+  }
+  const requestOptions = {
+      method: 'POST',
+      headers: {...authHeader(), ...globalHeaders},
+      body: JSON.stringify(data),
+  };
+  let user = JSON.parse(localStorage.getItem('user'));
+  console.log(user.business_id)
+  return fetch(`${serverUrl}/business/${user.business_id}/used_benefit`, requestOptions)
+  .then(response => response.json())
+  .then(response => {return response})
+}
+
 function handleError(e) {
   console.log("Error:", e);
   // logout();

@@ -11,7 +11,7 @@ export default function AddBenefit(){
     const [getDetail,setDetails]=useState("");
     const [showModal,setShowModal]=useState(false);
     const [pointValue,setPointValue]=useState();
-    const [benefitsArray,setBenefitArray]=useState();
+    const [benefitsArray,setBenefitArray]=useState([]);
 
     const addbenefitComfirmHandler=()=>{
         if(pointValue === undefined || pointValue === ""){
@@ -35,6 +35,7 @@ export default function AddBenefit(){
         const fetch=async()=>{
             // const res=await userService.getRequsts();
             const res=await userService.allBusinessBenefitOffer();
+            console.log(res)
             setBenefitArray(res);
         }
         fetch();
@@ -83,16 +84,15 @@ export default function AddBenefit(){
                 <div className="flex pl-[10px] items-center w-[100%] h-[65px] bg-[#d1ecf1] text-[#0C5460] xsm:text-[24px] text-[32px] rounded-[0.25rem]">
                     Select Benefit
                 </div>
-                {benefitsArray && 
+                {benefitsArray.length > 0 && 
                     benefitsArray?.map((item)=>{
                         return(
-                            <div key={item.id} onClick={()=>{setDetails(item);}} className="flex justify-center items-center w-[100%] h-[65px] bg-[#0069d9] text-[#fff] text-[20px] rounded-[0.25rem]">
+                            <div key={item.id} onClick={()=>{setDetails(item);}} className="cursor-pointer flex justify-center items-center w-[100%] h-[65px] bg-[#0069d9] text-[#fff] text-[20px] rounded-[0.25rem]">
                                 {item.description}
                             </div>
                         )
                     })
-                }
-                
+                } 
             </div>
         </div>
         </>

@@ -68,7 +68,7 @@ export default function AddBenefit(){
                         </h2>
                         <h2 className="my-[16px]">
                             <span className="xsm:text-[18px] text-[28px] font-bold text-[#212529]">Original balance:</span>
-                            {getDetail.price}
+                            {getDetail.points}
                         </h2>
                         <input max={10} onChange={(e)=>{setPointValue(e.target.value)}} className="w-[100%] focus:shadow-md my-[16px] rounded-[0.25rem] border-[1px] h-[38px] py-[6px] px-[12px] mb-[16px]" placeholder="A balance of point is desired" type={"number"}></input>
                         <div className="flex gap-[15px] py-[16px] text-[20px]">

@@ -259,7 +259,6 @@ function checkInfoAvailable() {
 }
 
 function getRequestByCode(code) {
-  console.log(authHeader())
     const requestOptions = {
         method: 'GET',
         headers: {...authHeader(), ...globalHeaders}

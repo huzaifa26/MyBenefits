@@ -70,7 +70,7 @@ export default function AddBenefit(){
                             <span className="xsm:text-[18px] text-[28px] font-bold text-[#212529]">Original balance:</span>
                             {getDetail.points}
                         </h2>
-                        <input max={10} onChange={(e)=>{setPointValue(e.target.value)}} className="w-[100%] focus:shadow-md my-[16px] rounded-[0.25rem] border-[1px] h-[38px] py-[6px] px-[12px] mb-[16px]" placeholder="A balance of point is desired" type={"number"}></input>
+                        <input max={10} onChange={(e)=>{setPointValue(e.target.value)}} className="w-[100%] focus:shadow-md my-[16px] rounded-[0.25rem] border-[1px] h-[38px] py-[6px] px-[12px] mb-[16px]" placeholder="Reduce amount of points" type={"number"}></input>
                         <div className="flex gap-[15px] py-[16px] text-[20px]">
                             <button onClick={()=>{setDetails("")}} className="flex-1 border h-[51px] py-[8px] px-[16px] text-[#6c757d] border-[#6c757d]">Cancel</button>
                             <button onClick={addbenefitComfirmHandler} className="flex-1 border h-[51px] py-[8px] px-[16px] text-[#007bff] border-[#007bff]">Confirm</button>

@@ -48,7 +48,7 @@ export default function EnterCodeModal(props){
                     </div>
 
                     <div className="flex gap-[8px]">
-                        <label className="font-medium text-[18px]">Remaining Points: </label><h2>{props?.codeRes?.pointsStatus}</h2>
+                        <label className="font-medium text-[18px]">Remaining Points: </label><h2>{props?.codeRes?.offerPrice}</h2>
                     </div>
 
                     <div className="flex gap-[8px]">

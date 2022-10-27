@@ -213,7 +213,7 @@ export default function ClubOffer({ getDataFromClubOffer }) {
                         </div>
                         <div style={button2IsActive ? {pointerEvents:"none",opacity:"0.5"}:{}} className="inline-block">
                             <label className="flex items-center gap-[10px] text-[clamp(14px,1.2vw,24px)] text-[#FDC11F] font-bold ">{button3IsActive?"Price before discount *":"Price *"} <div data-title={button3IsActive?"Price before discount":"Price"} className="helpDiv"><img className="cursor-pointer w-[1.6473958333333334vw] min-w-[20px]" src="./images/yellow-mark.png"/></div></label>
-                            <input type={"number"} min="0" name="price" placeholder={button3IsActive?"Price before discount":"Price"} required className="xsm:min-w-[80vw] sm:min-w-[calc(35vw-2.083vw)]  indent-[1.3vw] w-[14.85vw] min-h-[30px] h-[3.9592592592592593vh] max-h-[42.76px]" />
+                            <input type={"number"} min="0" name="price" placeholder={button3IsActive?"Price before discount":"Price"} required={button2IsActive?false:true} className="xsm:min-w-[80vw] sm:min-w-[calc(35vw-2.083vw)]  indent-[1.3vw] w-[14.85vw] min-h-[30px] h-[3.9592592592592593vh] max-h-[42.76px]" />
                         </div>
 
                         <div className="inline-block">
@@ -233,7 +233,7 @@ export default function ClubOffer({ getDataFromClubOffer }) {
 
                         <div style={button3IsActive?{pointerEvents:"none",opacity:"0.5"}:{}}>
                             <label className="flex items-center gap-[10px] text-[clamp(14px,1.2vw,24px)] text-[#FDC11F] font-bold ">{button2IsActive?"Gift Amount *":"Discount Amount *"} <div data-title={button2IsActive?"Gift Amount":"discount ammount"} className="helpDiv"><img className="cursor-pointer w-[1.6473958333333334vw] min-w-[20px]" src="./images/yellow-mark.png"/></div></label>
-                            <input type={"number"} name="discount" required placeholder={button2IsActive?"Gift Amount":"Discount Amount"}  className="xsm:min-w-[80vw] sm:min-w-[calc(35vw-2.083vw)] indent-[1.3vw] w-[14.85vw] min-h-[30px] h-[3.9592592592592593vh] max-h-[42.76px]" />
+                            <input type={"number"} name="discount" required={button3IsActive?false:true} placeholder={button2IsActive?"Gift Amount":"Discount Amount"}  className="xsm:min-w-[80vw] sm:min-w-[calc(35vw-2.083vw)] indent-[1.3vw] w-[14.85vw] min-h-[30px] h-[3.9592592592592593vh] max-h-[42.76px]" />
                         </div>
 
                         <div className="flex flex-col">
@@ -330,8 +330,8 @@ const BenefitRow=({b,index,deleteFromBenefitArray})=>{
                 <p><span className="font-[500] uppercase">Points: </span>{b.points}</p>
                 <p><span className="font-[500] uppercase">Possible Purchases:</span> {b.possiblePurchases}</p>
                 <p><span className="font-[500] uppercase">Discount Amount:</span> {b.discountAmount}</p>
-                <p><span className="font-[500] uppercase">Small Image:</span> <img className="w-[275]px" src={b.smallPicturlUrl} alt="Small picture"/></p>
-                <p><span className="font-[500] uppercase">Large Image:</span> <img className="w-[275]px" src={b.LargePicturlUrl} alt="Large picture"/></p>
+                <p><span className="font-[500] uppercase">Small Image:</span> {b.smallPicturlUrl.length>0?<img className="w-[275]px" src={b.smallPicturlUrl} alt="Small picture"/>:"No image"}</p>
+                <p><span className="font-[500] uppercase">Large Image:</span> {b.largeimageURL.length>0?<img className="w-[275]px" src={b.LargePicturlUrl} alt="Large picture"/>:"No image"}</p>
             </div>
         </div>
     )

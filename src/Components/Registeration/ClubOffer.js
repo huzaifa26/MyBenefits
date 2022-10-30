@@ -314,6 +314,7 @@ export default function ClubOffer({ getDataFromClubOffer }) {
 
 const BenefitRow=({b,index,deleteFromBenefitArray})=>{
     const [showBenefits,setShowBenefits]=useState(false);
+    console.log(b);
     return(
         <div key={index} className="flex flex-col gap-[10px] border-2 p-2 rounded-md border-[#FDC11F] divide-y-2 divide-[#FDC11F] ">
             <div className="relative z-20 flex justify-between">
@@ -330,8 +331,8 @@ const BenefitRow=({b,index,deleteFromBenefitArray})=>{
                 <p><span className="font-[500] uppercase">Points: </span>{b.points}</p>
                 <p><span className="font-[500] uppercase">Possible Purchases:</span> {b.possiblePurchases}</p>
                 <p><span className="font-[500] uppercase">Discount Amount:</span> {b.discountAmount}</p>
-                <p><span className="font-[500] uppercase">Small Image:</span> {b.smallPicturlUrl.length>0?<img className="w-[275]px" src={b.smallPicturlUrl} alt="Small picture"/>:"No image"}</p>
-                <p><span className="font-[500] uppercase">Large Image:</span> {b.largeimageURL.length>0?<img className="w-[275]px" src={b.LargePicturlUrl} alt="Large picture"/>:"No image"}</p>
+                <p><span className="font-[500] uppercase">Small Image:</span> {b?.smallPicturlUrl?.length>0?<img className="w-[275]px" src={b.smallPicturlUrl} alt="Small picture"/>:"No image"}</p>
+                <p><span className="font-[500] uppercase">Large Image:</span> {b?.LargePicturlUrl?.length>0?<img className="w-[275]px" src={b.LargePicturlUrl} alt="Large picture"/>:"No image"}</p>
             </div>
         </div>
     )

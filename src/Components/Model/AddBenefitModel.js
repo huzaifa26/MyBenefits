@@ -43,9 +43,6 @@ export default function AddBenefitModel(props){
             benefitOfferId:props.item.id
         }
 
-        console.log(data);
-        return
-        
         const fetch=async()=>{
             let res=await addBenefit(data)
             console.log(res);

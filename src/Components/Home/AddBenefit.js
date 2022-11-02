@@ -15,8 +15,10 @@ export default function AddBenefit(){
 
     const addbenefitComfirmHandler=()=>{
         if(pointValue === undefined || pointValue === ""){
-            toast.warning("Please Enter Points");
-            return;
+            if(getDetail.type !== "free"){
+                toast.warning("Please Enter Points");
+                return;
+            }
         }
 
         if(pointValue > getDetail.points){
@@ -24,7 +26,6 @@ export default function AddBenefit(){
             return;
         }
         setShowModal(true);
-        console.log(pointValue);
     }
 
     const closeModal=()=>{
@@ -70,7 +71,9 @@ export default function AddBenefit(){
                             <span className="xsm:text-[18px] text-[28px] font-bold text-[#212529]">Original balance:</span>
                             {getDetail.points}
                         </h2>
-                        <input max={10} onChange={(e)=>{setPointValue(e.target.value)}} className="w-[100%] focus:shadow-md my-[16px] rounded-[0.25rem] border-[1px] h-[38px] py-[6px] px-[12px] mb-[16px]" placeholder="Reduce amount of points" type={"number"}></input>
+                        {getDetail.type !== "free" &&
+                            <input max={10} onChange={(e)=>{setPointValue(e.target.value)}} className="w-[100%] focus:shadow-md my-[16px] rounded-[0.25rem] border-[1px] h-[38px] py-[6px] px-[12px] mb-[16px]" placeholder="Reduce amount of points" type={"number"}></input>
+                        }
                         <div className="flex gap-[15px] py-[16px] text-[20px]">
                             <button onClick={()=>{setDetails("")}} className="flex-1 border h-[51px] py-[8px] px-[16px] text-[#6c757d] border-[#6c757d]">Cancel</button>
                             <button onClick={addbenefitComfirmHandler} className="flex-1 border h-[51px] py-[8px] px-[16px] text-[#007bff] border-[#007bff]">Confirm</button>
@@ -87,7 +90,7 @@ export default function AddBenefit(){
                 {benefitsArray.length > 0 && 
                     benefitsArray?.map((item)=>{
                         return(
-                            <div key={item.id} onClick={()=>{setDetails(item);}} className="cursor-pointer flex justify-center items-center w-[100%] h-[65px] bg-[#0069d9] text-[#fff] text-[20px] rounded-[0.25rem]">
+                            <div key={item.id} onClick={()=>{console.log(item);setDetails(item);}} className="cursor-pointer flex justify-center items-center w-[100%] h-[65px] bg-[#0069d9] text-[#fff] text-[20px] rounded-[0.25rem]">
                                 {item.description}
                             </div>
                         )

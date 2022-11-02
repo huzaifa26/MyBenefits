@@ -9,6 +9,7 @@ const ToastError=(props)=>{
 }
 
 export default function AddBenefitModel(props){
+    console.log(props);
 
     const [code,setCode]=useState("");
 
@@ -34,11 +35,16 @@ export default function AddBenefitModel(props){
         if(code === ""){
             toast("Please enter code to proceed");
         }
+        let points=props.pointValue || 0;
+        
         let data={
-            pointsStatus:props.pointValue,
+            pointsStatus:points,
             code:code,
             benefitOfferId:props.item.id
         }
+
+        console.log(data);
+        return
         
         const fetch=async()=>{
             let res=await addBenefit(data)

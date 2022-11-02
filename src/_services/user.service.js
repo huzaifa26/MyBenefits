@@ -106,8 +106,7 @@ export const registerUser= async ({name,description,phoneNum,email,website,extra
   })
 }
 
-export const clubOffer= ({price,points,possiblePurchases,discountAmount,smallPicturlUrl,LargePicturlUrl,type,description,longDescription})=>{
-  console.log(type)
+export const clubOffer= ({price,points,possiblePurchases,discountAmount,smallPicturlUrl,largePicturlUrl,type,description,longDescription})=>{
   const requestOptions = {
     method: 'POST',
     cache: 'no-cache',
@@ -117,7 +116,7 @@ export const clubOffer= ({price,points,possiblePurchases,discountAmount,smallPic
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Credentials': true,
     },
-    body: JSON.stringify({price,points,possiblePurchases,discountAmount,smallPicturlUrl,LargePicturlUrl,type,description,longDescription}),
+    body: JSON.stringify({price,points,possiblePurchases,discountAmount,smallPicturlUrl,largePicturlUrl,type,description,longDescription}),
   };
 
   const clubId=JSON.parse(localStorage.getItem("clubId"));

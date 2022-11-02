@@ -184,12 +184,12 @@ export default function BrandInfo({getDataFromBrandInfo,benefitArrayFC}){
                     </div>
                     <div className="inline-block">
                         <label className="flex items-center gap-[10px] text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold ">Opening Hours * <div data-title="Opening Hours" className="helpDiv"><img className="cursor-pointer w-[1.6473958333333334vw] min-w-[20px]" src="./images/yellow-mark.png"/></div></label>
-                        <input type={"number"} name="openingHours" required placeholder="Opening Hours" className="indent-[15px] xsm:min-w-[280px] sm:min-w-[280px] w-[22.03513909224012vw] min-h-[30px] h-[5.555555555555555vh] max-h-[60px]"/>
+                        <input type={"time"} name="openingHours" required placeholder="Opening Hours" className="openingHours indent-[15px] xsm:min-w-[280px] sm:min-w-[280px] w-[22.03513909224012vw] min-h-[30px] h-[5.555555555555555vh] max-h-[60px]"/>
                     </div>
                     <div className="inline-block">
                         <label className="flex items-center gap-[10px] text-[clamp(16px,1.302vw,25px)] text-[#FDC11F] font-bold ">Special Opening Hours * <div data-title="Opening Hours" className="helpDiv"><img className="cursor-pointer w-[1.6473958333333334vw] min-w-[20px]" src="./images/yellow-mark.png"/></div></label>
                         <div className="relative flex">
-                            <input type={"number"} name="specialOpeningHours" required placeholder="Special Opening Hours" className="relative indent-[15px] xsm:min-w-[280px] sm:min-w-[280px] w-[22.03513909224012vw] min-h-[30px] h-[5.555555555555555vh] max-h-[60px]"/>
+                            <input type={"time"} name="specialOpeningHours" required placeholder="Special Opening Hours" className="specialOpening relative indent-[15px] xsm:min-w-[280px] sm:min-w-[280px] w-[22.03513909224012vw] min-h-[30px] h-[5.555555555555555vh] max-h-[60px]"/>
                             <label className="absolute top-[25%] xsm:right-[2%] sm:right-[0%] right-[-25%] flex items-center text-[#FDC11F]">Holiday,Vacation <div data-title="holiday, vacations" className="helpDiv"><img className="cursor-pointer w-[1.6473958333333334vw] min-w-[20px]" src="./images/yellow-mark.png"/></div></label>
                         </div>
                     </div>

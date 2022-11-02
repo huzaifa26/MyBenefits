@@ -15,10 +15,13 @@ export default function EnterCodeModal(props){
                 toast("Invalid code");
                 return
             }
+
+            if(res?.status === "NOT_FOUND"){
+                toast("Not found");
+                return
+            }
+            
             toast("Benefit redeemed for "+props?.codeRes?.customer?.firstName+" for "+formRef.current.points.value+" points",{autoClose:false});
-            // console.log(props.codeRes.benefitOfferId,props.codeRes.code,formRef.current.points.value)
-            // const res2=await userService.postAddBenefitToUser(props.codeRes.benefitOfferId,props.codeRes.code,formRef.current.points.value);
-            // console.log(res2);
             props.hideModalHandler();
         }
         fetch();

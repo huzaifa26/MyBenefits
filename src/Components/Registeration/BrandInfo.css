@@ -23,3 +23,13 @@
         min-width: 245px;
     }
 }
+
+.specialOpening::before{
+    content:'Special Opening Hours:';
+    margin-right:-1.5em;
+}
+
+.openingHours::before{
+    content:'Opening Hours:';
+    margin-right:-1.5em;
+}

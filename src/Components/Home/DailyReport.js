@@ -10,23 +10,20 @@ export default function DailyReport(){
 
     useEffect(()=>{
         const fetch=async()=>{
-            console.log(await userService.getDailyHistory({prevDays:1}))
             setTodayHistory(await userService.getDailyHistory({prevDays:1}));
         }
         fetch();
     },[])
 
     const undoOnclick=async(id,type)=>{
-        console.log(id,type)
         const result=await userService.undoTransaction(type,id);
-        console.log(result);
     }
+
 
     return(
         <div className="flex justify-center flex-col items-center">
             {todayHistory?.length===0 &&
                 <h2>No history found.</h2>
-               
             }
 
             {todayHistory?.length > 0 && todayHistory.map((t,index)=>{
@@ -36,6 +33,8 @@ export default function DailyReport(){
                 datetime=datetime.split(" ")
                 let d=datetime[0]
                 let hours=datetime[1]
+
+                console.log(t);
 
 
                 return(

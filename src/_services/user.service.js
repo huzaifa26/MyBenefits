@@ -182,7 +182,7 @@ export const addbusinessToClub= ({id})=>{
 }
 
 // Add Brand //POSTMAN
-export const addBrand= ({name,description,logoUrl})=>{
+export const addBrand= async ({name,description,logoUrl})=>{
   const requestOptions = {
     method: 'POST',
     cache: 'no-cache',

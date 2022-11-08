@@ -52,6 +52,7 @@ export default function Registeration({getDataFromRegisteration}){
         try{
             console.log(data);
             // Add club // POSTMAN
+            console.log("444444444444444444")
             let user=await registerUser(data)
             user=JSON.parse(user)
             if(Object.keys(user).length === 0 && user.constructor === Object){
@@ -138,17 +139,17 @@ export default function Registeration({getDataFromRegisteration}){
                 <div className="flex justify-center items-center flex-1">
                     <div className="flex gap-[4px] items-center">
                         <span className="pt-[10px] border-[1px] border-[#1D262D] w-[46px] h-[44px] bg-[#FDC11F] text-[15px] text-center rounded-full">1</span>
-                        <h2 className="text-[clamp(12px,1.30vw,25px)] text-[#1D262D] font-bold">Building loyalty club</h2>
+                        <h2 className="text-[clamp(12px,1.30vw,25px)] text-[#1D262D] font-bold">Create Club</h2>
                     </div>
                     <span className="w-[37px] h-[2px] bg-[#707070] xsm:hidden"></span>
                     <div className="flex gap-[4px] items-center xsm:hidden">
                         <span className="pt-[10px] border-[1px] border-[#1D262D] w-[46px] h-[44px] bg-[#fff] text-[15px] text-center rounded-full">2</span>
-                        <h2 className="text-[clamp(12px,1.30vw,25px)] text-[#1D262D] font-bold">Adding Business to club</h2>
+                        <h2 className="text-[clamp(12px,1.30vw,25px)] text-[#1D262D] font-bold">Choose Benefit</h2>
                     </div>
                     <span className="w-[37px] h-[2px] bg-[#707070] xsm:hidden"></span>
                     <div className="flex gap-[4px] items-center xsm:hidden">
                         <span className="pt-[10px] border-[1px] border-[#1D262D] w-[46px] h-[44px] bg-[#fff] text-[15px] text-center rounded-full">3</span>
-                        <h2 className="text-[clamp(12px,1.30vw,25px)] text-[#1D262D] font-bold">Define Brand</h2>
+                        <h2 className="text-[clamp(12px,1.30vw,25px)] text-[#1D262D] font-bold">Create Account</h2>
                     </div>
                 </div>
             </div>

@@ -68,7 +68,6 @@ export default function BrandInfo({ getDataFromBrandInfo, benefitArrayFC }) {
         let brand;
         try {
             // Add Brand //POSTMAN
-            console.log("111111111111111111")
             brand = await addBrand(brandData);
             console.log(brand);
             // brand = (JSON.parse(brand));

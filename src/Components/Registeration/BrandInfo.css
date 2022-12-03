@@ -1,0 +1,35 @@
+.linearBG{
+    background-image: linear-gradient(to bottom, #26CDBD,#16756C,#13675F);
+    position: relative;
+    overflow: hidden;
+}
+
+.phone-input2 .react-tel-input .special-label + .form-control {
+    width: 76% !important;
+}
+
+@media screen and (max-width: 576px) {
+    .phone-input2 .react-tel-input .special-label + .form-control {
+        width:58% !important;
+        /* min-width: 205px; */
+    }
+
+    
+}
+
+@media screen and (max-width: 767px) {
+    .phone-input2 .react-tel-input .special-label + .form-control {
+        width:48% !important;
+        min-width: 245px;
+    }
+}
+
+.specialOpening::before{
+    content:'Special Opening Hours:';
+    margin-right:-1.5em;
+}
+
+.openingHours::before{
+    content:'Opening Hours:';
+    margin-right:-1.5em;
+}

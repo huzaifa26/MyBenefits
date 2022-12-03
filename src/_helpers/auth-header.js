@@ -7,4 +7,8 @@ export function authHeader() {
     } else {
         return {};
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 6dd1e25de7981292365df9a66f81af7fea68eeef

@@ -111,7 +111,7 @@ export default function Registeration({ getDataFromRegisteration }) {
             console.log(width, height);
 
             if(width<81 && height <81){
-                
+
             }
         };
         const storageRef = ref(Storage, `/logo/${e.target.files[0].name}`);

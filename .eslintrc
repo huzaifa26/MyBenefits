@@ -1,8 +1,8 @@
 {
-# npm install -g eslint eslint-plugin-react-native babel-eslint eslint-config-airbnb eslint-plugin-jsx-a11y eslint-plugin-react eslint-plugin-import
+// npm install -g eslint eslint-plugin-react-native babel-eslint eslint-config-airbnb eslint-plugin-jsx-a11y eslint-plugin-react eslint-plugin-import
 "env": {
   "browser": true,
-  "es6": true,
+  "es6": true
 },
 "parserOptions": {
   "ecmaVersion": 6,
@@ -10,35 +10,35 @@
     "jsx": true
   }
 },
-"parser": "babel-eslint",
-"rules": {
-    # linebreak-style: off,
-    # indent: off,
-    # quotes: off,
-    # space-before-blocks: off,
-    # keyword-spacing: off,
-    # key-spacing: off,
-    # no-tabs: off,
-    # no-trailing-spaces: off,
-    # no-nested-ternary: off,
-    # react/prop-types: off,
-    # react/jsx-filename-extension: off,
-    # react/jsx-indent: off,
-    # react/jsx-max-props-per-line: off,
-    # no-unused-expressions: ["error", { "allowTernary": true }],
-    # max-len: ["error", { "code": 180 }],
-  #   "valid-jsdoc": ["error", {
-  #     "requireReturn": true,
-  #     "requireReturnType": true,
-  #     "requireParamDescription": true,
-  #     "requireReturnDescription": true
-  #   }],
-  #   "require-jsdoc": ["error", {
-  #       "require": {
-  #           "FunctionDeclaration": true,
-  #           "MethodDefinition": true,
-  #           "ClassDeclaration": true
-  #       }
-  #   }]
-  }
+"parser": "/usr/local/lib/node_modules/babel-eslint"
+// "rules": {
+//     # linebreak-style: off,
+//     # indent: off,
+//     # quotes: off,
+//     # space-before-blocks: off,
+//     # keyword-spacing: off,
+//     # key-spacing: off,
+//     # no-tabs: off,
+//     # no-trailing-spaces: off,
+//     # no-nested-ternary: off,
+//     # react/prop-types: off,
+//     # react/jsx-filename-extension: off,
+//     # react/jsx-indent: off,
+//     # react/jsx-max-props-per-line: off,
+//     # no-unused-expressions: ["error", { "allowTernary": true }],
+//     # max-len: ["error", { "code": 180 }],
+//   #   "valid-jsdoc": ["error", {
+//   #     "requireReturn": true,
+//   #     "requireReturnType": true,
+//   #     "requireParamDescription": true,
+//   #     "requireReturnDescription": true
+//   #   }],
+//   #   "require-jsdoc": ["error", {
+//   #       "require": {
+//   #           "FunctionDeclaration": true,
+//   #           "MethodDefinition": true,
+//   #           "ClassDeclaration": true
+//   #       }
+//   #   }]
+//   }
 }

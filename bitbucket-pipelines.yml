@@ -32,9 +32,9 @@ pipelines:
           - gcloud auth activate-service-account --key-file registry-upload-prod.json
           - gcloud auth configure-docker --quiet
           - echo tag number is- $BITBUCKET_BUILD_NUMBER
-          - docker tag mybenefitz-business-web gcr.io/warm-tangent-238911/mybenefitz-business-web:$BITBUCKET_BUILD_NUMBER
-          - docker tag mybenefitz-business-web gcr.io/warm-tangent-238911/mybenefitz-business-web:latest
-          - docker push gcr.io/warm-tangent-238911/mybenefitz-business-web
+          - docker tag mybenefitz-business-web gcr.io/warm-tangent-234914/mybenefitz-business-web:$BITBUCKET_BUILD_NUMBER
+          - docker tag mybenefitz-business-web gcr.io/warm-tangent-234914/mybenefitz-business-web:latest
+          - docker push gcr.io/warm-tangent-234914/mybenefitz-business-web
     - step:
         name: Deploy Test Server
         image: google/cloud-sdk
@@ -43,7 +43,7 @@ pipelines:
         script:
           - gcloud auth activate-service-account --key-file keys/deploy-key-test.json
           - gcloud container clusters get-credentials my-benefitz-test --zone europe-west2-b --project total-pillar-234914
-          - kubectl set image deploy/mybenefitz-business mybenefitz-business-web=gcr.io/warm-tangent-238911/mybenefitz-business-web:$BITBUCKET_BUILD_NUMBER
+          - kubectl set image deploy/mybenefitz-business mybenefitz-business-web=gcr.io/warm-tangent-234914/mybenefitz-business-web:$BITBUCKET_BUILD_NUMBER
     - step:
         name: Deploy Staging Server
         image: google/cloud-sdk

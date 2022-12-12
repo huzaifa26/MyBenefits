@@ -10,7 +10,7 @@
     "jsx": true
   }
 },
-"parser": "/usr/local/lib/node_modules/babel-eslint"
+"parser": "@babel/eslint-parser"
 // "rules": {
 //     # linebreak-style: off,
 //     # indent: off,

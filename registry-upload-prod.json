@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "warm-tangent-238911",
+  "private_key_id": "c872bff26faab0e046acef716276c49603c04d1b",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCpS8N4/L50XXQ/\nC+BH5R7nlOyvUs9tjCT+VakosAnZOjPi/pv4AujtLeaqahRo29uebso2u8NiljRu\nmy3q9nMGk6SZdSq3RKSivKPBtO2sxN++Y8DWiCg5xAr+sYio7FQZvkCXhs/TgIvd\nYIgu+4slP4aYcQWYe9vEJ8ShspAgH0n+EJ9tuxo6ApGq9pFA0WEtY3XtLJ9aR0OZ\nDzrnURSOMcyyQ+UwKfKvsiE/qwSZRJ+ZlXGTFBEMGlo9VhguS0K9QyRhX+aVXQ7a\n9X5iHsBSKjwmigbfYye3Hbc8LE/yUMPG3/kUgsnXxTVXC+6nE9Bze/R2EhhPj1U/\npzsuxk4PAgMBAAECggEAB+RHPWmSuzvsAlBcaR2OHj979QRINRQWWWDG3OWv39dt\nucQioyIHl57PJNyDDQxKpY0GkhyYlAzqbsl/D3fjjsftIVYr4pUpk4h1nb8AYVBg\nGbDuuVFphp/T32GJPE6f8P9EZYvcPkC8xFoOnxoMt3TJomuKVjxX10H/UYZQX57i\nWRpi1+uynm7pg05u5lbA6rDlaH5pz2Daa1lrY4kS8qeiOmUtnoMJUnczz/fla4w4\nn8GQXmAGJ2rn8D9R9B4Km8qE6iKcnyp1xo9xJPkfX8i1ZMnRfWXLI83x0oUh3aEg\n1rfEEIu0yebQ+GbNkP3awoDDK4rNZablFrKrcogwOQKBgQDX5Tc+5lKovRnRBj9a\n/MvzP0Uc0ed1+rQfbnCpkYeorwVrQc+Eu7MSm34HPEKNdhdcLHyBA2nJiXXsz9Ce\nDf3t3XOhdVZFX1s2huhrCNUwS0kDfQ58BXqMZcMWc5uZAQQ7bsu8xYwm0xOyFEXm\nuaKRz2UskUe9KZFuJMTjUQ+Y4wKBgQDIvonGO5wvRvux9etmd9Y68bzMzC5CcjS4\nDSLnu9AVqtXT/MfWYiRD7EWs+qJAt0a5KbV2TnAp5JiVDQyf9z3vk+E3ng/vVBVf\n6QYlKasSwhNRLEWjN9JFixVGfr5ve9DkiKFzrBTGlMYNwlToWm1TulXS2Hl/OhQh\ndj5BpJg55QKBgQCiidM567U3jIavM4DnQ4NYsr2ZoP4deI27TC5Nu17ixEHUKkvN\npnJ/A8myMM/6KHoVzvg9ORCfxnmdvCdXlzkhp6OyXuCAgfXt60t3qcK3BTcHBVOu\nU4GbydFCSe9PFdDV3ehNSnzljew6GcE2n3OhSv7kusvDwlPXFJ+WdCTF+QKBgEow\nyUB/NWjvpgQObDKRpZZhUzKpX4tlJADFshnM+smXOrG/Iagk21xTDSkx9BdQ5Q13\n0b3onWGOP6oOiZTxTm2lzL2+aAs+myu4NnIzpSsomPUOFKqO7eKP1YwZOY6ARyK/\nMFRMy9zcjRn2sWSyTud73U4wfS69K0V2qumdyDjVAoGAB3w1/7EBvYxWFeAe1nHT\nxNZYAn1Rkv4eufCzWIN64qwo69A/rbsoc6PpczSNDJpTNbf2dOH+cv3DP5PUnNjw\nnhj0wYoposv+a3pfaV7/jJgNgvi7/u3V5seYdAgqqtpb3QY2wHEEmy/ZpEov2MMf\nbBL+KTTmWPMAcLCbcaNCeNk=\n-----END PRIVATE KEY-----\n",
+  "client_email": "registry-upload@warm-tangent-238911.iam.gserviceaccount.com",
+  "client_id": "107351901927710075709",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/registry-upload%40warm-tangent-238911.iam.gserviceaccount.com"
+}

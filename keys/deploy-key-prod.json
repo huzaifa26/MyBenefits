@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "warm-tangent-238911",
+  "private_key_id": "4547d2d045d10cb569c28a1cc88bc8a1af8fde67",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCWPoicWSyeIWRr\nGpyLzh+bkurGG7x+xBXGpRtYJYcRNGXM9AxPB+94Do3dr6fhOS5p9FhsvCOPnm4i\nYzyZ7Jz4mitLJuc8/UeaXbPY0qNa9khO/UWuiTMZzTR6VvebCNHjSvQgfNHYsBuK\nW8zrCiR8mC6S8yqjzDqG9E0q7DWTk1972v3sNRtTT8aFPFqGqbt396QXNaQoFlnu\n0UufNzbs5eDUjnAK/qX/zO/25cZI/dzi45WGlAmyLFxM+DczkNehe4NYMDMpG+EF\nxORM8/sDfbV32Wx4uywuOBm/yLCwjkkaX4OVqA2a35dcUl6hkueFBConyWMgX4Vk\n4fd87XOPAgMBAAECggEAJi6IKyuiYiFcUre1lvXwJGpGzcfYtGKCojPtag5HcADf\n6iEPS7pZiiowtWjhgiQ0/mpBWojJhMMffA+6I+f00FzlqbieRWqcmsc7YFvPddtm\n7uQApGVrnh//OSQG0th/9oJi3iq6bZX7ucKwpf6y3RMTqvavHGdXbFqDjefviawj\nOCDhJ8kyRio8j3Y3P0AlCf3chWAzwh/bw28uWw7KWaQlf/sS8d7FE/SKT6yK0o7A\nRU0sBzCF7SyQIDT+dgVSPsyywFmInj++gGSRqxuiPzOzasuhxdFSlk0dW3YrE8Xn\n9e73GSofZgtKI6BkgAPqftM/+HY1iqmbXncFZukwOQKBgQDUGkjxZCdzSLc24PSs\nx0fx+wAHHGbkceyY88leWVGOGu34SIIuGas3Ytmxm57k5kggZvLlVtMwTuRKe7lX\nNX2grIPLNpRzRvtOSOye0r8+A4JCOYMbWqxKDphDDeUY268IZsnwYRVaIYVxywJd\nd/TD3Nh84g0b8qGMF4A/9QaM4wKBgQC1VtcXDNnu0XR5iw9dXeEVT10dIzDbvilq\n2o2ryjjDTCCncy8+GdEenM1ljHcu3jhzrAs6fLDcns4ROLBgtP2NnYol5KTB3pYe\nApDEA7Fb49bT11JTvSjOuz4V+5lf8cEFxcDveVqS4q1oRyvR4DdJIoKpwcZUmW1m\nW1EmN30KZQKBgQCbCsO7QHzd9o+G3BW+nsVmixXQHODRqL1MaRgPkbbd6618SnRu\ngnD3wZhkDd+ubu7WUKrJHhiuPVz/XUV0DDPS2YhVaYZGZeKZrRDaYC9Pg30aL7Q4\nsKU0VUrT6TpIW32s5IZE4pKbGdnT/pOyA1e2PJ87Wno+rbONFji3h8LMBQKBgQCv\nYFsI6d7jPyLcYYbsj1yeFXFCOsSH4LOBqfkVya94AWobSCTKdIFwj8l9ionBhB0o\nkZ0SZYFO/S7iLOc3wBLwIQp4d1Z4QOMCBw0m5UNkUUd0/WubnPeYaDI1ZG0DA3Xg\nNU7Qy5azNBLtJNfWVHhjfMLNlqBPNUs+kNY8lbGSmQKBgG72tYDmXBEC1xr+2NpY\nbzHX2mW7H/eOAHhPfO/VGDwtU16i9Y8LB7IZUY6DRQ2B8sXT6VGt+sG67/0JlQnM\n4H2UfXKAkAt0nCzU7x9hl+x3WA/yqcqLwu/+blrqFYYh0TusqicV6kqIFoOONdzZ\nOJXi0y23hRGztUus/t8RuOeB\n-----END PRIVATE KEY-----\n",
+  "client_email": "kubernetes-deploy@warm-tangent-238911.iam.gserviceaccount.com",
+  "client_id": "111454491594527751683",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/kubernetes-deploy%40warm-tangent-238911.iam.gserviceaccount.com"
+}

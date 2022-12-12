@@ -74,26 +74,38 @@ export default function Registeration({ getDataFromRegisteration }) {
         if (e.target.files[0] == null)
             return;
 
-        const storageRef = ref(Storage, `/logos/${e.target.files[0].name}`);
+        var img = new Image();
+        img.src = window.URL.createObjectURL(e.target.files[0]);
+        img.onload = async function () {
+            var width = img.naturalWidth,
+                height = img.naturalHeight;
+            console.log(width, height);
 
-        toast.loading("Uploading Image");
-        try {
-            const uploadTask = await uploadBytes(storageRef, e.target.files[0]);
-            toast.dismiss();
-            toast.success("Image Uploaded");
-            setDisableBtn(false);
-        } catch (e) {
-            toast.dismiss();
-            toast.error("Failed");
-            setDisableBtn(false);
-        }
+            if (height > 40) {
+                const storageRef = ref(Storage, `/logos/${e.target.files[0].name}`);
 
-        getDownloadURL(ref(Storage, `/logo/${e.target.files[0].name}`)).then((url) => {
-            console.log(url);
-            setsmallImageURL(url);
-        }).catch((err) => {
+                toast.loading("Uploading Image");
+                try {
+                    const uploadTask = await uploadBytes(storageRef, e.target.files[0]);
+                    toast.dismiss();
+                    toast.success("Image Uploaded");
+                    setDisableBtn(false);
+                } catch (e) {
+                    toast.dismiss();
+                    toast.error("Failed");
+                    setDisableBtn(false);
+                }
 
-        });
+                getDownloadURL(ref(Storage, `/logo/${e.target.files[0].name}`)).then((url) => {
+                    console.log(url);
+                    setsmallImageURL(url);
+                }).catch((err) => {
+
+                });
+            } else {
+                toast.error("Image size doesnot match");
+            }
+        };
     }
 
     const [largeimageURL, setlargeImageURL] = useState('');
@@ -105,32 +117,34 @@ export default function Registeration({ getDataFromRegisteration }) {
 
         img.src = window.URL.createObjectURL(e.target.files[0]);
 
-        img.onload = function () {
+        img.onload = async function () {
             var width = img.naturalWidth,
                 height = img.naturalHeight;
             console.log(width, height);
 
-            if(width<81 && height <81){
-                
+            if (width === 80 && height === 80) {
+                const storageRef = ref(Storage, `/logo/${e.target.files[0].name}`);
+                toast.loading("Uploading Image");
+                try {
+                    const uploadTask = await uploadBytes(storageRef, e.target.files[0]);
+                    toast.dismiss();
+                    toast.success("Image Uploaded")
+                    setDisableBtn(false)
+                } catch (e) {
+                    toast.dismiss();
+                    toast.error("Failed");
+                    setDisableBtn(false)
+                }
+
+                getDownloadURL(ref(Storage, `/logo/${e.target.files[0].name}`)).then((url) => {
+                    console.log(url);
+                    setlargeImageURL(url);
+                });
+            } else {
+                toast.error("Image size doesnot match");
             }
         };
-        const storageRef = ref(Storage, `/logo/${e.target.files[0].name}`);
-        toast.loading("Uploading Image");
-        try {
-            const uploadTask = await uploadBytes(storageRef, e.target.files[0]);
-            toast.dismiss();
-            toast.success("Image Uploaded")
-            setDisableBtn(false)
-        } catch (e) {
-            toast.dismiss();
-            toast.error("Failed");
-            setDisableBtn(false)
-        }
 
-        getDownloadURL(ref(Storage, `/logo/${e.target.files[0].name}`)).then((url) => {
-            console.log(url);
-            setlargeImageURL(url);
-        });
     }
 
     const [button1IsActive, setButton1IsActive] = useState(false);

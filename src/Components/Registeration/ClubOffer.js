@@ -38,25 +38,37 @@ export default function ClubOffer({ getDataFromClubOffer }) {
         if (e.target.files[0] == null)
             return;
 
-        const storageRef = ref(Storage, `/logos/${e.target.files[0].name}`);
+        var img = new Image();
+        img.src = window.URL.createObjectURL(e.target.files[0]);
+        img.onload = async function () {
+            var width = img.naturalWidth,
+                height = img.naturalHeight;
+            console.log(width, height);
 
-        toast.loading("Uploading Image");
-        try {
-            const uploadTask = await uploadBytes(storageRef, e.target.files[0]);
-            toast.dismiss();
-            toast.success("Small Image Uploaded");
-            setDisableBtn(false)
-        } catch (e) {
-            toast.dismiss();
-            toast.error("Failed");
-            setDisableBtn(false)
-        }
+            if (height > 40) {
+                const storageRef = ref(Storage, `/logos/${e.target.files[0].name}`);
 
-        getDownloadURL(ref(Storage, `/logo/${e.target.files[0].name}`)).then((url) => {
-            console.log(url);
-            setsmallImageURL(url);
-        })
-        e.target.value = "";
+                toast.loading("Uploading Image");
+                try {
+                    const uploadTask = await uploadBytes(storageRef, e.target.files[0]);
+                    toast.dismiss();
+                    toast.success("Small Image Uploaded");
+                    setDisableBtn(false)
+                } catch (e) {
+                    toast.dismiss();
+                    toast.error("Failed");
+                    setDisableBtn(false)
+                }
+
+                getDownloadURL(ref(Storage, `/logo/${e.target.files[0].name}`)).then((url) => {
+                    console.log(url);
+                    setsmallImageURL(url);
+                })
+                e.target.value = "";
+            } else {
+                toast.error("Image size doesnot match");
+            }
+        };
     }
 
 
@@ -66,24 +78,37 @@ export default function ClubOffer({ getDataFromClubOffer }) {
         if (e.target.files[0] == null)
             return;
 
-        const storageRef = ref(Storage, `/logo/${e.target.files[0].name}`);
-        toast.loading("Uploading Image");
-        try {
-            const uploadTask = await uploadBytes(storageRef, e.target.files[0]);
-            toast.dismiss();
-            toast.success("Big Image Uploaded")
-            setDisableBtn(false)
-        } catch (e) {
-            toast.dismiss();
-            toast.error("Failed");
-            setDisableBtn(false)
-        }
+        var img = new Image();
+        img.src = window.URL.createObjectURL(e.target.files[0]);
+        img.onload = async function () {
+            var width = img.naturalWidth,
+                height = img.naturalHeight;
+            console.log(width, height);
 
-        getDownloadURL(ref(Storage, `/logo/${e.target.files[0].name}`)).then((url) => {
-            console.log(url);
-            setlargeImageURL(url);
-        });
-        e.target.value = "";
+            if (width === 80 && height === 80) {
+
+                const storageRef = ref(Storage, `/logo/${e.target.files[0].name}`);
+                toast.loading("Uploading Image");
+                try {
+                    const uploadTask = await uploadBytes(storageRef, e.target.files[0]);
+                    toast.dismiss();
+                    toast.success("Big Image Uploaded")
+                    setDisableBtn(false)
+                } catch (e) {
+                    toast.dismiss();
+                    toast.error("Failed");
+                    setDisableBtn(false)
+                }
+
+                getDownloadURL(ref(Storage, `/logo/${e.target.files[0].name}`)).then((url) => {
+                    console.log(url);
+                    setlargeImageURL(url);
+                });
+                e.target.value = "";
+            } else {
+                toast.error("Image size doesnot match");
+            }
+        };
     }
 
 
@@ -215,9 +240,9 @@ export default function ClubOffer({ getDataFromClubOffer }) {
                 <div className="pb-[2.6574074074074074vh] pt-[2vh] xsm:flex-1 sm:flex-1 xsm:min-w-[90vw] xsm:m-auto sm:min-w-[80vw] w-[43.51vw] py-[10px] bg-[#1D262D] rounded-[57px]">
                     <form ref={clubOfferRef} onSubmit={clubOfferSubmitHandler} className="flex gap-[10px] flex-wrap items-center xsm:justify-center sm:justify-center x gap-x-[4.1666vw] xl:w-[95%] xsm:w-[100%] sm:w-[100%] w-[80%] h-[100%] m-auto">
                         <div className="flex justify-between gap-[10px]">
-                            <button type="button" onClick={() => { setIsAnyButtonActive(true); setBenefitType("prepaid"); setAllFalse(); setButton1IsActive(true); }} className={button1IsActive ? "flex justify-center items-center gap-[5px] w-[10.748vw] h-[4.701851851851852vh] min-h-[30px] max-h-[50.78px] text-[clamp(14px,1.2vw,24px)] text-[#EBBC33] font-bold bg-[#fff] rounded-[57px] min-w-[80px] xsm:min-w-[25vw] sm:min-w-[20vw] xsm:text-[14px]" : "flex justify-center items-center gap-[5px] xsm:text-[14px] min-w-[80px] xsm:min-w-[25vw] sm:min-w-[20vw] w-[10.748vw] h-[4.701851851851852vh] min-h-[30px] max-h-[50.78px] text-[clamp(14px,1.302vw,25px)] text-[#fff] font-bold bg-[#EBBC33] rounded-[57px]"}>Prepaid <div data-title="button 1" className="helpDiv"><img className="w-[1.6473958333333334vw] min-w-[20px]" src="./images/black-mark-center.png" /></div></button>
-                            <button type="button" onClick={() => { setIsAnyButtonActive(true); setBenefitType("punch"); setPointsValue(0); setPriceValue(0); setAllFalse(); setButton2IsActive(true); }} className={button2IsActive ? "flex justify-center items-center gap-[5px] w-[10.748vw] h-[4.701851851851852vh] min-h-[30px] max-h-[50.78px] text-[clamp(14px,1.2vw,24px)] text-[#EBBC33] font-bold bg-[#fff] rounded-[57px] min-w-[80px] xsm:min-w-[25vw] sm:min-w-[20vw] xsm:text-[14px]" : "flex justify-center items-center gap-[5px] xsm:text-[14px] min-w-[80px] xsm:min-w-[25vw] sm:min-w-[20vw] w-[10.748vw] h-[4.701851851851852vh] min-h-[30px] max-h-[50.78px] text-[clamp(14px,1.302vw,25px)] text-[#fff] font-bold bg-[#EBBC33] rounded-[57px]"}>Punchcard <div data-title="button 2" className="helpDiv"><img className="w-[1.6473958333333334vw] min-w-[20px]" src="./images/black-mark-center.png" /></div></button>
-                            <button type="button" onClick={() => { setIsAnyButtonActive(true); setBenefitType("free"); setPointsValue(0); setPriceValue(0); setAllFalse(); setButton3IsActive(true); }} className={button3IsActive ? "flex justify-center items-center gap-[5px] w-[10.748vw] h-[4.701851851851852vh] min-h-[30px] max-h-[50.78px] text-[clamp(14px,1.2vw,24px)] text-[#EBBC33] font-bold bg-[#fff] rounded-[57px] min-w-[80px] xsm:min-w-[25vw] sm:min-w-[20vw] xsm:text-[14px]" : "flex justify-center items-center gap-[5px] xsm:text-[14px] min-w-[80px] xsm:min-w-[25vw] sm:min-w-[20vw] w-[10.748vw] h-[4.701851851851852vh] min-h-[30px] max-h-[50.78px] text-[clamp(14px,1.302vw,25px)] text-[#fff] font-bold bg-[#EBBC33] rounded-[57px]"}>Free <div data-title="button 3" className="helpDiv"><img className="w-[1.6473958333333334vw] min-w-[20px]" src="./images/black-mark-center.png" /></div></button>
+                            <button type="button" onClick={() => { setIsAnyButtonActive(true); setBenefitType("prepaid"); setAllFalse(); setButton1IsActive(true); }} className={button1IsActive ? "flex justify-center items-center gap-[5px] w-[10.748vw] h-[4.701851851851852vh] min-h-[30px] max-h-[50.78px] text-[clamp(14px,1.2vw,18px)] text-[#EBBC33] font-bold bg-[#fff] rounded-[57px] min-w-[80px] xsm:min-w-[25vw] sm:min-w-[20vw] xsm:text-[14px]" : "flex justify-center items-center gap-[5px] xsm:text-[14px] min-w-[80px] xsm:min-w-[25vw] sm:min-w-[20vw] w-[10.748vw] h-[4.701851851851852vh] min-h-[30px] max-h-[50.78px] text-[clamp(14px,1.302vw,18px)] text-[#fff] font-bold bg-[#EBBC33] rounded-[57px]"}>Prepaid <div data-title="button 1" className="helpDiv"><img className="w-[1.6473958333333334vw] min-w-[20px]" src="./images/black-mark-center.png" /></div></button>
+                            <button type="button" onClick={() => { setIsAnyButtonActive(true); setBenefitType("punch"); setPointsValue(0); setPriceValue(0); setAllFalse(); setButton2IsActive(true); }} className={button2IsActive ? "flex justify-center items-center gap-[5px] w-[10.748vw] h-[4.701851851851852vh] min-h-[30px] max-h-[50.78px] text-[clamp(14px,1.2vw,18px)] text-[#EBBC33] font-bold bg-[#fff] rounded-[57px] min-w-[80px] xsm:min-w-[25vw] sm:min-w-[20vw] xsm:text-[14px]" : "flex justify-center items-center gap-[5px] xsm:text-[14px] min-w-[80px] xsm:min-w-[25vw] sm:min-w-[20vw] w-[10.748vw] h-[4.701851851851852vh] min-h-[30px] max-h-[50.78px] text-[clamp(14px,1.302vw,18px)] text-[#fff] font-bold bg-[#EBBC33] rounded-[57px]"}>Punchcard <div data-title="button 2" className="helpDiv"><img className="w-[1.6473958333333334vw] min-w-[20px]" src="./images/black-mark-center.png" /></div></button>
+                            <button type="button" onClick={() => { setIsAnyButtonActive(true); setBenefitType("free"); setPointsValue(0); setPriceValue(0); setAllFalse(); setButton3IsActive(true); }} className={button3IsActive ? "flex justify-center items-center gap-[5px] w-[10.748vw] h-[4.701851851851852vh] min-h-[30px] max-h-[50.78px] text-[clamp(14px,1.2vw,18px)] text-[#EBBC33] font-bold bg-[#fff] rounded-[57px] min-w-[80px] xsm:min-w-[25vw] sm:min-w-[20vw] xsm:text-[14px]" : "flex justify-center items-center gap-[5px] xsm:text-[14px] min-w-[80px] xsm:min-w-[25vw] sm:min-w-[20vw] w-[10.748vw] h-[4.701851851851852vh] min-h-[30px] max-h-[50.78px] text-[clamp(14px,1.302vw,18px)] text-[#fff] font-bold bg-[#EBBC33] rounded-[57px]"}>Free <div data-title="button 3" className="helpDiv"><img className="w-[1.6473958333333334vw] min-w-[20px]" src="./images/black-mark-center.png" /></div></button>
                         </div>
                         <div style={(button2IsActive || isAnyButtonActive === false) ? { pointerEvents: "none", opacity: "0.5" } : {}} className="inline-block">
                             <label className="flex items-center gap-[10px] text-[clamp(14px,1.2vw,24px)] text-[#FDC11F] font-bold ">{button3IsActive ? "Price before discount *" : "Price *"} <div data-title={button3IsActive ? "Price before discount" : "Price"} className="helpDiv"><img className="cursor-pointer w-[1.6473958333333334vw] min-w-[20px]" src="./images/yellow-mark.png" /></div></label>
@@ -248,7 +273,7 @@ export default function ClubOffer({ getDataFromClubOffer }) {
                         <div style={(isAnyButtonActive === false) ? { pointerEvents: "none", opacity: "0.5" } : {}} className="flex flex-col">
                             <div>
                                 <label className="flex items-center gap-[10px] text-[clamp(14px,1.2vw,24px)] text-[#FDC11F] font-bold ">Description * <div data-title="description" className="helpDiv"><img className="cursor-pointer w-[1.6473958333333334vw] min-w-[20px]" src="./images/yellow-mark.png" /></div></label>
-                                <textarea placeholder="Description" onChange={(e) => { setdescriptionLength(e.target.value) }} maxLength={30} name="description" rows='3' className="xsm:min-w-[80vw] sm:min-w-[calc(35vw-2.083vw)] w-[14.85vw]  indent-[1.3vw] pt-[10px] min-h-[60px] h-[7.312037037037037vh] max-h-[78.97px]"></textarea> {/* min-h-[80px] h-[16.77777777777778vh] max-h-[181.2px] */}
+                                <textarea placeholder="Description" onChange={(e) => { setdescriptionLength(e.target.value) }} maxLength={30} name="description" rows='3' className="xsm:min-w-[80vw] sm:min-w-[calc(35vw-2.083vw)] w-[29.21vw]  indent-[1.3vw] pt-[10px] min-h-[60px] h-[7.312037037037037vh] max-h-[78.97px]"></textarea>
                                 <p className="text-white text-[12px] text-right">{descriptionLength?.length || 0}/30</p>
                             </div>
 
